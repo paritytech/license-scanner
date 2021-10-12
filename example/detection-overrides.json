@@ -1,0 +1,23 @@
+[
+  {
+    "starts_with": "curve25519-dalek-2.1.0 file: src/",
+    "result": { "license": "BSD-3-CLAUSE" }
+  },
+  {
+    "starts_with": "ed25519-dalek-1.0.1 file: ",
+    "result": { "license": "BSD-3-CLAUSE" }
+  },
+  {
+    "id": "blake3-0.3.7 file: README.md",
+    "result": { "license": "CC0-1.0 or Apache-2.0" }
+  },
+  {
+    "id": "roadmap/implementers-guide/mermaid.min.js",
+    "result": null
+  },
+  {
+    "id": "bridges/scripts/add_license.sh",
+    "file": "./bridges/scripts/add_license.sh",
+    "result": null
+  }
+]

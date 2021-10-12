@@ -1,0 +1,5 @@
+hard_tabs = false
+max_width = 80
+edition = "2018"
+tab_spaces = 2
+imports_granularity = "Crate"

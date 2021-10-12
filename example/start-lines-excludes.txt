@@ -1,0 +1,316 @@
+Copyright (c) 2019 Peter Glotfelty
+Copyright (c) 2014 The Rust Project Developers
+Copyright (c) 2019 Tower Contributors
+Copyright (c) 2014 Alex Crichton
+Copyright (c) 2019 Nils Mehrtens
+Copyright (C) Jonas Schievink <jonasschievink@gmail.com>
+Copyright (c) 2019-2020 CreepySkeleton
+Copyright (c) 2015 Saghm Rossi
+Copyright (c) 2016 Alex Crichton
+Copyright (c) 2017 The Tokio Authors
+Copyright 2017 Juniper Networks, Inc.
+Copyright (c) 2017, Juniper Networks, Inc. All rights reserved.
+Copyright (c) 2015
+Copyright (c) 2019 The Crossbeam Project Developers
+Copyright (c) 2015-2021 Sean McArthur
+Copyright (c) 2017-2018 Parity Technologies Limited
+Copyright (c) 2019 Nick Fitzgerald
+Copyright (c) 2015 The Rust Project Developers
+Copyright (c) 2018-2019 The RustCrypto Project Developers
+Copyright (c) 2015 Alice Maz
+Copyright (c) 2014 Carl Lerche and other MIO contributors
+Copyright (c) 2006-2009 Graydon Hoare
+Copyright (c) 2009-2013 Mozilla Foundation
+Copyright (c) 2016 Artyom Pavlov
+Copyright (c) 2019 Hyper Contributors
+Copyright (c) 2015, Nick Fitzgerald
+Copyright © 2015, Simonas Kazlauskas
+Copyright (c) 2013-2016 The rust-url developers
+Copyright 2018 Developers of the Rand project
+Copyright (c) 2015-2016 the fiat-crypto authors (see
+Copyright (c) 2016-present, Facebook, Inc. All rights reserved.
+Copyright (c) 2014, lpsantil
+Copyright (c) 2011-2016, Yann Collet
+Copyright: (C) 2011+ Yann Collet
+Copyright (c) Yann Collet, Facebook, Inc.
+Copyright (c) 2016-present, Przemyslaw Skibinski
+Copyright 2014-2020 The Rust Project Developers
+Copyright (c) 2016 Alexandre Bury
+Copyright (c) 2013-2015 Yann Collet
+Copyright (c) 2021 Tokio Contributors
+Copyright (c) 2019 Yoshua Wuyts
+Copyrights in the Rand project are retained by their contributors. No
+Copyright (c) 2015-2020 Julien Cretin
+Copyright (c) 2017-2020 Google Inc.
+Copyright (c) 2014 Sébastien Martini
+Copyright (c) 2016-2017 Artyom Pavlov, Marek Kotewicz
+Copyright (c) 2014 Chris Wong
+Copyright (c) 2015 Andrew Gallant
+Copyright (c) 2018, POA Networks, Ltd.
+Copyright (c) 2015-2016 Kevin B. Knapp
+Copyright (c) 2016 Jason Housley
+Copyright (c) 2017 Nick Stevens
+Copyright (c) 2016 Steve Klabnik
+Copyright © 2018, Simonas Kazlauskas
+Copyright (c) 2017 tokio-jsonrpc developers
+Copyright (c) 2013, Jyun-Yan You
+Copyright (c) 2019 The RustCrypto Project Developers
+Copyright (c) 2015 Seif Lotfy
+Copyright (c) 2010 The Rust Project Developers
+Copyright (c) 2018 Nikolay Volf
+Copyright 2018 Nikolay Volf
+Copyright (c) 2018 Henry de Valence.
+Copyright (c) 2017 Redox OS Developers
+Copyright (c) 2016-2017 Isis Agora Lovecruft, Henry de Valence. All rights reserved.
+Copyright (c) Ulrik Sverdrup "bluss" 2015-2017
+Copyright (c) 2018 Artyom Pavlov
+Copyright (c) 2018 The RustCrypto Project Developers
+Copyright (c) 2017-2019 isis agora lovecruft. All rights reserved.
+Copyright (c) 2019 DebugSteven. All rights reserved.
+Copyright (c) 2015 fangyuanziti
+Copyright (c) 2016 The dns-parser Developers
+Copyright (c) 2015 Carl Lerche + nix-rust Authors
+Copyright (c) 2015 The rust-openssl-verify Developers
+Copyright (c) 2018 The pin-utils authors
+Copyright 2018 The pin-utils authors
+Copyright (c) 2017 Sebastian Dröge <sebastian@centricular.com>.
+Copyright [2017] [Maik Klein]
+Copyright (c) 2017 Maik Klein
+Copyright 2018 MaidSafe Developers <dev@maidsafe.net>
+Copyright (c) 2018 Carl Lerche
+Copyright (c) 2013, Kenneth MacKay
+Copyrights in the SAFE Network are retained by their contributors. No copyright assignment is required to contribute to this project.
+Copyright 2018 MaidSafe Developers <dev@maidsafe.net>,
+Copyright (c) 2015 The Gimli Developers
+Copyright (c) 2016, Joseph Birr-Pixton <jpixton@gmail.com>
+Copyright (c) 2016 Joseph Birr-Pixton <jpixton@gmail.com>
+Copyright (c) 2017, Jakub Onderka
+Copyright 2019-2020 CreepySkeleton <creepy-skeleton@yandex.ru>
+Copyright (c) 2016 The Rust Project Developers
+Copyright (c) 2015 Jake Goulding
+Copyright (c) 2017 Artyom Pavlov
+Copyright (c) 2015 The quick-error Developers
+Copyright (c) 2014 Mathijs van de Nes
+Copyright © 1991-2018 Unicode, Inc. All rights reserved.
+Copyright (c) 2015 The trust-dns Developers
+Copyright (c) 2017 Google LLC.
+Copyright (c) 2016 Jerome Froelich
+Copyright 2017 Dan Burkert
+Copyright (c) 2015 Steven Allen
+Copyright (c) 2014-2019 Geoffroy Couprie
+Copyright (C) 2012 Free Software Foundation, Inc.
+Copyright 2020, Ashish Myles (maintainer) and contributors.
+Copyright (c) 2020 Ashish Myles and contributors
+Copyright (c) 2018 Josh Stone
+Copyright (c) 2016-2019 Isis Agora Lovecruft, Henry de Valence. All rights reserved.
+Copyright (c) 2012 The Go Authors. All rights reserved.
+Copyright (c) Irina Shestak
+Copyright (c) 2021 Orson Peters <orsonpeters@gmail.com>
+Copyright (C) 2015-2016 Friedel Ziegelmayer
+Copyright (c) 2017 Steven Fackler
+Copyright (c) 2017-2018 Sergio Benitez
+Copyright (c) 2016 Amanieu d'Antras
+Copyright (c) 2018 myrrlyn (Alexander Payne)
+Copyright (c) 2019 RustCrypto Developers
+Copyright (c) 2014-2016 Simon Sapin
+Copyright 1998-2007 Google Inc.
+Copyright (C) 2002-present Jason Evans <jasone@canonware.com>.
+Copyright (C) 2007-2012 Mozilla Foundation.  All rights reserved.
+Copyright (C) 2009-present Facebook, Inc.  All rights reserved.
+Copyright (c) 2019 Eliza Weisman
+Copyright 1992-2016 Free Software Foundation, Inc.
+Copyright (c) 2019 Tokio Contributors
+Copyright (c) 2019 Carl Lerche
+Copyright (c) 2016 Kathryn Long
+Copyright (c) 2016-2019 Ulrik Sverdrup "bluss" and scopeguard developers
+Copyright 2018 MaidSafe.net limited.
+Copyright 2020 messense
+Copyright (c) 2018-2019 Sean McArthur
+Copyright (c) 2019 Eric McCorkle
+Copyright (c) 2020 The RustCrypto Project Developers
+Copyright 2018 Parity Technologies (UK) Ltd.
+Copyright (c) m4b 2016
+Copyright (c) 2015 Nicholas Allegra (comex).
+Copyright (C) 1995-2010 Jean-loup Gailly and Mark Adler
+Copyright (c) 2011-2015 Vicent Marti
+Copyright (C) 1985,1989-93,1995-98,2000,2001,2002,2003,2005,2006,2008
+Copyright (C) 2007 Francois Gouget
+Copyright (c) 2017:
+Copyright Rich Salz.
+Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+Copyright (c) 1998-2007 The OpenSSL Project.  All rights reserved.
+Copyright 2015 Nicholas Allegra (comex).
+Copyright (c) 2015-2019 RustCrypto Developers
+Copyright (c) 2018 Sam Rijs, Alex Crichton and contributors
+Copyright 2017 quininer kel
+Copyright (c) 1997-2020 University of Cambridge
+Copyright(c) 2010-2020 Zoltan Herczeg
+Copyright(c) 2009-2020 Zoltan Herczeg
+Copyright (c) 2007-2012, Google Inc.
+Copyright (c) 2017 quininer kel
+Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
+Copyright (c) 2018 The Servo Project Developers
+Copyright (c) 2014 Paho Lurie-Gregg
+Copyright (c) 2020 sval-rs
+Copyright (c) 2017 Doug Tangren
+Copyright (c) 2016 Google Inc. (lewinb@google.com) -- though not an official
+Copyright (c) 2016 Martin Carton
+Copyright 2020 quininer kel
+Copyright (c) 2020 quininer kel
+Copyright (c) 2018-2020 The Rust Secure Code Working Group
+Copyright (c) 2016 The humantime Developers
+Copyright (c) 2016 Pyfisch
+Copyright © 2005-2013 Rich Felker
+Copyright (c) 2014 Ty Overby
+Copyright 2008 Google Inc.  All rights reserved.
+Copyright (c) 2018 Guillaume Pinot (@TeXitoi) <texitoi@texitoi.eu>
+Copyright (c) 2017 Aaron Power
+Copyright (c) 2019 Daniel "Lokathor" Gee.
+Copyright 2019 Pierre Krieger
+Copyright (c) 2017 Gilad Naaman
+Copyright (c) 2016 Martin Geisler
+Copyright (c) 2018-2019 dirs-rs contributors
+Copyright 2017 Aaron Power
+Copyright (c) 2015 David Roundy <roundyd@physics.oregonstate.edu>
+Copyright (c) 2021 Jake McGinty
+Copyright 2017 Mio authors
+Copyright (c) 2017 Mio authors
+Copyright (c) 2018 Sean McArthur
+Copyright (c) 2019 - 2020 Matt Hunzinger
+Copyright (c) 2021 Max Inden
+Copyright (c) 2017 Robert Grosse
+Copyright (c) 2014-2020 The Rust Project Developers
+Copyright (c) 2015 Johann Hofmann
+Copyright (c) 2014-2017 Melissa O'Neill and PCG Project contributors
+Copyright (c) 2015 Bartłomiej Kamiński
+Copyright 2015 Brian Smith.
+Copyright (c) 2019 The CryptoCorrosion Contributors
+Copyright 2019 The CryptoCorrosion Contributors
+Copyright (c) 2020 Maciej Hirsz <hello@maciej.codes>
+Copyright 2020 Maciej Hirsz <hello@maciej.codes>
+Copyright (c) 2016-2020 RustCrypto Developers
+Copyright (c) 2018 directories-rs contributors
+Copyright (c) 2016 Erased Serde Developers
+Copyright (c) 2015 Igor Shaula
+Copyright (c) 2017 Carl Lerche
+Copyright 2017 Carl Lerche
+Copyright (c) 2015 Artem V. Navrotskiy
+Copyright (c) 2015-2016 The blake2-rfc Developers, Cesar Barros
+Copyright (c) 2017 Liran Ringel
+Copyright (c) 2017 Michael Neumann
+Copyright (c) 2019 iqlusion
+Copyright always originates with the author, except in cases of works
+Copyright law protects creative works.  Protection granted by the law to
+Copyright owners want to control uses of their work and be paid for any
+Copyright notice:
+Copyright (c) 2016-present Yann Collet, Facebook, Inc.
+Copyright (c) Henrik Ravn 2004
+Copyright 2011, Google Inc.
+Copyright (C) 2011-2016, Yann Collet.
+Copyright (c) 2017-present Facebook, Inc.
+Copyright (c) 2016 Michael Ma
+Copyright (c) 2014-2021 Sean McArthur
+Copyright (C) 2002-2020 Free Software Foundation, Inc.
+Copyright (c) 2006, 2015, Percona and/or its affiliates. All rights reserved.
+Copyright (c) 2011-present, Facebook, Inc.  All rights reserved.
+Copyright (c) 2011 The LevelDB Authors. All rights reserved.
+Copyright (c) 2017 Nikolay Volf
+Copyright (c) 2016--2017
+Copyright (c) 2017 Denis Kurilenko
+Copyright (c) 2020 Katharos Technology
+Copyright (c) 2019 Parity Technologies (UK) Ltd.
+Copyright 2019 Parity Technologies (UK) Ltd.
+Copyright (c) 2016 twist developers
+Copyright (c) 2015 steffengy
+Copyright (c) 2015-2018 The winapi-rs Developers
+Copyright (c) 2016 multimap developers
+Copyright base-x contributors and Oleksii Rudenko (c) 2016
+Copyright (c) 2017 Nikolai Vazquez
+Copyright (c) 2015 Fletcher Nichol
+Copyright 2012-2020, Bert Belder <bertbelder@gmail.com>
+Copyright (c) 2015 Dan Burkert.
+Copyright (c) 2019 MobileCoin, LLC
+Copyright (c) 2014 Benjamin Sago
+Copyright (c) 2020 Keziah Biermann
+Copyright (c) 2020, Keziah Biermann
+Copyright (c) 2016 The roaring-rs developers.
+Copyright (c) 2020, Keziah Biermann
+Copyright ⓒ 2017 contributors.
+Copyright (c) 2012-2013 Mozilla Foundation
+Copyright (c) 2019-2020 RustCrypto Developers
+Copyright (c) 2016 rust-derive-builder contributors
+Copyright (c) 2018 David Tolnay
+Copyright (c) 2017
+Copyright (c) 2015 Marvin Löbel
+Copyright (c) 2015-2019 Doug Tangren
+Copyright (c) 2016 - 2018 Ulrik Sverdrup "bluss"
+Copyright (c) 2017 http-rs authors
+Copyright 2017 http-rs authors
+Copyright (c) 2017 Andrew Gallant
+Copyright (c) 2014, Kang Seonghoon.
+Copyright (c) 2016 Jelte Fennema
+Copyright (c) 2014-2017 Sean McArthur
+Copyright (c) 2017-2018 Stephen Oliver
+Copyright (c) 2019 kneecaw (Nika Layzell)
+Copyright (c) 2018 Brian Myers
+Copyright 2018 Brian Myers
+Copyright (c) 2018 Guillaume Gomez
+Copyright (c) 2013-2014 The Rust Project Developers.
+Copyright (c) 2015-2020 The rust-hex Developers
+Copyright (c) 2020 Soveu
+Copyright 2011, The Snappy-Rust Authors. All rights reserved.
+Copyright (c) 2015 Danny Guo
+Copyright (c) 2016 Titus Wormer <tituswormer@gmail.com>
+Copyright (c) 2017 Jose Narvaez
+Copyright (c) 2016 Murarth
+Copyright (c) Nikolay Volf
+Copyright (c) 2015 Peter Atashian
+Copyright (c) 2010-2011 Dmitry Vyukov.
+Copyright (c) 2015-2017
+Copyright (c) 2016 Elliott Linder
+Copyright (c) 2014 Ning Sun
+Copyright (c) 2017 Frommi
+Copyright 2016 Nika Layzell
+Copyright (c) 2019, Sébastien Crozet
+Copyright (c) 2019 CreepySkeleton
+Copyright 2019 CreepySkeleton <creepy-skeleton@yandex.ru>
+Copyright 2017-2020 Parity Technologies (UK) Ltd.
+Copyright (c) 2015 The assert_cli Developers
+Copyright (c) 2018
+Copyright (c) 2015 The blake2-rfc Developers
+Copyright (c) 2017 Google Inc.
+Copyright (c) 2017 Contributors
+Copyright (c) 2015-2016 The resolv-conf Developers
+Copyright (c) 2018-2019 Andrew Gallant
+Copyright (c) 2018-2019 iqlusion
+Copyright (c) 2018 Jorge Aparicio
+Copyright (c) 2016 fengcen
+Copyright (c) 2019 svartalf
+Copyright (c) 2017-2018 Isis Agora Lovecruft. All rights reserved.
+Copyright (c) 2015 Jonathan Reem
+Copyright (c) 2017 Xudong Huang
+Copyright (c) 2020 Josh Triplett
+Copyright (c) 2016-2018 The gimli Developers
+Copyright (c) 2020 Evgeniy Reizner
+Copyright (c) 2015 Dan Burkert
+Copyright [2015] [Dan Burkert]
+The MIT License (MIT)
+MIT License
+The MIT License
+All rights reserved.
+BSD 3-Clause License
+Copyright (c) 2016-2019 Isis Lovecruft, Henry de Valence
+Copyright (c) 2016-2017 Nuxi (https://nuxi.nl/) and contributors.
+Portions copyright (c) 2015, John Nagle.
+(C) Copyright 2016 Jethro G. Beekman
+ISC License (ISC)
+Copyright 2016 The Fuchsia Authors. All rights reserved.
+Original work Copyright (c) 2014 The Rust Project Developers
+Modified work Copyright (c) 2016-2018 Nikita Pekin and lazycell contributors
+Copyright Joyent, Inc. and other Node contributors. All rights reserved.
+http_parser.c is based on src/http/ngx_http_parse.c from NGINX copyright
+Igor Sysoev.
+Additional changes are licensed under the same terms as NGINX and
+copyright Joyent, Inc. and other Node contributors. All rights reserved.
+Copyright (c) 2016 Google Inc. (lewinb@google.com) -- though not an official
+Google product or in any way related!

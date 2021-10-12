@@ -1,0 +1,5 @@
+data/**
+node_modules/**
+example/**
+db.json
+package-lock.json

@@ -1,0 +1,50 @@
+{
+  "name": "license-scanner",
+  "version": "0.0.0",
+  "author": "Parity <admin@parity.io> (https://parity.io)",
+  "type": "module",
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://opensource.org/licenses/Apache-2.0"
+    }
+  ],
+  "devDependencies": {
+    "@types/tar": "^4.0.5",
+    "@types/tmp": "^0.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^1.1.5",
+    "prettier": "^2.4.1",
+    "prettier-plugin-compactify": "^0.1.5",
+    "ts-prune": "^0.10.1"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "prettier": "prettier --version && prettier '{*,**/*}.json'",
+    "eslint": "eslint --version && eslint '{*,**/*}.{js,ts}'",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint:eslint": "npm run eslint",
+    "lint:prettier": "npm run prettier -- --check",
+    "fix:eslint": "npm run eslint -- --fix",
+    "fix:prettier": "npm run prettier -- --write",
+    "fix": "npm run fix:eslint && npm run fix:prettier",
+    "main": "node --trace-warnings --es-module-specifier-resolution=node --loader ./node_modules/ts-node/esm ./license-scanner/main.ts",
+    "debug": "node --inspect-brk --trace-warnings --es-module-specifier-resolution=node --loader ./node_modules/ts-node/esm ./license-scanner/main.ts"
+  },
+  "dependencies": {
+    "async-mutex": "^0.3.2",
+    "ts-node": "^10.3.0",
+    "node-fetch": "^3.0.0",
+    "typescript": "^4.4.3",
+    "p-queue": "^7.1.0",
+    "tar": "^6.1.11",
+    "tmp": "^0.2.1"
+  }
+}
