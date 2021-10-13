@@ -22,8 +22,7 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^1.1.5",
     "prettier": "^2.4.1",
-    "prettier-plugin-compactify": "^0.1.5",
-    "ts-prune": "^0.10.1"
+    "prettier-plugin-compactify": "^0.1.5"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -40,11 +39,11 @@
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
-    "ts-node": "^10.3.0",
     "node-fetch": "^3.0.0",
-    "typescript": "^4.4.3",
     "p-queue": "^7.1.0",
     "tar": "^6.1.11",
-    "tmp": "^0.2.1"
+    "tmp": "^0.2.1",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.3"
   }
 }
