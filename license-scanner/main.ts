@@ -2,7 +2,7 @@ import { executeDumpArgs, parseDumpArgs } from "./cli/dump"
 import { executeScanArgs, parseScanArgs } from "./cli/scan"
 import { DumpCliArgs, ScanCliArgs } from "./types"
 
-const commands = {
+const subcommands = {
   dump: { parse: parseDumpArgs, execute: executeDumpArgs },
   scan: { parse: parseScanArgs, execute: executeScanArgs },
 }
@@ -15,22 +15,26 @@ const main = async function () {
     if (subcommand === undefined) {
       throw new Error(
         `Must specify a subcommand\nThe available ones are: ${Object.keys(
-          commands,
+          subcommands,
         ).join(",")}`,
       )
     }
 
-    if (typeof subcommand !== "string" || !(subcommand in commands)) {
-      throw new Error(`Invalid subcommand ${subcommand}`)
+    if (typeof subcommand !== "string" || !(subcommand in subcommands)) {
+      throw new Error(
+        `Invalid subcommand ${subcommand}. Valid ones are: ${Object.keys(
+          subcommands,
+        )}`,
+      )
     }
 
-    const conf = commands[subcommand as keyof typeof commands]
+    const conf = subcommands[subcommand as keyof typeof subcommands]
     const args = await conf.parse(cliArgs)
 
     if (args instanceof DumpCliArgs) {
-      await commands.dump.execute(args)
+      await subcommands.dump.execute(args)
     } else if (args instanceof ScanCliArgs) {
-      await commands.scan.execute(args)
+      await subcommands.scan.execute(args)
     } else {
       const _: never = args
       throw new Error(`Argument handling is not exhaustive for ${args}`)
