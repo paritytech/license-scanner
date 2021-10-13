@@ -12,6 +12,7 @@ export const renameAsync = promisify(fs.rename)
 export const unlinkAsync = promisify(fs.unlink)
 export const existsAsync = promisify(fs.exists)
 export const lstatAsync = promisify(fs.lstat)
+export const writeFileAsync = promisify(fs.writeFile)
 const mkdirAsync = promisify(fs.mkdir)
 
 export const walkFiles: (

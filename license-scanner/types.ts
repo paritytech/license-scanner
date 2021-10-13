@@ -1,4 +1,12 @@
-import type { Logger } from "./logger"
+import type { Logger, LogLevel } from "./logger"
+
+export type DatabaseLayout = {
+  scanResult?: {
+    [path: string]: {
+      [id: string]: ScanResultItem
+    }
+  }
+}
 
 type ScanResultItemMetadata = Record<string, unknown>
 export type ScanResultItem =
@@ -128,4 +136,19 @@ export class UnexpectedCrateSourceError extends Error {
 
 export type CargoMetadataOutputV1 = {
   packages: { name: string; version: string; manifest_path: string }[]
+}
+
+export class ScanCliArgs {
+  constructor(
+    public args: {
+      scanRoot: string
+      startLinesExcludes: string[] | null
+      detectionOverrides: DetectionOverride[] | null
+      logLevel: LogLevel
+    },
+  ) {}
+}
+
+export class DumpCliArgs {
+  constructor(public args: { format: "csv"; outputFile: string }) {}
 }

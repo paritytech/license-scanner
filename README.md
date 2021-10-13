@@ -29,9 +29,14 @@ Requirements:
 - Node.js LTS (and `npm`)
 - `readelf`
 
-```
+```bash
 npm install
-npm run main -- /target/directory/or/file
+
+# use the following for scanning
+npm run main -- scan /target/directory/or/file
+
+# after the scan is complete, optionally dump it to CSV
+npm run main -- dump csv /path/to/create/output/file.csv
 ```
 
 If a single file is given as argument, the main command will scan that file and

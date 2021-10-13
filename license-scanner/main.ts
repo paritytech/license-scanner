@@ -1,283 +1,38 @@
-import { dirname, join as joinPath, resolve as resolvePath } from "path"
-import { fileURLToPath } from "url"
+import { executeDumpArgs, parseDumpArgs } from "./cli/dump"
+import { executeScanArgs, parseScanArgs } from "./cli/scan"
+import { DumpCliArgs, ScanCliArgs } from "./types"
 
-import { ensureDatabase, getSaveScanResultItem } from "./db"
-import { getLicenseMatcher, loadLicensesNormalized } from "./license"
-import { Logger, LogLevel } from "./logger"
-import { scan } from "./scanner"
-import {
-  DetectionOverride,
-  DetectionOverrideById,
-  DetectionOverrideByStartsWith,
-  DetectionOverrideInput,
-  LicenseInput,
-  ScanTracker,
-} from "./types"
-import { ensureDir, lstatAsync, readFileAsync } from "./utils"
-
-const thisDirectory = dirname(fileURLToPath(import.meta.url))
-
-const parseCliArgs = async function (args: string[]) {
-  let scanRoot: string | undefined = undefined
-  let startLinesExcludes: string[] | undefined = undefined
-  let detectionOverrides: DetectionOverride[] | undefined = undefined
-  let logLevel: LogLevel = "info"
-
-  let nextState:
-    | "read startLinesExcludes"
-    | "read detectionOverrides"
-    | "read logLevel"
-    | null = null
-
-  while (true) {
-    const arg = args.shift()
-    if (arg === undefined) {
-      break
-    }
-
-    switch (nextState) {
-      case "read logLevel": {
-        nextState = null
-
-        switch (arg) {
-          case "error":
-          case "debug":
-          case "info": {
-            logLevel = arg
-            break
-          }
-          default: {
-            throw new Error(`Invalid log level "${arg}"`)
-          }
-        }
-        break
-      }
-      case "read startLinesExcludes": {
-        nextState = null
-
-        startLinesExcludes = (await readFileAsync(arg))
-          .toString()
-          .trim()
-          .split("\n")
-        break
-      }
-      case "read detectionOverrides": {
-        nextState = null
-
-        const overridesFile = arg
-        const overridesFileDirectory = dirname(overridesFile)
-
-        const parsedOverrides: DetectionOverrideInput[] = JSON.parse(
-          (await readFileAsync(overridesFile)).toString(),
-        )
-
-        const overrides: DetectionOverride[] = []
-        const uids = new Set()
-        for (const {
-          compare_with: comparisonFile,
-          ...parsedOverride
-        } of parsedOverrides) {
-          const uid =
-            "id" in parsedOverride
-              ? parsedOverride.id
-              : parsedOverride.starts_with
-
-          if (uids.has(uid)) {
-            throw new Error(
-              `Duplicate id ${uid} in the provided detectionOverrides`,
-            )
-          } else {
-            uids.add(uid)
-          }
-
-          if (typeof parsedOverride.result !== "object") {
-            throw new Error(
-              `Result of override rule ${uid} should be an object or null`,
-            )
-          }
-
-          let contents: string | null = null
-          if (comparisonFile !== undefined) {
-            const path = comparisonFile.startsWith("./")
-              ? joinPath(overridesFileDirectory, comparisonFile)
-              : comparisonFile
-            contents = (await readFileAsync(path)).toString()
-          }
-
-          if ("id" in parsedOverride) {
-            overrides.push(
-              new DetectionOverrideById(parsedOverride.result, contents, uid),
-            )
-          } else if ("starts_with" in parsedOverride) {
-            overrides.push(
-              new DetectionOverrideByStartsWith(
-                parsedOverride.result,
-                contents,
-                uid,
-              ),
-            )
-          } else {
-            const _: never = parsedOverride
-            throw new Error(
-              `Not exhaustive parsedOverride rule: ${JSON.stringify(
-                parsedOverride,
-              )}`,
-            )
-          }
-        }
-
-        detectionOverrides = overrides
-        break
-      }
-      case null: {
-        const argIsOption = function (optionName: string) {
-          return arg === `-${optionName}` || arg === `-${optionName}=`
-        }
-        if (argIsOption("-start-lines-excludes")) {
-          nextState = "read startLinesExcludes"
-        } else if (argIsOption("-detection-overrides")) {
-          nextState = "read detectionOverrides"
-        } else if (argIsOption("-log-level")) {
-          nextState = "read logLevel"
-        } else if (scanRoot) {
-          throw new Error("scanRoot might only be specified once")
-        } else {
-          scanRoot = arg
-        }
-        break
-      }
-      default: {
-        const _: never = nextState
-        throw new Error(`Not exhaustive nextState: ${nextState}`)
-      }
-    }
-  }
-
-  if (!scanRoot) {
-    throw new Error("Required argument: scanRoot")
-  }
-
-  return {
-    scanRoot: resolvePath(scanRoot as string),
-    startLinesExcludes,
-    detectionOverrides,
-    logLevel,
-  }
+const commands = {
+  dump: { parse: parseDumpArgs, execute: executeDumpArgs },
+  scan: { parse: parseScanArgs, execute: executeScanArgs },
 }
 
 const main = async function () {
-  const { scanRoot, startLinesExcludes, detectionOverrides, logLevel } =
-    await parseCliArgs(process.argv.slice(2))
+  const cliArgs = [...process.argv.slice(2)]
+  const subcommand = cliArgs.shift()
 
-  const dataDir = await ensureDir(joinPath(thisDirectory, "..", "data"))
-  const dirs = {
-    crates: await ensureDir(joinPath(dataDir, "crates")),
-    repositories: await ensureDir(joinPath(dataDir, "repositories")),
+  if (subcommand === undefined) {
+    throw new Error(
+      `Must specify a subcommand\nThe available ones are: ${Object.keys(
+        commands,
+      ).join(",")}`,
+    )
   }
 
-  const extraLicenses: LicenseInput[] = [
-    {
-      id: "GPL-3.0-only",
-      text: [
-        `
-      you can redistribute it and/or modify it under the terms of the GNU General
-      Public License as published by the Free Software Foundation, either version 3
-      of the License, or (at your option) any later version.
-      `,
-      ],
-      match: "fragment",
-    },
-    {
-      id: "Apache-2.0",
-      text: ["Licensed under the Apache License, Version 2.0"],
-      match: "fragment",
-    },
-    {
-      id: "MIT",
-      text: [
-        "Licensed under the MIT License",
-        "Licensed under the MIT license",
-      ],
-      match: "fragment",
-    },
-    {
-      id: "MPL-2.0",
-      text: [
-        "This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0",
-      ],
-      match: "fragment",
-    },
-    {
-      id: "BSD-?",
-      text: [
-        "This source code is licensed under both the BSD-style license",
-        "Use of this source code is governed by a BSD-style license",
-      ],
-      match: "fragment",
-    },
-    {
-      id: "LICENSE",
-      text: [
-        "See LICENSE for licensing details.",
-        "See LICENSE for licensing information.",
-        "See LICENSE-APACHE, and LICENSE-MIT for details.",
-        "See LICENSE-MIT for details.",
-        "See LICENSE-THIRD-PARTY for details.",
-        "See LICENSE-APACHE.txt, and LICENSE-MIT.txt for details.",
-      ],
-      match: "fragment",
-      result: { description: "Defined in LICENSE for this project" },
-    },
-  ]
+  if (typeof subcommand !== "string" || !(subcommand in commands)) {
+    throw new Error(`Invalid subcommand ${subcommand}`)
+  }
 
-  const licenses = await loadLicensesNormalized(
-    joinPath(thisDirectory, "..", "licenses"),
-    {
-      aliases: new Map([
-        ["BSD-3-CLAUSE-with-asterisks", "BSD-3-CLAUSE"],
-        ["Apache-2.0-without-appendix", "Apache-2.0"],
-      ]),
-      extraLicenses,
-    },
-  )
+  const conf = commands[subcommand as keyof typeof commands]
+  const args = await conf.parse(cliArgs)
 
-  const dbPath = joinPath(thisDirectory, "..", "db.json")
-  const db = await ensureDatabase(dbPath)
-  const saveScanResultItem = getSaveScanResultItem(db)
-
-  const rustCrateScannerRoot = joinPath(
-    thisDirectory,
-    "..",
-    "rust-crate-scanner",
-  )
-
-  const matchLicense = getLicenseMatcher(licenses, startLinesExcludes)
-
-  const fileMetadata = await lstatAsync(scanRoot)
-
-  if (fileMetadata.isDirectory()) {
-    await scan({
-      saveResult: saveScanResultItem,
-      matchLicense,
-      root: scanRoot,
-      initialRoot: scanRoot,
-      dirs,
-      rust: {
-        shouldCheckForCargoLock: true,
-        cargoExecPath: "cargo",
-        rustCrateScannerRoot,
-      },
-      tracker: new ScanTracker(),
-      detectionOverrides: detectionOverrides ?? null,
-      logger: new Logger({ minLevel: logLevel }),
-    })
-  } else if (fileMetadata.isFile()) {
-    console.log(await matchLicense(scanRoot))
+  if (args instanceof DumpCliArgs) {
+    await commands.dump.execute(args)
+  } else if (args instanceof ScanCliArgs) {
+    await commands.scan.execute(args)
   } else {
-    console.error(
-      `ERROR: Scan target "${scanRoot}" is not a file or a directory`,
-    )
-    process.exit(1)
+    const _: never = args
+    throw new Error(`Argument handling is not exhaustive for ${args}`)
   }
 }
 
