@@ -36,7 +36,7 @@ npm install
 npm run main -- scan /target/directory/or/file
 
 # after the scan is complete, optionally dump it to CSV
-npm run main -- dump csv /path/to/create/output/file.csv
+npm run main -- dump csv /target/directory/or/file /output.csv
 ```
 
 If a single file is given as argument, the main command will scan that file and
@@ -59,14 +59,14 @@ section. You are able to further customize the output through
 Suppose the following directory structure:
 
 ```
-/target/directory
+/target
 ├── LICENSE-MIT
 ├── Cargo.toml
 ```
 
-After scanning that directory with `npm run main -- /target/directory`, a
-`db.json` file will be created in the root of this repository as follows
-(metadata omitted for brevity's sake):
+After scanning that directory with `npm run main -- scan /target`, a `db.json`
+file will be created in the root of this repository as follows (metadata
+omitted for brevity's sake):
 
 ```json
 {

@@ -17,6 +17,13 @@ export const parseDumpArgs = function (args: string[]) {
     )
   }
 
+  const scanRoot = args.shift()
+  if (scanRoot === undefined) {
+    throw new Error(
+      "Must specify the directory where the results will be dumped from",
+    )
+  }
+
   const outputFile = args.shift()
   if (outputFile === undefined) {
     throw new Error("Must specify the output file in the second argument")
@@ -25,6 +32,7 @@ export const parseDumpArgs = function (args: string[]) {
   return new DumpCliArgs({
     format: format as DumpCliArgs["args"]["format"],
     outputFile,
+    scanRoot,
   })
 }
 
@@ -48,7 +56,7 @@ const escapeValueForCsv = function (value: unknown) {
 }
 
 export const executeDumpArgs = async function ({
-  args: { format, outputFile },
+  args: { format, outputFile, scanRoot },
 }: DumpCliArgs) {
   switch (format) {
     case "csv": {
@@ -56,16 +64,27 @@ export const executeDumpArgs = async function ({
         (await readFileAsync(databasePath)).toString(),
       )
 
-      const scanResult = db.scanResult ?? {}
+      const scanResult = db.scanResult
+      if (scanResult === undefined) {
+        throw new Error(
+          `No scan result was found from the database at ${databasePath}`,
+        )
+      }
+
+      const collection = scanResult[scanRoot]
+      if (collection === undefined) {
+        throw new Error(
+          `No scan result was found for the directory "${scanRoot}" on the database ${databasePath}`,
+        )
+      }
+
       const lines: string[] = []
-      for (const path in scanResult) {
-        for (const [id, result] of Object.entries(scanResult[path])) {
-          lines.push(
-            `${escapeValueForCsv(id)},${escapeValueForCsv(
-              "license" in result ? result.license : result.description ?? "",
-            )}`,
-          )
-        }
+      for (const [id, result] of Object.entries(collection)) {
+        lines.push(
+          `${escapeValueForCsv(id)},${escapeValueForCsv(
+            "license" in result ? result.license : result.description ?? "",
+          )}`,
+        )
       }
 
       await writeFileAsync(outputFile, ["id,verdict"].concat(lines).join("\n"))

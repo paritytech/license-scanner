@@ -150,5 +150,7 @@ export class ScanCliArgs {
 }
 
 export class DumpCliArgs {
-  constructor(public args: { format: "csv"; outputFile: string }) {}
+  constructor(
+    public args: { format: "csv"; outputFile: string; scanRoot: string },
+  ) {}
 }
