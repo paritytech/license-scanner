@@ -40,6 +40,10 @@ following files are supported
 Should more files be relevant in future Rust versions, logically they should be
 supported as well.
 
+You are welcome to suggest other files, even if they are not Rust-related, which
+would make sense for us to support going forward by
+[opening a request ticket](https://github.com/paritytech/license-scanner/issues).
+
 # Usage <a name="usage"></a>
 
 Requirements:
