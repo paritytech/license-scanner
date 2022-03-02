@@ -139,7 +139,7 @@ Each Detection Rule object should have the following fields:
 ### id <a name="usage-detection-overrides-id"></a>
 
 This field defines the ID of the result you wish to override; IDs are formatted
-with according to the rules explained in the
+according to the rules explained in the
 [Walkthough section](#usage-walkthrough).
 
 For example, if you want to override the results for the file
