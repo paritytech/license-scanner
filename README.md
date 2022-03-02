@@ -175,9 +175,9 @@ choose either of them, not both._
 
 Instead of
 [overriding the detection for a single ID](#usage-detection-overrides-id),
-this field defines the **start** of IDs whose results should be overridden; that is,
-any IDs starting with the value of this field will be overridden by the
-specified result. This is usually useful for making an override apply to a whole
+this field defines the **start** of IDs whose results should be overridden; that
+is, any IDs starting with this field's value will be overridden by the specified
+`"result"`. This is usually useful for making an override apply to a whole
 directory or crate.
 
 For example, if you want to override the results for the **whole** `docs/`
