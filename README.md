@@ -174,7 +174,7 @@ choose either of them, not both._
 ### starts_with <a name="usage-detection-overrides-starts_with"></a>
 
 Instead of
-[overriding the detection for a single key](#usage-detection-overrides-id),
+[overriding the detection for a single ID](#usage-detection-overrides-id),
 this field defines the **start** of IDs whose results should be overridden; that is,
 any IDs starting with the value of this field will be overridden by the
 specified result. This is usually useful for making an override apply to a whole
