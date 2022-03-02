@@ -22,7 +22,7 @@ advice for any licensing questions that may arise from using this tool.
 
 # Introduction <a name="introduction"></a>
 
-license-scanner is a targeted license scanner based on file contents and project
+license-scanner is a targeted license scanner based on file content and project
 metadata. The [Usage section](#usage) provides explanations on what it does and
 how to use it.
 
