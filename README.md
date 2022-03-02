@@ -23,7 +23,7 @@ advice for any licensing questions that may arise from using this tool.
 # Introduction <a name="introduction"></a>
 
 license-scanner is a targeted license scanner based on file contents and project
-metadata. The [Usage section](#usage) goes into more detail on what it does and
+metadata. The [Usage section](#usage) provides explanations on what it does and
 how to use it.
 
 Before starting to work on this project we recommend reading the
