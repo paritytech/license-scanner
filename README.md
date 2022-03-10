@@ -128,7 +128,8 @@ detection for a given file using
 
 ## `--detection-overrides` <a name="usage-detection-overrides"></a>
 
-[See an example for the configuration](./example/detection-overrides.json)
+An example is available in
+[example/detection-overrides.json](./example/detection-overrides.json).
 
 This option provides a way of overriding the automatic detection by specifying
 Detection Rules as a JSON array from a configuration file. Use it as:
@@ -137,11 +138,11 @@ Detection Rules as a JSON array from a configuration file. Use it as:
 
 Each Detection Rule object should have the following fields:
 
-### id <a name="usage-detection-overrides-id"></a>
+### `"id"` <a name="usage-detection-overrides-id"></a>
 
-This field defines the ID of the result you wish to override; IDs are formatted
+This field defines the ID of the result you wish to override (IDs are formatted
 according to the rules explained in the
-[Walkthough section](#usage-walkthrough).
+[Walkthough section](#usage-walkthrough)).
 
 For example, if you want to override the results for the file
 `crates/metrics/analyze.rs`:
@@ -169,19 +170,20 @@ The following rule should be used:
 ```
 
 _This field is exclusive with
-[`starts_with`](#usage-detection-overrides-starts_with), meaning you should
+[`"starts_with"`](#usage-detection-overrides-starts_with), meaning you should
 choose either of them, not both._
 
-### starts_with <a name="usage-detection-overrides-starts_with"></a>
+### `"starts_with"` <a name="usage-detection-overrides-starts_with"></a>
 
 Instead of
 [overriding the detection for a single ID](#usage-detection-overrides-id),
-this field defines the **start** of IDs whose results should be overridden; that
-is, any IDs starting with this field's value will be overridden by the specified
-`"result"`. This is usually useful for making an override apply to a whole
-directory or crate.
+this field defines the **start** of IDs (IDs are formatted according to the
+rules explained in the [Walkthough](#usage-walkthrough) section) whose results
+should be overridden; that is, any IDs starting with this field's value will be
+overridden by the specified `"result"`. This is usually useful for making an
+override apply to a whole directory or crate.
 
-For example, if you want to override the results for the **whole** `docs/`
+For example, if you want to override the results for the whole `docs/`
 directory:
 
 ```json
@@ -191,7 +193,7 @@ directory:
 }
 ```
 
-As another example, if you wish to override the results the **whole** crate
+As another example, if you wish to override the results the whole crate
 `messenger` whose version is `0.1`:
 
 ```json
@@ -201,20 +203,19 @@ As another example, if you wish to override the results the **whole** crate
 }
 ```
 
-_This field is exclusive with [`id`](#usage-detection-overrides-id), meaning
+_This field is exclusive with [`"id"`](#usage-detection-overrides-id), meaning
 you should choose either of them, not both._
 
-### result
+### `"result"`
 
 The result which will be assigned to items matching the expression provided
-through [`id`](#usage-detection-overrides-id) or
-[`starts_with`](#usage-detection-overrides-starts_with). The provided value
+through [`"id"`](#usage-detection-overrides-id) or
+[`"starts_with"`](#usage-detection-overrides-starts_with). The provided value
 will replace the automatic detection's result completely for matched items.
-Use `result: null` to omit the file from the results completely or provide a
-[`ScanResultItem`](./license-scanner/types.ts) for consistency with other
-non-overriden results.
+Use `"result": null` to omit the file from the results completely or provide a
+[`ScanResultItem`](./license-scanner/types.ts) as a replacement.
 
-### compare_with (optional)
+### `"compare_with"` (optional)
 
 Provide a reference file whose contents will be compared against the contents of
 the file matched to the ID you're overriding. The program will stop the scan if
@@ -226,7 +227,8 @@ time without your knowledge and thus possibly making the result incorrect.
 
 ## `--start-lines-excludes` <a name="usage-start-lines-excludes"></a>
 
-[See an example for the configuration](./example/start-lines-excludes.txt)
+An example is available in
+[example/start-lines-excludes.txt](./example/start-lines-excludes.txt).
 
 `--start-lines-excludes` takes as argument a plain-text file which specifies
 lines to be excluded from **the top** of the file during the text normalization
