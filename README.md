@@ -128,13 +128,13 @@ detection for a given file using
 
 ## `--detection-overrides` <a name="usage-detection-overrides"></a>
 
-This option provides a way of overriding the automatic detection by specifying
-Detection Rules as a JSON array from a configuration file
-([example](./example/detection-overrides.json)). Use it as:
+Takes as argument a configuration file specifying Override Rules
+([example](./example/detection-overrides.json)) which can be used to override
+the automatic detection. Use it as:
 
 `scan --detection-overrides configuration.json`
 
-Each Detection Rule object should have the following fields:
+Each Override Rule object should have the following fields:
 
 ### `"id"` <a name="usage-detection-overrides-id"></a>
 
@@ -225,9 +225,9 @@ time without your knowledge and thus possibly making the result incorrect.
 
 ## `--start-lines-excludes` <a name="usage-start-lines-excludes"></a>
 
-`--start-lines-excludes` takes as argument a plain-text file which specifies
-lines to be excluded from **the top** of the file during the text normalization
-step ([example](./example/start-lines-excludes.txt)). It is useful for removing
+Takes as argument a plain-text file which specifies lines to be excluded from
+**the top** of the file during the text normalization step
+([example](./example/start-lines-excludes.txt)). It is useful for removing
 "Copyright (c) Foo Bar" boilerplate at the start of licenses which might make
 the detector misrecognize them.
 
