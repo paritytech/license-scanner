@@ -17,7 +17,7 @@
   },
   {
     "id": "bridges/scripts/add_license.sh",
-    "file": "./bridges/scripts/add_license.sh",
+    "compare_with": "./bridges/scripts/add_license.sh",
     "result": null
   }
 ]
