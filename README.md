@@ -128,11 +128,9 @@ detection for a given file using
 
 ## `--detection-overrides` <a name="usage-detection-overrides"></a>
 
-An example is available in
-[example/detection-overrides.json](./example/detection-overrides.json).
-
 This option provides a way of overriding the automatic detection by specifying
-Detection Rules as a JSON array from a configuration file. Use it as:
+Detection Rules as a JSON array from a configuration file
+([example](./example/detection-overrides.json)). Use it as:
 
 `scan --detection-overrides configuration.json`
 
@@ -227,15 +225,13 @@ time without your knowledge and thus possibly making the result incorrect.
 
 ## `--start-lines-excludes` <a name="usage-start-lines-excludes"></a>
 
-An example is available in
-[example/start-lines-excludes.txt](./example/start-lines-excludes.txt).
-
 `--start-lines-excludes` takes as argument a plain-text file which specifies
 lines to be excluded from **the top** of the file during the text normalization
-step. This is mainly useful for removing "Copyright (c) Foo Bar" boilerplate
-at the start of licenses which would normally make the detector misrecognize
-them. For instance, if you see lots of licenses starting with the following
-template:
+step ([example](./example/start-lines-excludes.txt)). It is useful for removing
+"Copyright (c) Foo Bar" boilerplate at the start of licenses which might make
+the detector misrecognize them.
+
+For instance, if you see lots of licenses starting with the following template:
 
 ```
 Copyright (c) Foo Bar, 2019
