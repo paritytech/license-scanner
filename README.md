@@ -211,7 +211,7 @@ you should choose either of them, not both._
 The result which will be assigned to items matching the expression provided
 through [`"id"`](#usage-detection-overrides-id) or
 [`"starts_with"`](#usage-detection-overrides-starts_with). The provided value
-will replace the automatic detection's result completely for matched items.
+will replace the automatic detection's result completely for the matched items.
 Use `"result": null` to omit the file from the results completely or provide a
 [`ScanResultItem`](./license-scanner/types.ts) as a replacement.
 
