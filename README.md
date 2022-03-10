@@ -229,7 +229,9 @@ Takes as argument a plain-text file which specifies lines to be excluded from
 **the top** of the file during the text normalization step
 ([example](./example/start-lines-excludes.txt)). It is useful for removing
 "Copyright (c) Foo Bar" boilerplate at the start of licenses which might make
-the detector misrecognize them.
+the detector misrecognize them. Use it as:
+
+`scan --start-lines-excludes excludes.txt`
 
 For instance, if you see lots of licenses starting with the following template:
 
