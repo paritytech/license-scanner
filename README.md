@@ -178,7 +178,7 @@ choose either of them, not both._
 Instead of
 [overriding the detection for a single ID](#usage-detection-overrides-id),
 this field defines the **start** of IDs (IDs are formatted according to the
-rules explained in the [Walkthough](#usage-walkthrough) section) whose results
+rules explained in the [Walkthough section](#usage-walkthrough)) whose results
 should be overridden; that is, any IDs starting with this field's value will be
 overridden by the specified `"result"`. This is usually useful for making an
 override apply to a whole directory or crate.
