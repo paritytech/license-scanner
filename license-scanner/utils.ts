@@ -103,6 +103,8 @@ export const isBinaryFile = function (file: string) {
  */
 export const assertCommand = function (command: string) {
   if (cp.spawnSync("command", ["-v", command]).status !== 0) {
-    throw new Error(`Command "${command}" not available. Check the readme for prerequisites.`)
+    throw new Error(
+      `Command "${command}" not available. Check the readme for prerequisites.`,
+    )
   }
 }
