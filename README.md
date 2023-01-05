@@ -51,19 +51,19 @@ Requirements:
 
 - [`cargo`](https://doc.rust-lang.org/cargo/)
 - [Node.js](https://nodejs.org/en/) LTS
-- `npm`
-  - Should already be included in your Node.js installation
+- `yarn`
+  - If it's not already be bundled with Node.js, install with `npm install -g yarn`
 - [`readelf`](https://man7.org/linux/man-pages/man1/readelf.1.html)
   - Should be available from a package for your operating system
 
 ```bash
-npm install
+yarn install
 
 # use `scan` for scanning
-npm run main -- scan /directory/or/file
+yarn run main -- scan /directory/or/file
 
 # after the scan is complete, optionally dump it to CSV
-npm run main -- dump csv /directory/or/file /output.csv
+yarn run main -- dump csv /directory/or/file /output.csv
 ```
 
 If a single file is provided, the scan will be performed exclusively for that
@@ -92,7 +92,7 @@ Consider the following directory structure:
 ├── Cargo.toml
 ```
 
-After scanning that directory with `npm run main -- scan /directory`, a
+After scanning that directory with `yarn run main -- scan /directory`, a
 `db.json` file will be created in the root of this repository with the following
 structure:
 
