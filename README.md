@@ -50,11 +50,13 @@ would make sense for us to support going forward by
 Requirements:
 
 - [`cargo`](https://doc.rust-lang.org/cargo/)
-- [Node.js](https://nodejs.org/en/) LTS
+- [Node.js](https://nodejs.org/en/)
+  - Currently, versions 16.x or newer are not supported.
+  - It's recommended to use version 14.x
 - `npm`
   - Should already be included in your Node.js installation
 - [`readelf`](https://man7.org/linux/man-pages/man1/readelf.1.html)
-  - Should be available from a package for your operating system
+  - Should be available from a package manager for your operating system
 
 ```bash
 npm install

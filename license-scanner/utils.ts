@@ -89,10 +89,20 @@ export const execute = function (
 }
 
 export const isBinaryFile = function (file: string) {
+  assertCommand("readelf")
   return new Promise<boolean>(function (resolve) {
     const child = cp.spawn("readelf", ["-h", file], { stdio: "ignore" })
     child.on("close", function (code) {
       resolve(code === 0 ? true : false)
     })
   })
+}
+
+/**
+ * Checks that the given command exists in path and can be used with child_process spawn.
+ */
+export const assertCommand = function (command: string) {
+  if (cp.spawnSync("command", ["-v", command]).status !== 0) {
+    throw new Error(`Command "${command}" not available. Check the readme for prerequisites.`)
+  }
 }
