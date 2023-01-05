@@ -1,110 +1,100 @@
-import cp from "child_process"
-import fs from "fs"
-import fetch from "node-fetch"
-import path from "path"
-import stream from "stream"
-import { promisify } from "util"
+import cp from "child_process";
+import fs from "fs";
+import fetch from "node-fetch";
+import path from "path";
+import stream from "stream";
+import { promisify } from "util";
 
-const streamPipelineAsync = promisify(stream.pipeline)
-export const readFileAsync = promisify(fs.readFile)
-export const readdirAsync = promisify(fs.readdir)
-export const renameAsync = promisify(fs.rename)
-export const unlinkAsync = promisify(fs.unlink)
-export const existsAsync = promisify(fs.exists)
-export const lstatAsync = promisify(fs.lstat)
-export const writeFileAsync = promisify(fs.writeFile)
-const mkdirAsync = promisify(fs.mkdir)
+const streamPipelineAsync = promisify(stream.pipeline);
+export const readFileAsync = promisify(fs.readFile);
+export const readdirAsync = promisify(fs.readdir);
+export const renameAsync = promisify(fs.rename);
+export const unlinkAsync = promisify(fs.unlink);
+export const existsAsync = promisify(fs.exists);
+export const lstatAsync = promisify(fs.lstat);
+export const writeFileAsync = promisify(fs.writeFile);
+const mkdirAsync = promisify(fs.mkdir);
 
-export const walkFiles: (
-  dir: string,
-) => AsyncGenerator<{ path: string; name: string }> = async function* (dir) {
+export const walkFiles: (dir: string) => AsyncGenerator<{ path: string; name: string }> = async function* (dir) {
   for await (const d of await fs.promises.opendir(dir)) {
-    const fullPath = path.join(dir, d.name)
+    const fullPath = path.join(dir, d.name);
     if (d.isDirectory()) {
-      yield* walkFiles(fullPath)
+      yield* walkFiles(fullPath);
     } else {
-      yield { path: fullPath, name: d.name }
+      yield { path: fullPath, name: d.name };
     }
   }
-}
+};
 
 export const loadFiles = async function (
   root: string,
   mapContents: (text: string) => string = function (text: string) {
-    return text
+    return text;
   },
 ) {
-  const result: Record<string, string> = {}
-  const seenNames: Record<string, string> = {}
+  const result: Record<string, string> = {};
+  const seenNames: Record<string, string> = {};
   for await (const file of walkFiles(root)) {
-    const prevLocation = seenNames[file.name]
+    const prevLocation = seenNames[file.name];
     if (prevLocation) {
-      throw new Error(
-        `Found file with duplicate name at ${file.path} (previously seen in ${prevLocation})`,
-      )
+      throw new Error(`Found file with duplicate name at ${file.path} (previously seen in ${prevLocation})`);
     }
 
-    seenNames[file.name] = file.path
-    result[file.name] = mapContents((await readFileAsync(file.path)).toString())
+    seenNames[file.name] = file.path;
+    result[file.name] = mapContents((await readFileAsync(file.path)).toString());
   }
-  return result
-}
+  return result;
+};
 
 export const ensureDir = async function (dir: string) {
   if (!(await existsAsync(dir))) {
-    await mkdirAsync(dir, { recursive: true })
+    await mkdirAsync(dir, { recursive: true });
   }
-  return dir
-}
+  return dir;
+};
 
 export const download = async function (url: string, targetPath: string) {
-  const response = await fetch(url)
+  const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`Unexpected response ${response.statusText} for ${url}`)
+    throw new Error(`Unexpected response ${response.statusText} for ${url}`);
   } else if (response.body === null) {
-    throw new Error(`Response of ${url} had no body`)
+    throw new Error(`Response of ${url} had no body`);
   }
 
-  await streamPipelineAsync(response.body, fs.createWriteStream(targetPath))
-}
+  await streamPipelineAsync(response.body, fs.createWriteStream(targetPath));
+};
 
-export const execute = function (
-  cmd: string,
-  args: string[],
-  options: Omit<cp.SpawnOptions, "stdio">,
-) {
-  return new Promise<string>(function (resolve) {
-    const child = cp.spawn(cmd, args, { ...options, stdio: "pipe" })
+export const execute = function (cmd: string, args: string[], options: Omit<cp.SpawnOptions, "stdio">) {
+  return new Promise<string>((resolve) => {
+    const child = cp.spawn(cmd, args, { ...options, stdio: "pipe" });
 
-    let stdoutBuf = ""
-    child.stdout.on("data", function (data) {
-      stdoutBuf += data.toString()
-    })
+    let stdoutBuf = "";
+    child.stdout.on("data", (data) => {
+      stdoutBuf += data.toString();
+    });
 
-    child.on("close", function () {
-      resolve(stdoutBuf.trim())
-    })
-  })
-}
+    child.on("close", () => {
+      resolve(stdoutBuf.trim());
+    });
+  });
+};
 
 export const isBinaryFile = function (file: string) {
-  assertCommand("readelf")
-  return new Promise<boolean>(function (resolve) {
-    const child = cp.spawn("readelf", ["-h", file], { stdio: "ignore" })
-    child.on("close", function (code) {
-      resolve(code === 0 ? true : false)
-    })
-  })
-}
+  assertCommand("readelf");
+  return new Promise<boolean>((resolve) => {
+    const child = cp.spawn("readelf", ["-h", file], { stdio: "ignore" });
+    child.on("close", (code) => {
+      resolve(code === 0 ? true : false);
+    });
+  });
+};
 
 /**
  * Checks that the given command exists in path and can be used with child_process spawn.
  */
 export const assertCommand = function (command: string) {
   if (cp.spawnSync("command", ["-v", command]).status !== 0) {
-    throw new Error(
-      `Command "${command}" not available. Check the readme for prerequisites.`,
-    )
+    throw new Error(`Command "${command}" not available. Check the readme for prerequisites.`);
   }
-}
+};
