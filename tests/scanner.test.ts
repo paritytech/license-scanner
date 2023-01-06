@@ -10,7 +10,7 @@ import {
 import { getLicenseMatcher, loadLicensesNormalized } from "license-scanner/license";
 import { Logger } from "license-scanner/logger";
 import { scan } from "license-scanner/scanner";
-import { ScanOptions, ScanResultItem, ScanTracker } from "license-scanner/types";
+import { ScanOptions, ScanTracker } from "license-scanner/types";
 import path, { join as joinPath } from "path";
 import { fileURLToPath } from "url";
 
@@ -34,7 +34,7 @@ describe("Scanner tests", () => {
 
   const performScan = async (target: string) => {
     const scanRoot = path.join(targetsRoot, target);
-    const output: Record<string, ScanResultItem> = {};
+    const output: Record<string, { description?: string; license?: string }> = {};
     await scan({
       ...scanOptions,
       saveResult: async (projectId, filePathFromRoot, result) => {
@@ -50,15 +50,15 @@ describe("Scanner tests", () => {
 
   it("single-crate", async () => {
     const output = await performScan("single-crate");
-    expect(output.LICENSE).to.be.an("object");
-    expect(output["src/main.rs"]).to.be.an("object");
+    expect(output.LICENSE?.license).to.equal("MIT");
+    expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
   });
 
   it("multiple-crates", async () => {
     const output = await performScan("multiple-crates");
-    expect(output["first-crate/LICENSE"]).to.be.an("object");
-    expect(output["first-crate/src/main.rs"]).to.be.an("object");
-    expect(output["second-crate/LICENSE"]).to.be.an("object");
-    expect(output["second-crate/src/main.rs"]).to.be.an("object");
+    expect(output["first-crate/LICENSE"]?.license).to.equal("MIT");
+    expect(output["first-crate/src/main.rs"]?.license).to.equal("Apache-2.0");
+    expect(output["second-crate/LICENSE"]?.license).to.equal("UNLICENSE");
+    expect(output["second-crate/src/main.rs"]?.license).to.equal("GPL-3.0-or-later");
   });
 });
