@@ -181,6 +181,6 @@ export const scan = async function (options: ScanOptions) {
     }
   }
 
-  // Try to wait until the queue is processed before considering the scan finished.
+  // Wait until the queue is processed before considering the scan finished.
   await scanQueue.onSizeLessThan(1);
 };
