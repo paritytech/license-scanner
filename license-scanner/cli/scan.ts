@@ -4,7 +4,7 @@ import {
   licenseAliases,
   projectRoot,
   repositoriesDir,
-  rustCrateScannerRoot
+  rustCrateScannerRoot,
 } from "license-scanner/constants";
 import { ensureDatabase, getSaveScanResultItem } from "license-scanner/db";
 import { getLicenseMatcher, loadLicensesNormalized } from "license-scanner/license";

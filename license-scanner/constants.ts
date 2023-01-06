@@ -1,6 +1,7 @@
 import { dirname, join as joinPath } from "path";
 import { fileURLToPath } from "url";
-import {LicenseInput} from "./types";
+
+import { LicenseInput } from "./types";
 
 export const projectRoot = dirname(fileURLToPath(import.meta.url));
 
@@ -59,4 +60,4 @@ export const extraLicenses: LicenseInput[] = [
 export const licenseAliases: Map<string, string> = new Map([
   ["BSD-3-CLAUSE-with-asterisks", "BSD-3-CLAUSE"],
   ["Apache-2.0-without-appendix", "Apache-2.0"],
-])
+]);
