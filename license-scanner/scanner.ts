@@ -160,16 +160,16 @@ export const scan = async function (options: ScanOptions) {
         }
       }
 
-      saveResult(initialRoot, key, { ...rule.result, meta });
+      await saveResult(initialRoot, key, { ...rule.result, meta });
       continue toNextFile;
     }
 
-    scanQueue.add(async () => {
+    await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
       if (result === undefined) {
         return;
       }
-      saveResult(initialRoot, key, { ...result, meta: Object.assign({}, meta, result.meta) });
+      await saveResult(initialRoot, key, { ...result, meta: Object.assign({}, meta, result.meta) });
     });
     await scanQueue.onSizeLessThan(scanQueueSize);
   }
