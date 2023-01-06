@@ -38,6 +38,7 @@ describe("Scanner tests", () => {
     await scan({
       ...scanOptions,
       saveResult: async (projectId, filePathFromRoot, result) => {
+        console.log('saveResult', {projectId, filePathFromRoot, result})
         output[filePathFromRoot] = result;
         return await Promise.resolve();
       },
