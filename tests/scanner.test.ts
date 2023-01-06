@@ -56,6 +56,7 @@ describe("Scanner tests", () => {
 
   it("multiple-crates", async () => {
     const output = await performScan("multiple-crates");
+    console.log(output)
     expect(output["first-crate/LICENSE"]?.license).to.equal("MIT");
     expect(output["first-crate/src/main.rs"]?.license).to.equal("Apache-2.0");
     expect(output["second-crate/LICENSE"]?.license).to.equal("UNLICENSE");
