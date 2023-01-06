@@ -180,4 +180,6 @@ export const scan = async function (options: ScanOptions) {
       scanCrates(rust, options);
     }
   }
+
+  await scanQueue.onSizeLessThan(1)
 };
