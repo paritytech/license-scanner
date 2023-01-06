@@ -171,7 +171,7 @@ export const scan = async function (options: ScanOptions) {
       }
       saveResult(initialRoot, key, { ...result, meta: Object.assign({}, meta, result.meta) });
     });
-    await scanQueue.onSizeLessThan(scanQueueSize);
+    await scanQueue.onSizeLessThan(1);
   }
 
   if (rust !== null) {
