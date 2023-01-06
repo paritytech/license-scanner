@@ -3,4 +3,6 @@ node_modules/**
 example/**
 db.json
 package-lock.json
+**/target/debug
+**/target/release
 yarn.lock
