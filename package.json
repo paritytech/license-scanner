@@ -11,8 +11,11 @@
     }
   ],
   "devDependencies": {
+    "@types/mocha": "^10.0.1",
     "@types/tar": "^4.0.5",
     "@types/tmp": "^0.2.1",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
     "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d"
   },
   "scripts": {
@@ -25,6 +28,7 @@
     "fix:eslint": "yarn run eslint -- --fix",
     "fix:prettier": "yarn run prettier -- --write",
     "fix": "yarn run fix:eslint && yarn run fix:prettier",
+    "test": "mocha",
     "main": "node --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts",
     "debug": "node --inspect-brk --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts"
   },
