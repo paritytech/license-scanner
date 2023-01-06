@@ -180,4 +180,7 @@ export const scan = async function (options: ScanOptions) {
       scanCrates(rust, options);
     }
   }
+
+  // Try to wait until the queue is processed before considering the scan finished.
+  await scanQueue.onSizeLessThan(1);
 };
