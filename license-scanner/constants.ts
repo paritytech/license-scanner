@@ -55,3 +55,8 @@ export const extraLicenses: LicenseInput[] = [
     result: { description: "Defined in LICENSE for this project" },
   },
 ];
+
+export const licenseAliases: Map<string, string> = new Map([
+  ["BSD-3-CLAUSE-with-asterisks", "BSD-3-CLAUSE"],
+  ["Apache-2.0-without-appendix", "Apache-2.0"],
+])

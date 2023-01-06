@@ -1,4 +1,11 @@
-import {cratesDir, extraLicenses, projectRoot, repositoriesDir, rustCrateScannerRoot} from "license-scanner/constants";
+import {
+  cratesDir,
+  extraLicenses,
+  licenseAliases,
+  projectRoot,
+  repositoriesDir,
+  rustCrateScannerRoot
+} from "license-scanner/constants";
 import { ensureDatabase, getSaveScanResultItem } from "license-scanner/db";
 import { getLicenseMatcher, loadLicensesNormalized } from "license-scanner/license";
 import { Logger, LogLevel } from "license-scanner/logger";
@@ -135,10 +142,7 @@ export const executeScanArgs = async function ({
   args: { scanRoot, startLinesExcludes, detectionOverrides, logLevel },
 }: ScanCliArgs) {
   const licenses = await loadLicensesNormalized(joinPath(projectRoot, "..", "licenses"), {
-    aliases: new Map([
-      ["BSD-3-CLAUSE-with-asterisks", "BSD-3-CLAUSE"],
-      ["Apache-2.0-without-appendix", "Apache-2.0"],
-    ]),
+    aliases: licenseAliases,
     extraLicenses,
   });
 
