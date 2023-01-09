@@ -15,7 +15,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["node"]
+    "types": ["node", "mocha"]
   },
-  "include": ["license-scanner"]
+  "include": ["license-scanner", "tests"]
 }
