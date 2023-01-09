@@ -262,6 +262,8 @@ If configured, the scan will make sure that all scanned files are licensed.
 - If set to `true`, the scan will make sure that all source files have some license detected.
 - If set to a specific license(s), the scan will make sure that all source files have one of those licenses detected.
 
+By default, it is `false` - meaning no license enforcement.
+
 # Implementation <a name="implementation"></a>
 
 [`scan`](https://github.com/paritytech/license-scanner/blob/668b8c5f1cfa1dfc8f22170562f648a344cb60ef/license-scanner/scanner.ts#L141)
