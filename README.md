@@ -53,9 +53,6 @@ Requirements:
 - [Node.js](https://nodejs.org/en/) LTS
 - `yarn`
   - If it's not already be bundled with Node.js, install with `npm install -g yarn`
-- [`readelf`](https://man7.org/linux/man-pages/man1/readelf.1.html)
-  - Should be available from a package for your operating system
-  - On macOS, it can be installed using `brew install binutils`
 
 ```bash
 yarn install

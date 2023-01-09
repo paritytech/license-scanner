@@ -4,6 +4,7 @@ import fetch from "node-fetch";
 import path from "path";
 import stream from "stream";
 import { promisify } from "util";
+import { open as openElf } from 'elfinfo';
 
 const streamPipelineAsync = promisify(stream.pipeline);
 export const readFileAsync = promisify(fs.readFile);
@@ -80,11 +81,9 @@ export const execute = function (cmd: string, args: string[], options: Omit<cp.S
   });
 };
 
-export const isBinaryFile = function (file: string) {
-  return new Promise<boolean>((resolve) => {
-    const child = cp.spawn("readelf", ["-h", file], { stdio: "ignore" });
-    child.on("close", (code) => {
-      resolve(code === 0 ? true : false);
-    });
-  });
+export const isBinaryFile = async function (file: string) {
+  const fileData = await fs.promises.open(file, "r")
+  const elfData = await openElf(fileData)
+  await fileData.close()
+  return elfData.success
 };
