@@ -33,9 +33,10 @@ jobs:
           version: 14.21.0
       - run: yarn install --frozen-lockfile
       - uses: actions/checkout@v2
-        repository: polkadot
-        ref: '1c935f35139f3f43cb22009dc5c010dfbe6ad9e7'
-        path: polkadot
+        with:
+          repository: polkadot
+          ref: '1c935f35139f3f43cb22009dc5c010dfbe6ad9e7'
+          path: polkadot
       - name: Scan the Polkadot repo
         run: |
           yarn run main -- scan --log-level debug ../polkadot
