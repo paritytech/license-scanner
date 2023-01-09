@@ -42,5 +42,6 @@ jobs:
           path: polkadot
       - name: Scan the Polkadot repo
         run: |
-          yarn run main -- scan --log-level debug ../polkadot
+          yarn run main -- scan --log-level debug ../polkadot/node
         working-directory: license-scanner
+        timeout-minutes: 3
