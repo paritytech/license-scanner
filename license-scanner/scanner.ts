@@ -168,7 +168,21 @@ export const scan = async function (options: ScanOptions) {
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
       if (result === undefined) {
+        if (ensureLicenses !== false) {
+          throw new Error(`Ensuring files have license failed: No license detected in ${key}`);
+        }
         return;
+      }
+      if (typeof ensureLicenses === "object") {
+        if ("license" in result) {
+          if (!ensureLicenses.includes(result.license)) {
+            throw new Error(
+              `Ensuring files have license failed: ${key} has ${
+                result.license
+              } license, expected one of: ${ensureLicenses.join(",")}`,
+            );
+          }
+        } else throw new Error(`Ensuring files have license failed: ${key} resulted in: ${result.description}`);
       }
       await saveResult(initialRoot, key, { ...result, meta: Object.assign({}, meta, result.meta) });
     });
