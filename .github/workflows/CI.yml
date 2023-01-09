@@ -34,7 +34,7 @@ jobs:
         with:
           version: 14.21.0
       - run: yarn install --frozen-lockfile
-        working_directory: license-scanner
+        working-directory: license-scanner
       - uses: actions/checkout@v3.3.0
         with:
           repository: paritytech/polkadot
@@ -43,4 +43,4 @@ jobs:
       - name: Scan the Polkadot repo
         run: |
           yarn run main -- scan --log-level debug ../polkadot
-        working_directory: license-scanner
+        working-directory: license-scanner
