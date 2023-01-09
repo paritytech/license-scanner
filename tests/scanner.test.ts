@@ -70,7 +70,7 @@ describe("Scanner tests", () => {
     const output = await performScan("crate-with-dependencies");
     expect(output["async-trait-0.1.61 file: Cargo.toml"]?.license).to.equal("MIT OR Apache-2.0");
     expect(output["futures-0.4.0-alpha.0 file: Cargo.toml"]?.license).to.equal("MIT OR Apache-2.0");
-  }).timeout(50_000); // High timeout because it downloads the crates from the Internet.
+  }).timeout(0); // Unpredictable time because it downloads the crates from the Internet.
 
   describe("ensure license", () => {
     it("works when file properly licensed", async () => {
