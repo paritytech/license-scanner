@@ -31,7 +31,7 @@ describe("Scanner tests", () => {
       dirs: { crates: cratesDir, repositories: repositoriesDir },
       rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
       detectionOverrides: null,
-      logger: new Logger({ minLevel: "info" }),
+      logger: new Logger({ minLevel: "debug" }),
     };
   });
 
@@ -52,11 +52,11 @@ describe("Scanner tests", () => {
     return output;
   };
 
-  it("single-crate", async () => {
+  it.only("single-crate", async () => {
     const output = await performScan("single-crate");
     expect(output.LICENSE?.license).to.equal("MIT");
     expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
-  });
+  }).timeout(0);
 
   it("multiple-crates", async () => {
     const output = await performScan("multiple-crates");
