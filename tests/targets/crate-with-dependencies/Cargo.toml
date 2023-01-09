@@ -1,0 +1,10 @@
+[package]
+name = "crate-with-dependencies"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+async-trait = "0.1.57"
+futures = { git = "https://github.com/rust-lang/futures-rs", rev = "0f83c20103d6f4af661307f2a88eea5ce10697f9" }
