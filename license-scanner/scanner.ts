@@ -127,6 +127,7 @@ export const scan = async function (options: ScanOptions) {
     detectionOverrides,
     tracker,
     logger,
+    ensureLicenses
   } = options;
 
   toNextFile: for await (const file of walkFiles(root)) {

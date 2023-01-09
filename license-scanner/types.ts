@@ -66,6 +66,12 @@ export type ScanOptions = {
   detectionOverrides: DetectionOverride[] | null;
   meta?: ScanResultItemMetadata;
   logger: Logger;
+  /**
+   * If true, the scan will make sure that all source files have some license detected.
+   * If set to a specific license(s), the scan will make sure that
+   * all source files have one of those licenses detected.
+   */
+  ensureLicenses?: boolean | string[]
 };
 
 export type LicenseInput = {
@@ -133,6 +139,7 @@ export class ScanCliArgs {
       startLinesExcludes: string[] | null;
       detectionOverrides: DetectionOverride[] | null;
       logLevel: LogLevel;
+      ensureLicenses: boolean | string[]
     },
   ) {}
 }
