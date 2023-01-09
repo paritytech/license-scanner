@@ -18,8 +18,8 @@ jobs:
           version: 14.21.0
       - name: Install prerequisites
         run: |
-          apt-get update
-          apt-get install -y binutils
+          sudo apt-get update
+          sudo apt-get install -y binutils
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn typecheck
