@@ -66,7 +66,7 @@ describe("Scanner tests", () => {
     expect(output["second-crate/src/main.rs"]?.license).to.equal("GPL-3.0-or-later");
   });
 
-  describe("ensure license", async () => {
+  describe("ensure license", () => {
     it("works when file properly licensed", async () => {
       const output = await performScan("required-license/src/licensed", { ensureLicenses: ["Apache-2.0"] });
       expect(output["main.rs"]?.license).to.equal("Apache-2.0");
