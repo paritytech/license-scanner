@@ -26,8 +26,14 @@ export const parseScanArgs = async function (args: string[]) {
   let startLinesExcludes: string[] | null = null;
   let detectionOverrides: DetectionOverride[] | null = null;
   let logLevel: LogLevel = "info";
+  let ensureLicenses: boolean | string[] = false;
 
-  let nextState: "read startLinesExcludes" | "read detectionOverrides" | "read logLevel" | null = null;
+  let nextState:
+    | "read startLinesExcludes"
+    | "read detectionOverrides"
+    | "read logLevel"
+    | "read ensureLicenses"
+    | null = null;
 
   while (true) {
     const arg = args.shift();
@@ -102,6 +108,20 @@ export const parseScanArgs = async function (args: string[]) {
         detectionOverrides = overrides;
         break;
       }
+      case "read ensureLicenses": {
+        nextState = null;
+
+        if (["true", "True"].includes(arg)) {
+          ensureLicenses = true;
+        } else if (["false", "False"].includes(arg)) {
+          ensureLicenses = false;
+        } else if (typeof ensureLicenses === "boolean") {
+          ensureLicenses = [arg];
+        } else {
+          ensureLicenses.push(arg);
+        }
+        break;
+      }
       case null: {
         const argIsOption = function (optionName: string) {
           return arg === `-${optionName}` || arg === `-${optionName}=`;
@@ -112,6 +132,8 @@ export const parseScanArgs = async function (args: string[]) {
           nextState = "read detectionOverrides";
         } else if (argIsOption("-log-level")) {
           nextState = "read logLevel";
+        } else if (argIsOption("-ensure-licenses")) {
+          nextState = "read ensureLicenses";
         } else if (scanRoot) {
           throw new Error("scanRoot might only be specified once");
         } else {
@@ -135,11 +157,12 @@ export const parseScanArgs = async function (args: string[]) {
     startLinesExcludes,
     detectionOverrides,
     logLevel,
+    ensureLicenses,
   });
 };
 
 export const executeScanArgs = async function ({
-  args: { scanRoot, startLinesExcludes, detectionOverrides, logLevel },
+  args: { scanRoot, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses },
 }: ScanCliArgs) {
   const licenses = await loadLicensesNormalized(joinPath(projectRoot, "..", "licenses"), {
     aliases: licenseAliases,
@@ -165,6 +188,7 @@ export const executeScanArgs = async function ({
       tracker: new ScanTracker(),
       detectionOverrides: detectionOverrides ?? null,
       logger: new Logger({ minLevel: logLevel }),
+      ensureLicenses,
     });
   } else if (fileMetadata.isFile()) {
     console.log(await matchLicense(scanRoot));

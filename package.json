@@ -12,10 +12,12 @@
   ],
   "devDependencies": {
     "@types/chai": "^4.3.4",
+    "@types/chai-as-promised": "^7.1.5",
     "@types/mocha": "^10.0.1",
     "@types/tar": "^4.0.5",
     "@types/tmp": "^0.2.1",
     "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
     "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d"
   },

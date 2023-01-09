@@ -2,6 +2,7 @@ import assert from "assert";
 import { dirname, join as joinPath, relative as relativePath } from "path";
 
 import { getOrDownloadCrate, getVersionedCrateName } from "./crate";
+import { ensureLicensesInResult } from "./license";
 import { getOrDownloadRepository } from "./repository";
 import { scanQueue, scanQueueSize } from "./synchronization";
 import {
@@ -127,6 +128,7 @@ export const scan = async function (options: ScanOptions) {
     detectionOverrides,
     tracker,
     logger,
+    ensureLicenses = false,
   } = options;
 
   toNextFile: for await (const file of walkFiles(root)) {
@@ -166,6 +168,7 @@ export const scan = async function (options: ScanOptions) {
 
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
+      ensureLicensesInResult(key, result, ensureLicenses);
       if (result === undefined) {
         return;
       }

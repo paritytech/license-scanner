@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import { promisify } from "util";
 
-import { License, LicenseInput } from "./types";
+import { License, LicenseInput, ScanResultItem } from "./types";
 import { isBinaryFile, loadFiles } from "./utils";
 
 const openAsync = promisify(fs.open);
@@ -272,4 +272,30 @@ export const getLicenseMatcher = function (licenses: License[], startLinesExclud
       };
     }
   };
+};
+
+export const ensureLicensesInResult = function (
+  key: string,
+  result: ScanResultItem | undefined,
+  ensureLicenses: boolean | string[],
+) {
+  if (ensureLicenses === false) return;
+  if (result === undefined) {
+    throw new Error(`Ensuring files have license failed: No license detected in ${key}`);
+  }
+
+  if ("description" in result) {
+    throw new Error(`Ensuring files have license failed: ${key} resulted in: ${result.description}`);
+  }
+
+  /* At this point, the file has some license detected.
+     If specific licenses are required, check that the detected is one of them */
+  if (typeof ensureLicenses !== "object") return;
+  if (!ensureLicenses.includes(result.license)) {
+    throw new Error(
+      `Ensuring files have license failed: ${key} has ${result.license} license, expected one of: ${ensureLicenses.join(
+        ",",
+      )}`,
+    );
+  }
 };
