@@ -2,6 +2,7 @@ import assert from "assert";
 import { dirname, join as joinPath, relative as relativePath } from "path";
 
 import { getOrDownloadCrate, getVersionedCrateName } from "./crate";
+import { ensureLicensesInResult } from "./license";
 import { getOrDownloadRepository } from "./repository";
 import { scanQueue, scanQueueSize } from "./synchronization";
 import {
@@ -127,7 +128,7 @@ export const scan = async function (options: ScanOptions) {
     detectionOverrides,
     tracker,
     logger,
-    ensureLicenses,
+    ensureLicenses = false,
   } = options;
 
   toNextFile: for await (const file of walkFiles(root)) {
@@ -167,22 +168,9 @@ export const scan = async function (options: ScanOptions) {
 
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
+      ensureLicensesInResult(key, result, ensureLicenses);
       if (result === undefined) {
-        if (ensureLicenses !== false) {
-          throw new Error(`Ensuring files have license failed: No license detected in ${key}`);
-        }
         return;
-      }
-      if (typeof ensureLicenses === "object") {
-        if ("license" in result) {
-          if (!ensureLicenses.includes(result.license)) {
-            throw new Error(
-              `Ensuring files have license failed: ${key} has ${
-                result.license
-              } license, expected one of: ${ensureLicenses.join(",")}`,
-            );
-          }
-        } else throw new Error(`Ensuring files have license failed: ${key} resulted in: ${result.description}`);
       }
       await saveResult(initialRoot, key, { ...result, meta: Object.assign({}, meta, result.meta) });
     });

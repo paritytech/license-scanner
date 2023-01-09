@@ -76,11 +76,21 @@ describe("Scanner tests", () => {
       await expect(
         performScan("required-license/src/not-licensed", { ensureLicenses: ["Apache-2.0"] }),
       ).to.eventually.be.rejectedWith("Ensuring files have license failed: No license detected in main.rs");
+
+      await expect(
+        performScan("required-license/src/not-licensed", { ensureLicenses: true }),
+      ).to.eventually.be.rejectedWith("Ensuring files have license failed: No license detected in main.rs");
     });
 
     it("throws when file copyrighted but not licensed", async () => {
       await expect(
         performScan("required-license/src/copyrighted", { ensureLicenses: ["Apache-2.0"] }),
+      ).to.eventually.be.rejectedWith(
+        'Ensuring files have license failed: main.rs resulted in: Flagged because "copyright" was found somewhere within this file, but no licenses were detected',
+      );
+
+      await expect(
+        performScan("required-license/src/copyrighted", { ensureLicenses: true }),
       ).to.eventually.be.rejectedWith(
         'Ensuring files have license failed: main.rs resulted in: Flagged because "copyright" was found somewhere within this file, but no licenses were detected',
       );
@@ -92,6 +102,9 @@ describe("Scanner tests", () => {
       ).to.eventually.be.rejectedWith(
         "Ensuring files have license failed: main.rs has MIT license, expected one of: Apache-2.0",
       );
+
+      const output = await performScan("required-license/src/licensed-differently", { ensureLicenses: true });
+      expect(output["main.rs"]?.license).to.equal("MIT");
     });
   });
 });
