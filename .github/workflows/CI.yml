@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.3.0
       - name: Setup Node.js for use with actions
         uses: actions/setup-node@v3.5.1
         with:
@@ -32,7 +32,7 @@ jobs:
         with:
           version: 14.21.0
       - run: yarn install --frozen-lockfile
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.3.0
         with:
           repository: paritytech/polkadot
           ref: '1c935f35139f3f43cb22009dc5c010dfbe6ad9e7'
