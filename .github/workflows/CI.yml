@@ -20,4 +20,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn typecheck
+      - name: Warm up Rust
+        run: cargo run --release
+        working-directory: tests/targets/single-crate
       - run: yarn test
