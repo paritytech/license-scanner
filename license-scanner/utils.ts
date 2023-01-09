@@ -1,10 +1,10 @@
 import cp from "child_process";
+import { open as openElf } from "elfinfo";
 import fs from "fs";
 import fetch from "node-fetch";
 import path from "path";
 import stream from "stream";
 import { promisify } from "util";
-import { open as openElf } from 'elfinfo';
 
 const streamPipelineAsync = promisify(stream.pipeline);
 export const readFileAsync = promisify(fs.readFile);
@@ -82,8 +82,8 @@ export const execute = function (cmd: string, args: string[], options: Omit<cp.S
 };
 
 export const isBinaryFile = async function (file: string) {
-  const fileData = await fs.promises.open(file, "r")
-  const elfData = await openElf(fileData)
-  await fileData.close()
-  return elfData.success
+  const fileData = await fs.promises.open(file, "r");
+  const elfData = await openElf(fileData);
+  await fileData.close();
+  return elfData.success;
 };
