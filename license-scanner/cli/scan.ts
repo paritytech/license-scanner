@@ -26,9 +26,14 @@ export const parseScanArgs = async function (args: string[]) {
   let startLinesExcludes: string[] | null = null;
   let detectionOverrides: DetectionOverride[] | null = null;
   let logLevel: LogLevel = "info";
-  let ensureLicenses: boolean | string[] = false
+  let ensureLicenses: boolean | string[] = false;
 
-  let nextState: "read startLinesExcludes" | "read detectionOverrides" | "read logLevel" | "read ensureLicenses" | null = null;
+  let nextState:
+    | "read startLinesExcludes"
+    | "read detectionOverrides"
+    | "read logLevel"
+    | "read ensureLicenses"
+    | null = null;
 
   while (true) {
     const arg = args.shift();
@@ -107,13 +112,13 @@ export const parseScanArgs = async function (args: string[]) {
         nextState = null;
 
         if (["true", "True"].includes(arg)) {
-          ensureLicenses = true
+          ensureLicenses = true;
         } else if (["false", "False"].includes(arg)) {
-          ensureLicenses = false
+          ensureLicenses = false;
         } else if (typeof ensureLicenses === "boolean") {
-          ensureLicenses = [arg]
+          ensureLicenses = [arg];
         } else {
-          ensureLicenses.push(arg)
+          ensureLicenses.push(arg);
         }
         break;
       }
@@ -128,7 +133,7 @@ export const parseScanArgs = async function (args: string[]) {
         } else if (argIsOption("-log-level")) {
           nextState = "read logLevel";
         } else if (argIsOption("-ensure-licenses")) {
-          nextState = "read ensureLicenses"
+          nextState = "read ensureLicenses";
         } else if (scanRoot) {
           throw new Error("scanRoot might only be specified once");
         } else {
@@ -152,7 +157,7 @@ export const parseScanArgs = async function (args: string[]) {
     startLinesExcludes,
     detectionOverrides,
     logLevel,
-    ensureLicenses
+    ensureLicenses,
   });
 };
 
@@ -183,7 +188,7 @@ export const executeScanArgs = async function ({
       tracker: new ScanTracker(),
       detectionOverrides: detectionOverrides ?? null,
       logger: new Logger({ minLevel: logLevel }),
-      ensureLicenses
+      ensureLicenses,
     });
   } else if (fileMetadata.isFile()) {
     console.log(await matchLicense(scanRoot));
