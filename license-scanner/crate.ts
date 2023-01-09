@@ -4,7 +4,7 @@ import tar from "tar";
 import { Logger } from "./logger";
 import { downloadMutex } from "./synchronization";
 import { Crate, CratesIoCrate } from "./types";
-import { download, existsAsync, unlinkAsync } from "./utils";
+import { download, ensureDir, existsAsync, unlinkAsync } from "./utils";
 
 export const getVersionedCrateName = function ({ name, version }: Pick<Crate, "name" | "version">) {
   return `${name}-${version}`;
@@ -40,6 +40,7 @@ const fetchCrate = async function (crate: CratesIoCrate, destination: string, lo
 };
 
 export const getOrDownloadCrate = async function (cratesDir: string, crate: CratesIoCrate, logger: Logger) {
+  await ensureDir(cratesDir);
   const cratePath = joinPath(cratesDir, getVersionedCrateName(crate.base));
 
   if (!(await existsAsync(cratePath))) {
