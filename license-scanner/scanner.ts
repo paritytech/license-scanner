@@ -180,7 +180,7 @@ export const scan = async function (options: ScanOptions) {
   if (rust !== null) {
     const rootCargoToml = joinPath(root, "Cargo.toml");
     if (await existsAsync(rootCargoToml)) {
-      scanCrates(rust, options);
+      await scanCrates(rust, options);
     }
   }
 

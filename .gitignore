@@ -2,3 +2,4 @@ node_modules
 db.json
 rust-crate-scanner/target
 data
+tests/targets/**/target

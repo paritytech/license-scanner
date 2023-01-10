@@ -66,6 +66,12 @@ describe("Scanner tests", () => {
     expect(output["second-crate/src/main.rs"]?.license).to.equal("GPL-3.0-or-later");
   });
 
+  it("create-with-dependencies", async () => {
+    const output = await performScan("crate-with-dependencies");
+    expect(output["async-trait-0.1.61 file: Cargo.toml"]?.license).to.equal("MIT OR Apache-2.0");
+    expect(output["futures-0.4.0-alpha.0 file: Cargo.toml"]?.license).to.equal("MIT OR Apache-2.0");
+  }).timeout(120_000); // Takes some time because it downloads the crates from the Internet.
+
   describe("ensure license", () => {
     it("works when file properly licensed", async () => {
       const output = await performScan("required-license/src/licensed", { ensureLicenses: ["Apache-2.0"] });
