@@ -3,3 +3,4 @@ db.json
 rust-crate-scanner/target
 data
 build
+tests/targets/**/target

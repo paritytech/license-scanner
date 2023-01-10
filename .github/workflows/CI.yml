@@ -15,10 +15,12 @@ jobs:
       - name: Setup Node.js for use with actions
         uses: actions/setup-node@v3.5.1
         with:
-          version: 16.19.0
+          version: 14.21.0
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn build
+      - run: cargo build --release
+        working-directory: rust-crate-scanner
       - run: yarn test
   profiling:
     timeout-minutes: 10
@@ -31,7 +33,7 @@ jobs:
       - name: Setup Node.js for use with actions
         uses: actions/setup-node@v3.5.1
         with:
-          version: 16.19.0
+          version: 14.21.0
       - uses: actions/checkout@v3.3.0
         with:
           repository: paritytech/polkadot
@@ -43,7 +45,7 @@ jobs:
         working-directory: license-scanner
       - name: Scan the Polkadot repo
         run: |
-          yarn start -- scan --log-level debug ../polkadot/node
+          yarn run main -- scan --log-level debug ../polkadot/node
         working-directory: license-scanner
         # It should take a reasonable time to scan the node crate.
         timeout-minutes: 3
