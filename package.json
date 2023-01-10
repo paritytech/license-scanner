@@ -37,7 +37,7 @@
     "test": "mocha",
     "main": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
     "dev": "node --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts",
-    "debug": "NODE_OPTIONS='--inspect-brk' yarn run dev"
+    "debug": "node --inspect-brk --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts"
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
