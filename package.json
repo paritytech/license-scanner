@@ -20,7 +20,8 @@
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
-    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d"
+    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d",
+    "tsc-alias": "^1.8.2"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
