@@ -17,9 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "types": ["node", "mocha"],
     "paths": {
-      "license-scanner/*": [
-        "./license-scanner/*"
-      ]
+      "license-scanner/*": ["./license-scanner/*"]
     },
     "plugins": [
       {
