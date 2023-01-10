@@ -38,8 +38,7 @@
     "fix:prettier": "yarn run prettier -- --write",
     "fix": "yarn run fix:eslint && yarn run fix:prettier",
     "test": "mocha",
-    "dev": "node --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts",
-    "debug": "NODE_OPTIONS='--inspect-brk' yarn run main"
+    "debug": "NODE_OPTIONS='--inspect-brk' yarn run start"
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
