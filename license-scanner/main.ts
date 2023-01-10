@@ -37,4 +37,4 @@ const main = async function () {
   }
 };
 
-main();
+await main();
