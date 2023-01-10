@@ -33,7 +33,7 @@
     "fix": "yarn run fix:eslint && yarn run fix:prettier",
     "test": "mocha",
     "main": "node --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts",
-    "debug": "node --inspect-brk --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts"
+    "debug": "NODE_OPTIONS='--inspect-brk' yarn run main"
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
