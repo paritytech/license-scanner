@@ -20,12 +20,12 @@
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
-    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d",
-    "tsc-alias": "^1.8.2"
+    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "rm -rf build && tsc && tsc-alias",
+    "start": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
     "prettier": "prettier '{*,**/*}.json'",
     "eslint": "eslint '{*,**/*}.{js,ts}'",
     "lint": "yarn run lint:eslint && yarn run lint:prettier",
@@ -35,9 +35,8 @@
     "fix:prettier": "yarn run prettier -- --write",
     "fix": "yarn run fix:eslint && yarn run fix:prettier",
     "test": "mocha",
-    "main": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
     "dev": "node --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts",
-    "debug": "node --inspect-brk --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts"
+    "debug": "NODE_OPTIONS='--inspect-brk' yarn run main"
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
