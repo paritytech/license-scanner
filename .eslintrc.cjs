@@ -15,7 +15,6 @@ module.exports = {
       files: "{*,**,**/*}.{ts,tsx}",
       rules: {
         ...tsConfOverride.rules,
-        "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-unsafe-call": "off",
