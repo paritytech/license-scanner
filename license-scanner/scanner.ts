@@ -42,7 +42,7 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
 
   if (project.license !== null && project.license !== undefined) {
     assert(typeof project.license === "string");
-    saveResult(initialRoot, transformItemKey("Cargo.toml"), { license: project.license });
+    await saveResult(initialRoot, transformItemKey("Cargo.toml"), { license: project.license });
   }
 
   for (const { source, ...subCrate } of project.crates ?? []) {
