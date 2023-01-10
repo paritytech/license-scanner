@@ -43,7 +43,7 @@ jobs:
         working-directory: license-scanner
       - name: Scan the Polkadot repo
         run: |
-          yarn run main -- scan --log-level debug ../polkadot/node
+          yarn start -- scan --log-level debug ../polkadot/node
         working-directory: license-scanner
         # It should take a reasonable time to scan the node crate.
         timeout-minutes: 3
