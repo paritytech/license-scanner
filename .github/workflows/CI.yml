@@ -18,7 +18,7 @@ jobs:
           version: 16.19.0
       - run: yarn install --frozen-lockfile
       - run: yarn lint
-      - run: yarn typecheck
+      - run: yarn build
       - run: yarn test
   profiling:
     timeout-minutes: 10
@@ -39,6 +39,7 @@ jobs:
           path: polkadot
       - run: yarn install --frozen-lockfile
         working-directory: license-scanner
+      - run: yarn build
       - name: Scan the Polkadot repo
         run: |
           yarn run main -- scan --log-level debug ../polkadot/node
