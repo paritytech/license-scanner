@@ -56,6 +56,7 @@ Requirements:
 
 ```bash
 yarn install
+yarn build
 
 # use `scan` for scanning
 yarn run main -- scan /directory/or/file

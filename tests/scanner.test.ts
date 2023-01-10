@@ -22,7 +22,7 @@ describe("Scanner tests", () => {
   const targetsRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "./targets");
 
   before(async () => {
-    const licenses = await loadLicensesNormalized(joinPath(projectRoot, "..", "licenses"), {
+    const licenses = await loadLicensesNormalized(joinPath(projectRoot, "licenses"), {
       aliases: licenseAliases,
       extraLicenses,
     });

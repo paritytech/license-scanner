@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js for use with actions
         uses: actions/setup-node@v3.5.1
         with:
-          version: 14.21.0
+          version: 16.19.0
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn typecheck
@@ -31,7 +31,7 @@ jobs:
       - name: Setup Node.js for use with actions
         uses: actions/setup-node@v3.5.1
         with:
-          version: 14.21.0
+          version: 16.19.0
       - uses: actions/checkout@v3.3.0
         with:
           repository: paritytech/polkadot
