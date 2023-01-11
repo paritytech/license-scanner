@@ -37,7 +37,7 @@
     "fix:eslint": "yarn run eslint -- --fix",
     "fix:prettier": "yarn run prettier -- --write",
     "fix": "yarn run fix:eslint && yarn run fix:prettier",
-    "test": "mocha",
+    "test": "yarn build --sourceMap && mocha",
     "debug": "NODE_OPTIONS='--inspect-brk' yarn run start"
   },
   "dependencies": {
