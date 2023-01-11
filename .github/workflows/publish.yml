@@ -26,7 +26,7 @@ jobs:
       packages: write 
     needs: [tag]
     # important, only triggers if tag was created
-    if: needs.tag.outputs.tagcreated == 'true'
+    if: needs.tag.outputs.tagcreated == 'yes'
     steps:
       - uses: actions/checkout@v3
       # Setup .npmrc file to publish to GitHub Packages
