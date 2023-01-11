@@ -116,5 +116,16 @@ describe("Scanner tests", () => {
       const output = await performScan("required-license/src/licensed-differently", { ensureLicenses: true });
       expect(output["main.rs"]?.license).to.equal("MIT");
     });
+
+    it("throws when file licensed differently, targeting a single file", async () => {
+      await expect(
+        performScan("required-license/src/licensed-differently/main.rs", { ensureLicenses: ["Apache-2.0"] }),
+      ).to.eventually.be.rejectedWith(
+        "Ensuring files have license failed: main.rs has MIT license, expected one of: Apache-2.0",
+      );
+
+      const output = await performScan("required-license/src/licensed-differently/main.rs", { ensureLicenses: true });
+      expect(output[""]?.license).to.equal("MIT");
+    });
   });
 });
