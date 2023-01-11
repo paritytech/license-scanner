@@ -17,6 +17,11 @@ export const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
 export const walkFiles: (dir: string) => AsyncGenerator<{ path: string; name: string }> = async function* (dir) {
+  if ((await lstatAsync(dir)).isFile()) {
+    yield { path: dir, name: path.basename(dir) };
+    return;
+  }
+
   for await (const d of await fs.promises.opendir(dir)) {
     const fullPath = path.join(dir, d.name);
     if (d.isDirectory()) {

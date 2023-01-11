@@ -57,6 +57,11 @@ describe("Scanner tests", () => {
     expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
   });
 
+  it("single-crate, targeting a single file", async () => {
+    const output = await performScan("single-crate/src/main.rs");
+    expect(output[""]?.license).to.equal("Apache-2.0");
+  });
+
   it("multiple-crates", async () => {
     const output = await performScan("multiple-crates");
     expect(output["first-crate/LICENSE"]?.license).to.equal("MIT");

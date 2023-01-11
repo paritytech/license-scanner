@@ -176,24 +176,21 @@ export const executeScanArgs = async function ({
   const matchLicense = getLicenseMatcher(licenses, startLinesExcludes ?? undefined);
 
   const fileMetadata = await lstatAsync(scanRoot);
-
-  if (fileMetadata.isDirectory()) {
-    await scan({
-      saveResult: saveScanResultItem,
-      matchLicense,
-      root: scanRoot,
-      initialRoot: scanRoot,
-      dirs: { crates: cratesDir, repositories: repositoriesDir },
-      rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
-      tracker: new ScanTracker(),
-      detectionOverrides: detectionOverrides ?? null,
-      logger: new Logger({ minLevel: logLevel }),
-      ensureLicenses,
-    });
-  } else if (fileMetadata.isFile()) {
-    console.log(await matchLicense(scanRoot));
-  } else {
+  if (!fileMetadata.isDirectory() && !fileMetadata.isFile()) {
     console.error(`ERROR: Scan target "${scanRoot}" is not a file or a directory`);
     process.exit(1);
   }
+
+  await scan({
+    saveResult: saveScanResultItem,
+    matchLicense,
+    root: scanRoot,
+    initialRoot: scanRoot,
+    dirs: { crates: cratesDir, repositories: repositoriesDir },
+    rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
+    tracker: new ScanTracker(),
+    detectionOverrides: detectionOverrides ?? null,
+    logger: new Logger({ minLevel: logLevel }),
+    ensureLicenses,
+  });
 };
