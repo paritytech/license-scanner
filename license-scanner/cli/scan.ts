@@ -164,12 +164,12 @@ export const parseScanArgs = async function (args: string[]) {
 export const executeScanArgs = async function ({
   args: { scanRoot, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses },
 }: ScanCliArgs) {
-  const licenses = await loadLicensesNormalized(joinPath(projectRoot, "..", "licenses"), {
+  const licenses = await loadLicensesNormalized(joinPath(projectRoot, "licenses"), {
     aliases: licenseAliases,
     extraLicenses,
   });
 
-  const dbPath = joinPath(projectRoot, "..", "db.json");
+  const dbPath = joinPath(projectRoot, "db.json");
   const db = await ensureDatabase(dbPath);
   const saveScanResultItem = getSaveScanResultItem(db);
 

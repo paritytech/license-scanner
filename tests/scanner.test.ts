@@ -12,17 +12,16 @@ import { getLicenseMatcher, loadLicensesNormalized } from "license-scanner/licen
 import { Logger } from "license-scanner/logger";
 import { scan } from "license-scanner/scanner";
 import { ScanOptions, ScanTracker } from "license-scanner/types";
-import path, { join as joinPath } from "path";
-import { fileURLToPath } from "url";
+import path from "path";
 
 chai.use(chaiAsPromised);
 
 describe("Scanner tests", () => {
   let commonScanOptions: Omit<ScanOptions, "root" | "initialRoot" | "saveResult" | "tracker">;
-  const targetsRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "./targets");
+  const targetsRoot = path.join(projectRoot, "tests/targets");
 
   before(async () => {
-    const licenses = await loadLicensesNormalized(joinPath(projectRoot, "..", "licenses"), {
+    const licenses = await loadLicensesNormalized(path.join(projectRoot, "licenses"), {
       aliases: licenseAliases,
       extraLicenses,
     });

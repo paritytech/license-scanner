@@ -56,12 +56,13 @@ Requirements:
 
 ```bash
 yarn install
+yarn build
 
 # use `scan` for scanning
-yarn run main -- scan /directory/or/file
+yarn start -- scan /directory/or/file
 
 # after the scan is complete, optionally dump it to CSV
-yarn run main -- dump csv /directory/or/file /output.csv
+yarn start -- dump csv /directory/or/file /output.csv
 ```
 
 If a single file is provided, the scan will be performed exclusively for that
@@ -90,7 +91,7 @@ Consider the following directory structure:
 ├── Cargo.toml
 ```
 
-After scanning that directory with `yarn run main -- scan /directory`, a
+After scanning that directory with `yarn start -- scan /directory`, a
 `db.json` file will be created in the root of this repository with the following
 structure:
 

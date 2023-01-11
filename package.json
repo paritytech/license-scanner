@@ -14,15 +14,21 @@
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/mocha": "^10.0.1",
+    "@types/node": "^16.18.11",
     "@types/tar": "^4.0.5",
     "@types/tmp": "^0.2.1",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
-    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d"
+    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d",
+    "ts-patch": "^2.1.0",
+    "typescript-transform-paths": "^3.4.6"
   },
   "scripts": {
+    "prepare": "ts-patch install -s",
     "typecheck": "tsc --noEmit",
+    "build": "rm -rf build && tsc",
+    "start": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
     "prettier": "prettier '{*,**/*}.json'",
     "eslint": "eslint '{*,**/*}.{js,ts}'",
     "lint": "yarn run lint:eslint && yarn run lint:prettier",
@@ -32,17 +38,15 @@
     "fix:prettier": "yarn run prettier -- --write",
     "fix": "yarn run fix:eslint && yarn run fix:prettier",
     "test": "mocha",
-    "main": "node --trace-warnings --es-module-specifier-resolution=node --loader ./loader.cjs ./license-scanner/main.ts",
-    "debug": "NODE_OPTIONS='--inspect-brk' yarn run main"
+    "debug": "NODE_OPTIONS='--inspect-brk' yarn run start"
   },
   "dependencies": {
     "async-mutex": "^0.3.2",
-    "node-fetch": "^3.2.10",
     "elfinfo": "^0.4.0-beta",
+    "node-fetch": "^3.2.10",
     "p-queue": "^7.1.0",
     "tar": "^6.1.11",
     "tmp": "^0.2.1",
-    "ts-node": "^10.3.0",
     "typescript": "^4.4.3"
   }
 }
