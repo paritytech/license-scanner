@@ -7,7 +7,7 @@ import {
   rustCrateScannerRoot,
 } from "license-scanner/constants";
 import { ensureDatabase, getSaveScanResultItem } from "license-scanner/db";
-import { getLicenseMatcher, loadLicensesNormalized } from "license-scanner/license";
+import {getLicenseMatcher, loadLicensesNormalized, throwLicensingErrors} from "license-scanner/license";
 import { Logger, LogLevel } from "license-scanner/logger";
 import { scan } from "license-scanner/scanner";
 import {
@@ -181,8 +181,9 @@ export const executeScanArgs = async function ({
     }
   }
 
+  const allLicensingErrors: Error[] = []
   for (const scanRoot of scanRoots) {
-    await scan({
+    const {licensingErrors} = await scan({
       saveResult: saveScanResultItem,
       matchLicense,
       root: scanRoot,
@@ -194,5 +195,7 @@ export const executeScanArgs = async function ({
       logger: new Logger({ minLevel: logLevel }),
       ensureLicenses,
     });
+    allLicensingErrors.push(...licensingErrors)
   }
+  throwLicensingErrors(allLicensingErrors)
 };

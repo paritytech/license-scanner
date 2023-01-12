@@ -276,23 +276,30 @@ export const getLicenseMatcher = function (licenses: License[], startLinesExclud
 
 export const ensureLicensesInResult = function (
   {file, result, ensureLicenses}: EnsureLicensesInResultOptions
-) {
+): Error | undefined {
   if (ensureLicenses === false) return;
   if (result === undefined) {
-    throw new Error(`Ensuring files have license failed: No license detected in ${file.name}`);
+    return new Error(`Ensuring files have license failed: No license detected in ${file.name}. Exact file path: "${file.path}"`);
   }
 
   if ("description" in result) {
-    throw new Error(`Ensuring files have license failed: ${file.name} resulted in: ${result.description}`);
+    return new Error(`Ensuring files have license failed: ${file.name} resulted in: ${result.description}. Exact file path: "${file.path}"`);
   }
 
   /* At this point, the file has some license detected.
      If specific licenses are required, check that the detected is one of them */
   if (typeof ensureLicenses !== "object") return;
   if (!ensureLicenses.includes(result.license)) {
-    throw new Error(
+    return new Error(
       `Ensuring files have license failed: ${file.name} has ${result.license} license` +
-        `, expected one of: ${ensureLicenses.join(",")}`,
+        `, expected one of: ${ensureLicenses.join(",")}. Exact file path: "${file.path}"`,
     );
   }
 };
+
+export const throwLicensingErrors = function (
+  licensingErrors: Error[]
+) {
+  if (licensingErrors.length === 1) return
+  throw new Error("todo")
+}
