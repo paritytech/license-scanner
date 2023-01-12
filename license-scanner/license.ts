@@ -300,7 +300,7 @@ export const ensureLicensesInResult = function ({
 };
 
 export const throwLicensingErrors = function (licensingErrors: Error[]) {
-  if (licensingErrors.length === 1) return;
+  if (licensingErrors.length === 0) return;
   throw new Error(
     "Encountered the following errors when enforcing licenses:\n" +
       licensingErrors.map((error) => error.message).join("\n"),
