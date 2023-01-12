@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import { promisify } from "util";
 
-import { EnsureLicensesInResultOptions, License, LicenseInput, ScanResultItem } from "./types";
+import { EnsureLicensesInResultOptions, License, LicenseInput } from "./types";
 import { isBinaryFile, loadFiles } from "./utils";
 
 const openAsync = promisify(fs.open);
@@ -274,16 +274,22 @@ export const getLicenseMatcher = function (licenses: License[], startLinesExclud
   };
 };
 
-export const ensureLicensesInResult = function (
-  {file, result, ensureLicenses}: EnsureLicensesInResultOptions
-): Error | undefined {
+export const ensureLicensesInResult = function ({
+  file,
+  result,
+  ensureLicenses,
+}: EnsureLicensesInResultOptions): Error | undefined {
   if (ensureLicenses === false) return;
   if (result === undefined) {
-    return new Error(`Ensuring files have license failed: No license detected in ${file.name}. Exact file path: "${file.path}"`);
+    return new Error(
+      `Ensuring files have license failed: No license detected in ${file.name}. Exact file path: "${file.path}"`,
+    );
   }
 
   if ("description" in result) {
-    return new Error(`Ensuring files have license failed: ${file.name} resulted in: ${result.description}. Exact file path: "${file.path}"`);
+    return new Error(
+      `Ensuring files have license failed: ${file.name} resulted in: ${result.description}. Exact file path: "${file.path}"`,
+    );
   }
 
   /* At this point, the file has some license detected.
@@ -297,9 +303,7 @@ export const ensureLicensesInResult = function (
   }
 };
 
-export const throwLicensingErrors = function (
-  licensingErrors: Error[]
-) {
-  if (licensingErrors.length === 1) return
-  throw new Error("todo")
-}
+export const throwLicensingErrors = function (licensingErrors: Error[]) {
+  if (licensingErrors.length === 1) return;
+  throw new Error("todo");
+};
