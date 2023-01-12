@@ -17,7 +17,7 @@ import {
   ScanResult,
   UnexpectedCrateSourceError,
 } from "./types";
-import {execute, existsAsync, readFileAsync, shouldExclude, walkFiles} from "./utils";
+import { execute, existsAsync, readFileAsync, shouldExclude, walkFiles } from "./utils";
 
 const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOptions, "rust">) {
   const {
@@ -136,10 +136,10 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
   } = options;
 
   const licensingErrors: Error[] = [];
-  toNextFile: for await (const file of walkFiles(root)) {
+  toNextFile: for await (const file of walkFiles(root, { excluding: { initialRoot, exclude } })) {
     const key = transformItemKey(relativePath(root, file.path));
-    if (shouldExclude({file, initialRoot, exclude})) {
-      logger.debug(`Excluding file ${file.path}`)
+    if (shouldExclude({ targetPath: file.path, initialRoot, exclude })) {
+      logger.debug(`Excluding file ${file.path}`);
       continue toNextFile;
     }
     tracker.setFileKey(file.path, key);

@@ -16,16 +16,23 @@ export const lstatAsync = promisify(fs.lstat);
 export const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
-export const walkFiles: (dir: string) => AsyncGenerator<{ path: string; name: string }> = async function* (dir) {
+export const walkFiles: (
+  dir: string,
+  options?: {
+    excluding?: { initialRoot: string; exclude: string[] };
+  },
+) => AsyncGenerator<{ path: string; name: string }> = async function* (dir, { excluding } = {}) {
   if ((await lstatAsync(dir)).isFile()) {
+    if (excluding && shouldExclude({ targetPath: dir, ...excluding })) return;
     yield { path: dir, name: path.basename(dir) };
     return;
   }
 
   for await (const d of await fs.promises.opendir(dir)) {
     const fullPath = path.join(dir, d.name);
+    if (excluding && shouldExclude({ targetPath: fullPath, ...excluding })) continue;
     if (d.isDirectory()) {
-      yield* walkFiles(fullPath);
+      yield* walkFiles(fullPath, { excluding });
     } else {
       yield { path: fullPath, name: d.name };
     }
@@ -72,12 +79,12 @@ export const download = async function (url: string, targetPath: string) {
 };
 
 export const execute = function (cmd: string, args: string[], options: Omit<cp.SpawnOptions, "stdio">) {
-  return new Promise<{stdout: string, stderr: string}>((resolve) => {
+  return new Promise<{ stdout: string; stderr: string }>((resolve) => {
     const child = cp.spawn(cmd, args, { ...options, stdio: "pipe" });
 
-    let stderrBuf = ""
+    let stderrBuf = "";
     child.stderr.on("data", (data) => {
-      stderrBuf += data.toString()
+      stderrBuf += data.toString();
     });
 
     let stdoutBuf = "";
@@ -86,7 +93,7 @@ export const execute = function (cmd: string, args: string[], options: Omit<cp.S
     });
 
     child.on("close", () => {
-      resolve({stdout: stdoutBuf.trim(), stderr: stderrBuf.trim()});
+      resolve({ stdout: stdoutBuf.trim(), stderr: stderrBuf.trim() });
     });
   });
 };
@@ -98,17 +105,13 @@ export const isBinaryFile = async function (file: string) {
   return elfData.success;
 };
 
-export function shouldExclude(options: {
-  file: { path: string; name: string },
-  initialRoot: string,
-  exclude: string[]
-}) {
-  const {file, initialRoot, exclude} = options
+export function shouldExclude(options: { targetPath: string; initialRoot: string; exclude: string[] }) {
+  const { targetPath, initialRoot, exclude } = options;
   for (const excl of exclude) {
     // Relative exclude:
-    if (file.path === path.join(initialRoot, excl)) return true
+    if (targetPath === path.join(initialRoot, excl)) return true;
     // Absolute exclude:
-    if (file.path === excl) return true
+    if (targetPath === excl) return true;
   }
   return false;
 }

@@ -52,14 +52,14 @@ export class ScanTracker {
 }
 
 export type ScanResult = {
-  licensingErrors: Error[]
-}
+  licensingErrors: Error[];
+};
 
 export type ScanOptions = {
   saveResult: (projectId: string, filePathFromRoot: string, result: ScanResultItem) => Promise<void>;
   root: string;
   initialRoot: string;
-  exclude: string[]
+  exclude: string[];
   dirs: {
     repositories: string;
     crates: string;
@@ -93,10 +93,10 @@ export type License = Omit<LicenseInput, "text"> & {
 };
 
 export type EnsureLicensesInResultOptions = {
-  file: { path: string; name: string },
-  result: ScanResultItem | undefined,
-  ensureLicenses: boolean | string[],
-}
+  file: { path: string; name: string };
+  result: ScanResultItem | undefined;
+  ensureLicenses: boolean | string[];
+};
 
 export class DatabaseSaveError extends Error {
   constructor(public item: unknown) {
@@ -147,6 +147,7 @@ export class ScanCliArgs {
   constructor(
     public args: {
       scanRoots: string[];
+      exclude: string[];
       startLinesExcludes: string[] | null;
       detectionOverrides: DetectionOverride[] | null;
       logLevel: LogLevel;
