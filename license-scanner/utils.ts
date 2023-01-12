@@ -72,8 +72,13 @@ export const download = async function (url: string, targetPath: string) {
 };
 
 export const execute = function (cmd: string, args: string[], options: Omit<cp.SpawnOptions, "stdio">) {
-  return new Promise<string>((resolve) => {
+  return new Promise<{stdout: string, stderr: string}>((resolve) => {
     const child = cp.spawn(cmd, args, { ...options, stdio: "pipe" });
+
+    let stderrBuf = ""
+    child.stderr.on("data", (data) => {
+      stderrBuf += data.toString()
+    });
 
     let stdoutBuf = "";
     child.stdout.on("data", (data) => {
@@ -81,7 +86,7 @@ export const execute = function (cmd: string, args: string[], options: Omit<cp.S
     });
 
     child.on("close", () => {
-      resolve(stdoutBuf.trim());
+      resolve({stdout: stdoutBuf.trim(), stderr: stderrBuf.trim()});
     });
   });
 };

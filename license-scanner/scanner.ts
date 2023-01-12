@@ -34,7 +34,8 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
     execute(rust.cargoExecPath, ["run", "--release", root, String(rust.shouldCheckForCargoLock)], {
       cwd: rust.rustCrateScannerRoot,
     })
-      .then((stdout) => {
+      .then(({stdout, stderr}) => {
+        logger.debug(stderr)
         resolve(JSON.parse(stdout));
       })
       .catch(reject);
@@ -82,7 +83,8 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
           No such file or directory (os error 2)
       */
       execute(rust.cargoExecPath, ["metadata", "--format-version=1"], { cwd: cratePath })
-        .then((stdout) => {
+        .then(({stdout, stderr}) => {
+          logger.debug(stderr)
           if (stdout) {
             const cargoMeta: CargoMetadataOutputV1 = JSON.parse(stdout);
             for (const pkg of cargoMeta.packages) {
