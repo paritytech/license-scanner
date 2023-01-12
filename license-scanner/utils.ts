@@ -109,9 +109,11 @@ export function shouldExclude(options: { targetPath: string; initialRoot: string
   const { targetPath, initialRoot, exclude } = options;
   for (const excl of exclude) {
     // Relative exclude from target root:
-    if (targetPath === path.join(initialRoot, excl)) return true;
+    if (targetPath.includes(path.join(initialRoot, excl))) return true;
+
     // Relative exclude from CWD:
-    if (targetPath === path.resolve(excl)) return true;
+    if (targetPath.includes(path.resolve(excl))) return true;
+
     // Absolute exclude:
     if (targetPath === excl) return true;
   }

@@ -236,5 +236,16 @@ describe("Scanner tests", () => {
         expect(output["src/main.rs"]).to.be.undefined;
       }
     });
+
+    it("Can exclude a path above the target root", async () => {
+      {
+        // Exclude a relative path from target root.
+        const { output } = await performScan("single-crate", {
+          exclude: [targetsRoot]
+        });
+        expect(output).to.deep.equal({})
+      }
+    });
+
   });
 });
