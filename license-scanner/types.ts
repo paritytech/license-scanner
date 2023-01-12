@@ -88,7 +88,7 @@ export type License = Omit<LicenseInput, "text"> & {
 };
 
 export type EnsureLicensesInResultOptions = {
-  fileName: string,
+  file: { path: string; name: string },
   result: ScanResultItem | undefined,
   ensureLicenses: boolean | string[],
 }
