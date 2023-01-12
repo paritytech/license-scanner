@@ -18,7 +18,7 @@ import {
   ScanCliArgs,
   ScanTracker,
 } from "license-scanner/types";
-import { lstatAsync, readFileAsync } from "license-scanner/utils";
+import {lstatAsync, readFileAsync, shouldExclude} from "license-scanner/utils";
 import { dirname, join as joinPath, resolve as resolvePath } from "path";
 
 type NextState =
@@ -206,16 +206,15 @@ export const executeScanArgs = async function ({
 
   const matchLicense = getLicenseMatcher(licenses, startLinesExcludes ?? undefined);
 
+  const allLicensingErrors: Error[] = [];
+  const logger = new Logger({ minLevel: logLevel })
   for (const scanRoot of scanRoots) {
+    if (shouldExclude({targetPath: scanRoot, initialRoot: scanRoot, exclude})) continue
     const fileMetadata = await lstatAsync(scanRoot);
     if (!fileMetadata.isDirectory() && !fileMetadata.isFile()) {
       console.error(`ERROR: Scan target "${scanRoot}" is not a file or a directory`);
       process.exit(1);
     }
-  }
-
-  const allLicensingErrors: Error[] = [];
-  for (const scanRoot of scanRoots) {
     const { licensingErrors } = await scan({
       saveResult: saveScanResultItem,
       matchLicense,
@@ -226,7 +225,7 @@ export const executeScanArgs = async function ({
       rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
       tracker: new ScanTracker(),
       detectionOverrides: detectionOverrides ?? null,
-      logger: new Logger({ minLevel: logLevel }),
+      logger,
       ensureLicenses,
     });
     allLicensingErrors.push(...licensingErrors);
