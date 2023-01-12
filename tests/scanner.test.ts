@@ -174,16 +174,29 @@ describe("Scanner tests", () => {
   describe("excluding files", () => {
     it("Can exclude a file", async () => {
       {
+        // No exclude for comparison.
         const { output } = await performScan("single-crate");
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
       }
       {
-        const { output } = await performScan("single-crate", { exclude: ["src/main.rs"] });
+        // Exclude a relative path from target root.
+        const { output } = await performScan("single-crate", {
+          exclude: ["src/main.rs"]
+        });
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]).to.be.undefined;
       }
       {
+        // Exclude a relative path from CWD.
+        const { output } = await performScan("single-crate", {
+          exclude: ["./tests/targets/single-crate/src/main.rs"]
+        });
+        expect(output.LICENSE?.license).to.equal("MIT");
+        expect(output["src/main.rs"]).to.be.undefined;
+      }
+      {
+        // Exclude an absolute path.
         const { output } = await performScan("single-crate", {
           exclude: [path.join(targetsRoot, "single-crate/src/main.rs")],
         });
@@ -194,12 +207,24 @@ describe("Scanner tests", () => {
 
     it("Can exclude a directory", async () => {
       {
+        // No exclude for comparison.
         const { output } = await performScan("single-crate");
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
       }
       {
-        const { output } = await performScan("single-crate", { exclude: ["src"] });
+        // Exclude a relative path from target root.
+        const { output } = await performScan("single-crate", {
+          exclude: ["src"]
+        });
+        expect(output.LICENSE?.license).to.equal("MIT");
+        expect(output["src/main.rs"]).to.be.undefined;
+      }
+      {
+        // Exclude a relative path from CWD.
+        const { output } = await performScan("single-crate", {
+          exclude: ["./tests/targets/single-crate/src"]
+        });
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]).to.be.undefined;
       }
