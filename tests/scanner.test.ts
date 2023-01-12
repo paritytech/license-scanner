@@ -96,17 +96,13 @@ describe("Scanner tests", () => {
           ensureLicenses: ["Apache-2.0"],
         });
         expect(licensingErrors.length).to.eq(1);
-        expect(licensingErrors[0].toString()).to.include(
-          "No license detected in main.rs",
-        );
+        expect(licensingErrors[0].toString()).to.include("No license detected in main.rs");
       }
 
       {
         const { licensingErrors } = await performScan("required-license/src/not-licensed", { ensureLicenses: true });
         expect(licensingErrors.length).to.eq(1);
-        expect(licensingErrors[0].toString()).to.include(
-          "No license detected in main.rs",
-        );
+        expect(licensingErrors[0].toString()).to.include("No license detected in main.rs");
       }
     });
 
@@ -136,9 +132,7 @@ describe("Scanner tests", () => {
           ensureLicenses: ["Apache-2.0"],
         });
         expect(licensingErrors.length).to.eq(1);
-        expect(licensingErrors[0].toString()).to.include(
-          "main.rs has MIT license, expected one of: Apache-2.0",
-        );
+        expect(licensingErrors[0].toString()).to.include("main.rs has MIT license, expected one of: Apache-2.0");
       }
 
       {
@@ -156,9 +150,7 @@ describe("Scanner tests", () => {
           ensureLicenses: ["Apache-2.0"],
         });
         expect(licensingErrors.length).to.eq(1);
-        expect(licensingErrors[0].toString()).to.include(
-          "main.rs has MIT license, expected one of: Apache-2.0",
-        );
+        expect(licensingErrors[0].toString()).to.include("main.rs has MIT license, expected one of: Apache-2.0");
       }
 
       {
@@ -181,17 +173,13 @@ describe("Scanner tests", () => {
       }
       {
         // Exclude a relative path from target root.
-        const { output } = await performScan("single-crate", {
-          exclude: ["src/main.rs"]
-        });
+        const { output } = await performScan("single-crate", { exclude: ["src/main.rs"] });
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]).to.be.undefined;
       }
       {
         // Exclude a relative path from CWD.
-        const { output } = await performScan("single-crate", {
-          exclude: ["./tests/targets/single-crate/src/main.rs"]
-        });
+        const { output } = await performScan("single-crate", { exclude: ["./tests/targets/single-crate/src/main.rs"] });
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]).to.be.undefined;
       }
@@ -214,24 +202,18 @@ describe("Scanner tests", () => {
       }
       {
         // Exclude a relative path from target root.
-        const { output } = await performScan("single-crate", {
-          exclude: ["src"]
-        });
+        const { output } = await performScan("single-crate", { exclude: ["src"] });
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]).to.be.undefined;
       }
       {
         // Exclude a relative path from CWD.
-        const { output } = await performScan("single-crate", {
-          exclude: ["./tests/targets/single-crate/src"]
-        });
+        const { output } = await performScan("single-crate", { exclude: ["./tests/targets/single-crate/src"] });
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]).to.be.undefined;
       }
       {
-        const { output } = await performScan("single-crate", {
-          exclude: [path.join(targetsRoot, "single-crate/src")],
-        });
+        const { output } = await performScan("single-crate", { exclude: [path.join(targetsRoot, "single-crate/src")] });
         expect(output.LICENSE?.license).to.equal("MIT");
         expect(output["src/main.rs"]).to.be.undefined;
       }
@@ -240,12 +222,9 @@ describe("Scanner tests", () => {
     it("Can exclude a path above the target root", async () => {
       {
         // Exclude a relative path from target root.
-        const { output } = await performScan("single-crate", {
-          exclude: [targetsRoot]
-        });
-        expect(output).to.deep.equal({})
+        const { output } = await performScan("single-crate", { exclude: [targetsRoot] });
+        expect(output).to.deep.equal({});
       }
     });
-
   });
 });

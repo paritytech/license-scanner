@@ -281,15 +281,11 @@ export const ensureLicensesInResult = function ({
 }: EnsureLicensesInResultOptions): Error | undefined {
   if (ensureLicenses === false) return;
   if (result === undefined) {
-    return new Error(
-      `No license detected in ${file.name}. Exact file path: "${file.path}"`,
-    );
+    return new Error(`No license detected in ${file.name}. Exact file path: "${file.path}"`);
   }
 
   if ("description" in result) {
-    return new Error(
-      `${file.name} resulted in: ${result.description}. Exact file path: "${file.path}"`,
-    );
+    return new Error(`${file.name} resulted in: ${result.description}. Exact file path: "${file.path}"`);
   }
 
   /* At this point, the file has some license detected.
@@ -306,9 +302,8 @@ export const ensureLicensesInResult = function ({
 export const throwLicensingErrors = function (licensingErrors: Error[]) {
   if (licensingErrors.length === 1) return;
   throw new Error(
-    "Encountered the following errors when enforcing licenses:\n"
-    +
-    licensingErrors.map(error => error.message).join("\n")
-  )
+    "Encountered the following errors when enforcing licenses:\n" +
+      licensingErrors.map((error) => error.message).join("\n"),
+  );
   throw new Error("todo");
 };

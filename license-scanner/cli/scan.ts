@@ -18,7 +18,7 @@ import {
   ScanCliArgs,
   ScanTracker,
 } from "license-scanner/types";
-import {lstatAsync, readFileAsync, shouldExclude} from "license-scanner/utils";
+import { lstatAsync, readFileAsync, shouldExclude } from "license-scanner/utils";
 import { dirname, join as joinPath, resolve as resolvePath } from "path";
 
 type NextState =
@@ -28,7 +28,7 @@ type NextState =
   | "read ensureLicenses"
   | "read exclude"
   | "read include"
-  | null
+  | null;
 
 const detectOption = (arg: string): NextState => {
   const argIsOption = function (optionName: string) {
@@ -49,11 +49,11 @@ const detectOption = (arg: string): NextState => {
   if (argIsOption("-exclude")) {
     return "read exclude";
   }
-    if (argIsOption("-include")) {
+  if (argIsOption("-include")) {
     return "read include";
   }
   return null;
-}
+};
 
 export const parseScanArgs = async function (args: string[]) {
   const scanRoots: string[] = [];
@@ -153,11 +153,11 @@ export const parseScanArgs = async function (args: string[]) {
         break;
       }
       case "read exclude": {
-        let excludeArg: string | undefined = arg
-        while(excludeArg !== undefined && detectOption(excludeArg) === null) {
+        let excludeArg: string | undefined = arg;
+        while (excludeArg !== undefined && detectOption(excludeArg) === null) {
           // Continue slurping exclude parameters until another option is found.
           exclude.push(excludeArg);
-          excludeArg = args.shift()
+          excludeArg = args.shift();
         }
         nextState = excludeArg ? detectOption(excludeArg) : null;
         break;
@@ -165,7 +165,7 @@ export const parseScanArgs = async function (args: string[]) {
       case "read include":
       case null: {
         if (detectOption(arg) !== null) {
-          nextState = detectOption(arg)
+          nextState = detectOption(arg);
         } else {
           scanRoots.push(arg);
         }
@@ -207,9 +207,9 @@ export const executeScanArgs = async function ({
   const matchLicense = getLicenseMatcher(licenses, startLinesExcludes ?? undefined);
 
   const allLicensingErrors: Error[] = [];
-  const logger = new Logger({ minLevel: logLevel })
+  const logger = new Logger({ minLevel: logLevel });
   for (const scanRoot of scanRoots) {
-    if (shouldExclude({targetPath: scanRoot, initialRoot: scanRoot, exclude})) continue
+    if (shouldExclude({ targetPath: scanRoot, initialRoot: scanRoot, exclude })) continue;
     const fileMetadata = await lstatAsync(scanRoot);
     if (!fileMetadata.isDirectory() && !fileMetadata.isFile()) {
       console.error(`ERROR: Scan target "${scanRoot}" is not a file or a directory`);
