@@ -56,7 +56,7 @@ jobs:
             --log-level debug \
             --ensure-licenses Apache-2.0 \
             --ensure-licenses GPL-3.0-only \
-            --exclude ../polkadot/**/target ../polkadot/**/weights
+            --exclude ../polkadot/**/target ../polkadot/**/weights \
             --include ../polkadot/**/src/**/*.rs \
             && exit 0 || exit 1
             # The command is expected to fail because there are some unlicensed files left.
