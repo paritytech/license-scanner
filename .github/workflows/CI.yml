@@ -57,7 +57,6 @@ jobs:
             --ensure-licenses Apache-2.0 \
             --ensure-licenses GPL-3.0-only \
             --exclude ../polkadot/**/target ../polkadot/**/weights \
-            --include ../polkadot/**/src/**/*.rs \
-            && exit 0 || exit 1
+            --include ../polkadot/**/src/**/*.rs
             # The command is expected to fail because there are some unlicensed files left.
         working-directory: license-scanner
