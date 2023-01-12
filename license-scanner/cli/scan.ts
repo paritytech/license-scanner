@@ -22,7 +22,7 @@ import { lstatAsync, readFileAsync } from "license-scanner/utils";
 import { dirname, join as joinPath, resolve as resolvePath } from "path";
 
 export const parseScanArgs = async function (args: string[]) {
-  let scanRoot: string | null = null;
+  const scanRoots: string[] = [];
   let startLinesExcludes: string[] | null = null;
   let detectionOverrides: DetectionOverride[] | null = null;
   let logLevel: LogLevel = "info";
@@ -134,10 +134,8 @@ export const parseScanArgs = async function (args: string[]) {
           nextState = "read logLevel";
         } else if (argIsOption("-ensure-licenses")) {
           nextState = "read ensureLicenses";
-        } else if (scanRoot) {
-          throw new Error("scanRoot might only be specified once");
         } else {
-          scanRoot = arg;
+          scanRoots.push(arg);
         }
         break;
       }
@@ -148,12 +146,12 @@ export const parseScanArgs = async function (args: string[]) {
     }
   }
 
-  if (!scanRoot) {
+  if (scanRoots.length === 0) {
     throw new Error("Required argument: scanRoot");
   }
 
   return new ScanCliArgs({
-    scanRoot: resolvePath(scanRoot as string),
+    scanRoots: scanRoots.map((scanRoot) => resolvePath(scanRoot)),
     startLinesExcludes,
     detectionOverrides,
     logLevel,
@@ -162,7 +160,7 @@ export const parseScanArgs = async function (args: string[]) {
 };
 
 export const executeScanArgs = async function ({
-  args: { scanRoot, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses },
+  args: { scanRoots, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses },
 }: ScanCliArgs) {
   const licenses = await loadLicensesNormalized(joinPath(projectRoot, "licenses"), {
     aliases: licenseAliases,
@@ -175,22 +173,26 @@ export const executeScanArgs = async function ({
 
   const matchLicense = getLicenseMatcher(licenses, startLinesExcludes ?? undefined);
 
-  const fileMetadata = await lstatAsync(scanRoot);
-  if (!fileMetadata.isDirectory() && !fileMetadata.isFile()) {
-    console.error(`ERROR: Scan target "${scanRoot}" is not a file or a directory`);
-    process.exit(1);
+  for (const scanRoot of scanRoots) {
+    const fileMetadata = await lstatAsync(scanRoot);
+    if (!fileMetadata.isDirectory() && !fileMetadata.isFile()) {
+      console.error(`ERROR: Scan target "${scanRoot}" is not a file or a directory`);
+      process.exit(1);
+    }
   }
 
-  await scan({
-    saveResult: saveScanResultItem,
-    matchLicense,
-    root: scanRoot,
-    initialRoot: scanRoot,
-    dirs: { crates: cratesDir, repositories: repositoriesDir },
-    rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
-    tracker: new ScanTracker(),
-    detectionOverrides: detectionOverrides ?? null,
-    logger: new Logger({ minLevel: logLevel }),
-    ensureLicenses,
-  });
+  for (const scanRoot of scanRoots) {
+    await scan({
+      saveResult: saveScanResultItem,
+      matchLicense,
+      root: scanRoot,
+      initialRoot: scanRoot,
+      dirs: { crates: cratesDir, repositories: repositoriesDir },
+      rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
+      tracker: new ScanTracker(),
+      detectionOverrides: detectionOverrides ?? null,
+      logger: new Logger({ minLevel: logLevel }),
+      ensureLicenses,
+    });
+  }
 };

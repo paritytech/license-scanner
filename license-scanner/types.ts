@@ -135,7 +135,7 @@ export type CargoMetadataOutputV1 = {
 export class ScanCliArgs {
   constructor(
     public args: {
-      scanRoot: string;
+      scanRoots: string[];
       startLinesExcludes: string[] | null;
       detectionOverrides: DetectionOverride[] | null;
       logLevel: LogLevel;
