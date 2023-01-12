@@ -170,7 +170,7 @@ export const scan = async function (options: ScanOptions) {
 
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
-      ensureLicensesInResult(file.name, result, ensureLicenses);
+      ensureLicensesInResult({fileName: file.name, result, ensureLicenses});
       if (result === undefined) {
         return;
       }

@@ -87,6 +87,12 @@ export type License = Omit<LicenseInput, "text"> & {
   needleStart: string;
 };
 
+export type EnsureLicensesInResultOptions = {
+  fileName: string,
+  result: ScanResultItem | undefined,
+  ensureLicenses: boolean | string[],
+}
+
 export class DatabaseSaveError extends Error {
   constructor(public item: unknown) {
     super("Failed to save item to the database");

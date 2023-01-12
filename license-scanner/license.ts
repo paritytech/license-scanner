@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import { promisify } from "util";
 
-import { License, LicenseInput, ScanResultItem } from "./types";
+import { EnsureLicensesInResultOptions, License, LicenseInput, ScanResultItem } from "./types";
 import { isBinaryFile, loadFiles } from "./utils";
 
 const openAsync = promisify(fs.open);
@@ -275,9 +275,7 @@ export const getLicenseMatcher = function (licenses: License[], startLinesExclud
 };
 
 export const ensureLicensesInResult = function (
-  fileName: string,
-  result: ScanResultItem | undefined,
-  ensureLicenses: boolean | string[],
+  {fileName, result, ensureLicenses}: EnsureLicensesInResultOptions
 ) {
   if (ensureLicenses === false) return;
   if (result === undefined) {
