@@ -44,7 +44,7 @@ jobs:
         working-directory: license-scanner
       - run: yarn build
         working-directory: license-scanner
-      - name: Scan the Polkadot repo
+      - name: Scan the Polkadot repo - node directory
         run: |
           yarn start scan --log-level debug ../polkadot/node
         working-directory: license-scanner
@@ -52,6 +52,8 @@ jobs:
         timeout-minutes: 3
       - name: Enforce licenses in Rust files
         run: |
+          shopt -s globstar
+
           yarn start scan \
             --log-level debug \
             --ensure-licenses Apache-2.0 \
