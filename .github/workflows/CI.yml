@@ -46,18 +46,18 @@ jobs:
         working-directory: license-scanner
       - name: Scan the Polkadot repo
         run: |
-          yarn start -- scan --log-level debug ../polkadot/node
+          yarn start scan --log-level debug ../polkadot/node
         working-directory: license-scanner
         # It should take a reasonable time to scan the node crate.
         timeout-minutes: 3
       - name: Enforce licenses in Rust files
         run: |
-          yarn start -- scan \
+          yarn start scan \
             --log-level debug \
             --ensure-licenses Apache-2.0 \
             --ensure-licenses GPL-3.0-only \
             --exclude ../polkadot/**/target ../polkadot/**/weights
-            ../polkadot/**/src/**/*.rs \
+            --include ../polkadot/**/src/**/*.rs \
             && exit 0 || exit 1
             # The command is expected to fail because there are some unlicensed files left.
         working-directory: license-scanner
