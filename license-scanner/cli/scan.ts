@@ -21,6 +21,40 @@ import {
 import { lstatAsync, readFileAsync } from "license-scanner/utils";
 import { dirname, join as joinPath, resolve as resolvePath } from "path";
 
+type NextState =
+  | "read startLinesExcludes"
+  | "read detectionOverrides"
+  | "read logLevel"
+  | "read ensureLicenses"
+  | "read exclude"
+  | "read include"
+  | null
+
+const detectOption = (arg: string): NextState => {
+  const argIsOption = function (optionName: string) {
+    return arg === `-${optionName}` || arg === `-${optionName}=`;
+  };
+  if (argIsOption("-start-lines-excludes")) {
+    return "read startLinesExcludes";
+  }
+  if (argIsOption("-detection-overrides")) {
+    return "read detectionOverrides";
+  }
+  if (argIsOption("-log-level")) {
+    return "read logLevel";
+  }
+  if (argIsOption("-ensure-licenses")) {
+    return "read ensureLicenses";
+  }
+  if (argIsOption("-exclude")) {
+    return "read exclude";
+  }
+    if (argIsOption("-include")) {
+    return "read include";
+  }
+  return null;
+}
+
 export const parseScanArgs = async function (args: string[]) {
   const scanRoots: string[] = [];
   const exclude: string[] = [];
@@ -29,13 +63,7 @@ export const parseScanArgs = async function (args: string[]) {
   let logLevel: LogLevel = "info";
   let ensureLicenses: boolean | string[] = false;
 
-  let nextState:
-    | "read startLinesExcludes"
-    | "read detectionOverrides"
-    | "read logLevel"
-    | "read ensureLicenses"
-    | "read exclude"
-    | null = null;
+  let nextState: NextState = null;
 
   while (true) {
     const arg = args.shift();
@@ -125,24 +153,19 @@ export const parseScanArgs = async function (args: string[]) {
         break;
       }
       case "read exclude": {
-        nextState = null;
-        exclude.push(arg);
+        let excludeArg: string | undefined = arg
+        while(excludeArg !== undefined && detectOption(excludeArg) === null) {
+          // Continue slurping exclude parameters until another option is found.
+          exclude.push(excludeArg);
+          excludeArg = args.shift()
+        }
+        nextState = excludeArg ? detectOption(excludeArg) : null;
         break;
       }
+      case "read include":
       case null: {
-        const argIsOption = function (optionName: string) {
-          return arg === `-${optionName}` || arg === `-${optionName}=`;
-        };
-        if (argIsOption("-start-lines-excludes")) {
-          nextState = "read startLinesExcludes";
-        } else if (argIsOption("-detection-overrides")) {
-          nextState = "read detectionOverrides";
-        } else if (argIsOption("-log-level")) {
-          nextState = "read logLevel";
-        } else if (argIsOption("-ensure-licenses")) {
-          nextState = "read ensureLicenses";
-        } else if (argIsOption("-exclude")) {
-          nextState = "read exclude";
+        if (detectOption(arg) !== null) {
+          nextState = detectOption(arg)
         } else {
           scanRoots.push(arg);
         }
