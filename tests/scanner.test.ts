@@ -31,6 +31,7 @@ describe("Scanner tests", () => {
       rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
       detectionOverrides: null,
       logger: new Logger({ minLevel: process.env.DEBUG ? "debug" : "info" }),
+      exclude: []
     };
   });
 
@@ -143,5 +144,29 @@ describe("Scanner tests", () => {
         expect(output[""]?.license).to.equal("MIT");
       }
     });
+  });
+
+  describe("excluding files", () => {
+    it('Can exclude a file', async () => {
+      {
+        const {output, licensingErrors} = await performScan("single-crate");
+        expect(output.LICENSE?.license).to.equal("MIT");
+        expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
+      }
+      {
+        const {output, licensingErrors} = await performScan("single-crate", {
+          exclude: ["src/main.rs"]
+        });
+        expect(output.LICENSE?.license).to.equal("MIT");
+        expect(output["src/main.rs"]).to.be.undefined
+      }
+      {
+        const {output, licensingErrors} = await performScan("single-crate", {
+          exclude: [path.join(targetsRoot, "single-crate/src/main.rs")]
+        });
+        expect(output.LICENSE?.license).to.equal("MIT");
+        expect(output["src/main.rs"]).to.be.undefined
+      }
+    })
   });
 });

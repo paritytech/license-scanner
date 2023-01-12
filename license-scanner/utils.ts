@@ -97,3 +97,18 @@ export const isBinaryFile = async function (file: string) {
   await fileData.close();
   return elfData.success;
 };
+
+export function shouldExclude(options: {
+  file: { path: string; name: string },
+  initialRoot: string,
+  exclude: string[]
+}) {
+  const {file, initialRoot, exclude} = options
+  for (const excl of exclude) {
+    // Relative exclude:
+    if (file.path === path.join(initialRoot, excl)) return true
+    // Absolute exclude:
+    if (file.path === excl) return true
+  }
+  return false;
+}

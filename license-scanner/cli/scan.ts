@@ -23,6 +23,7 @@ import { dirname, join as joinPath, resolve as resolvePath } from "path";
 
 export const parseScanArgs = async function (args: string[]) {
   const scanRoots: string[] = [];
+  const exclude: string[] = [];
   let startLinesExcludes: string[] | null = null;
   let detectionOverrides: DetectionOverride[] | null = null;
   let logLevel: LogLevel = "info";
@@ -33,6 +34,7 @@ export const parseScanArgs = async function (args: string[]) {
     | "read detectionOverrides"
     | "read logLevel"
     | "read ensureLicenses"
+    | "read exclude"
     | null = null;
 
   while (true) {
@@ -122,6 +124,11 @@ export const parseScanArgs = async function (args: string[]) {
         }
         break;
       }
+      case "read exclude": {
+        nextState = null;
+        exclude.push(arg)
+        break;
+      }
       case null: {
         const argIsOption = function (optionName: string) {
           return arg === `-${optionName}` || arg === `-${optionName}=`;
@@ -134,6 +141,8 @@ export const parseScanArgs = async function (args: string[]) {
           nextState = "read logLevel";
         } else if (argIsOption("-ensure-licenses")) {
           nextState = "read ensureLicenses";
+        } else if (argIsOption("-exclude")) {
+          nextState = "read exclude";
         } else {
           scanRoots.push(arg);
         }
@@ -152,6 +161,7 @@ export const parseScanArgs = async function (args: string[]) {
 
   return new ScanCliArgs({
     scanRoots: scanRoots.map((scanRoot) => resolvePath(scanRoot)),
+    exclude,
     startLinesExcludes,
     detectionOverrides,
     logLevel,
@@ -160,7 +170,7 @@ export const parseScanArgs = async function (args: string[]) {
 };
 
 export const executeScanArgs = async function ({
-  args: { scanRoots, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses },
+  args: { scanRoots, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses, exclude },
 }: ScanCliArgs) {
   const licenses = await loadLicensesNormalized(joinPath(projectRoot, "licenses"), {
     aliases: licenseAliases,
@@ -188,6 +198,7 @@ export const executeScanArgs = async function ({
       matchLicense,
       root: scanRoot,
       initialRoot: scanRoot,
+      exclude,
       dirs: { crates: cratesDir, repositories: repositoriesDir },
       rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
       tracker: new ScanTracker(),

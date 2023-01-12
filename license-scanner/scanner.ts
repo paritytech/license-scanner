@@ -14,9 +14,10 @@ import {
   RustCrateScannerOutput,
   ScanOptions,
   ScanOptionsRust,
+  ScanResult,
   UnexpectedCrateSourceError,
 } from "./types";
-import { execute, existsAsync, readFileAsync, walkFiles } from "./utils";
+import {execute, existsAsync, readFileAsync, shouldExclude, walkFiles} from "./utils";
 
 const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOptions, "rust">) {
   const {
@@ -34,8 +35,8 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
     execute(rust.cargoExecPath, ["run", "--release", root, String(rust.shouldCheckForCargoLock)], {
       cwd: rust.rustCrateScannerRoot,
     })
-      .then(({stdout, stderr}) => {
-        logger.debug(stderr)
+      .then(({ stdout, stderr }) => {
+        logger.debug(stderr);
         resolve(JSON.parse(stdout));
       })
       .catch(reject);
@@ -83,8 +84,8 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
           No such file or directory (os error 2)
       */
       execute(rust.cargoExecPath, ["metadata", "--format-version=1"], { cwd: cratePath })
-        .then(({stdout, stderr}) => {
-          logger.debug(stderr)
+        .then(({ stdout, stderr }) => {
+          logger.debug(stderr);
           if (stdout) {
             const cargoMeta: CargoMetadataOutputV1 = JSON.parse(stdout);
             for (const pkg of cargoMeta.packages) {
@@ -116,9 +117,10 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
   }
 };
 
-export const scan = async function (options: ScanOptions) {
+export const scan = async function (options: ScanOptions): Promise<ScanResult> {
   const {
     saveResult,
+    exclude,
     root,
     rust,
     transformItemKey = function (key: string) {
@@ -133,8 +135,13 @@ export const scan = async function (options: ScanOptions) {
     ensureLicenses = false,
   } = options;
 
+  const licensingErrors: Error[] = [];
   toNextFile: for await (const file of walkFiles(root)) {
     const key = transformItemKey(relativePath(root, file.path));
+    if (shouldExclude({file, initialRoot, exclude})) {
+      logger.debug(`Excluding file ${file.path}`)
+      continue toNextFile;
+    }
     tracker.setFileKey(file.path, key);
 
     logger.debug(`Enqueueing file ${file.path}`);
@@ -170,7 +177,8 @@ export const scan = async function (options: ScanOptions) {
 
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
-      ensureLicensesInResult({file, result, ensureLicenses});
+      const licensingError = ensureLicensesInResult({ file, result, ensureLicenses });
+      if (licensingError) licensingErrors.push(licensingError);
       if (result === undefined) {
         return;
       }
@@ -188,4 +196,5 @@ export const scan = async function (options: ScanOptions) {
 
   // Wait until the queue is processed before considering the scan finished.
   await scanQueue.onSizeLessThan(1);
+  return { licensingErrors };
 };

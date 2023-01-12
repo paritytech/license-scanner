@@ -51,10 +51,15 @@ export class ScanTracker {
   }
 }
 
+export type ScanResult = {
+  licensingErrors: Error[]
+}
+
 export type ScanOptions = {
   saveResult: (projectId: string, filePathFromRoot: string, result: ScanResultItem) => Promise<void>;
   root: string;
   initialRoot: string;
+  exclude: string[]
   dirs: {
     repositories: string;
     crates: string;
