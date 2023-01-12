@@ -282,13 +282,13 @@ export const ensureLicensesInResult = function ({
   if (ensureLicenses === false) return;
   if (result === undefined) {
     return new Error(
-      `Ensuring files have license failed: No license detected in ${file.name}. Exact file path: "${file.path}"`,
+      `No license detected in ${file.name}. Exact file path: "${file.path}"`,
     );
   }
 
   if ("description" in result) {
     return new Error(
-      `Ensuring files have license failed: ${file.name} resulted in: ${result.description}. Exact file path: "${file.path}"`,
+      `${file.name} resulted in: ${result.description}. Exact file path: "${file.path}"`,
     );
   }
 
@@ -297,7 +297,7 @@ export const ensureLicensesInResult = function ({
   if (typeof ensureLicenses !== "object") return;
   if (!ensureLicenses.includes(result.license)) {
     return new Error(
-      `Ensuring files have license failed: ${file.name} has ${result.license} license` +
+      `${file.name} has ${result.license} license` +
         `, expected one of: ${ensureLicenses.join(",")}. Exact file path: "${file.path}"`,
     );
   }
@@ -305,5 +305,10 @@ export const ensureLicensesInResult = function ({
 
 export const throwLicensingErrors = function (licensingErrors: Error[]) {
   if (licensingErrors.length === 1) return;
+  throw new Error(
+    "Encountered the following errors when enforcing licenses:\n"
+    +
+    licensingErrors.map(error => error.message).join("\n")
+  )
   throw new Error("todo");
 };

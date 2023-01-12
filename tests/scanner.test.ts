@@ -97,7 +97,7 @@ describe("Scanner tests", () => {
         });
         expect(licensingErrors.length).to.eq(1);
         expect(licensingErrors[0].toString()).to.include(
-          "Ensuring files have license failed: No license detected in main.rs",
+          "No license detected in main.rs",
         );
       }
 
@@ -105,7 +105,7 @@ describe("Scanner tests", () => {
         const { licensingErrors } = await performScan("required-license/src/not-licensed", { ensureLicenses: true });
         expect(licensingErrors.length).to.eq(1);
         expect(licensingErrors[0].toString()).to.include(
-          "Ensuring files have license failed: No license detected in main.rs",
+          "No license detected in main.rs",
         );
       }
     });
@@ -117,7 +117,7 @@ describe("Scanner tests", () => {
         });
         expect(licensingErrors.length).to.eq(1);
         expect(licensingErrors[0].toString()).to.include(
-          'Ensuring files have license failed: main.rs resulted in: Flagged because "copyright" was found somewhere within this file, but no licenses were detected',
+          'main.rs resulted in: Flagged because "copyright" was found somewhere within this file, but no licenses were detected',
         );
       }
 
@@ -125,7 +125,7 @@ describe("Scanner tests", () => {
         const { licensingErrors } = await performScan("required-license/src/copyrighted", { ensureLicenses: true });
         expect(licensingErrors.length).to.eq(1);
         expect(licensingErrors[0].toString()).to.include(
-          'Ensuring files have license failed: main.rs resulted in: Flagged because "copyright" was found somewhere within this file, but no licenses were detected',
+          'main.rs resulted in: Flagged because "copyright" was found somewhere within this file, but no licenses were detected',
         );
       }
     });
@@ -137,7 +137,7 @@ describe("Scanner tests", () => {
         });
         expect(licensingErrors.length).to.eq(1);
         expect(licensingErrors[0].toString()).to.include(
-          "Ensuring files have license failed: main.rs has MIT license, expected one of: Apache-2.0",
+          "main.rs has MIT license, expected one of: Apache-2.0",
         );
       }
 
@@ -157,7 +157,7 @@ describe("Scanner tests", () => {
         });
         expect(licensingErrors.length).to.eq(1);
         expect(licensingErrors[0].toString()).to.include(
-          "Ensuring files have license failed: main.rs has MIT license, expected one of: Apache-2.0",
+          "main.rs has MIT license, expected one of: Apache-2.0",
         );
       }
 
