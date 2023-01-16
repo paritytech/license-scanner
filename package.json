@@ -21,7 +21,7 @@
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
-    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#8578c0d55043e4e3db94f7fdf8b698bc4a86e58d",
+    "opstooling-js-style": "https://github.com/paritytech/opstooling-js-style#c298d0f732d93712e4397fd53baa3317a3022c8c",
     "ts-patch": "^2.1.0",
     "typescript-transform-paths": "^3.4.6"
   },
