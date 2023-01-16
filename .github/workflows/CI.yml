@@ -53,5 +53,5 @@ jobs:
         run: |
           yarn start dump csv $(realpath ../polkadot/node) ./output.csv
           # Check a couple of rows to make sure we have the output we expected.
-          grep '"metrics/src/lib.rs","GPL-3.0-only"' ./output.csv
-          grep '"overseer/src/tests.rs","GPL-3.0-only"' ./output.csv
+          grep -q '"metrics/src/lib.rs","GPL-3.0-only"' ./output.csv
+          grep -q '"overseer/src/tests.rs","GPL-3.0-only"' ./output.csv
