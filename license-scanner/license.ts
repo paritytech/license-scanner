@@ -305,5 +305,4 @@ export const throwLicensingErrors = function (licensingErrors: Error[]) {
     "Encountered the following errors when enforcing licenses:\n" +
       licensingErrors.map((error) => error.message).join("\n"),
   );
-  throw new Error("todo");
 };
