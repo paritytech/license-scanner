@@ -262,6 +262,32 @@ If configured, the scan will make sure that all scanned files are licensed.
 
 By default, it is `false` - meaning no license enforcement.
 
+## `--exclude` <a name="exclude"></a>
+
+Can be used to exclude files or directories from the scan.
+
+- Most useful in the combination with `--ensure-licenses`.
+- The excluded path can be absolute or relative.
+- `--include` must be used explicitly to mark the end of `--exclude` parameters.
+
+## `--include` <a name="include"></a>
+
+Which files or directories to target with the scan.
+
+Example:
+
+```bash
+yarn start -- scan --include /directory/or/file
+```
+
+In most cases can be omitted:
+
+```bash
+yarn start -- scan --include /directory/or/file
+```
+
+- `--include` must be used explicitly to mark the end of `--exclude` parameters.
+
 # Implementation <a name="implementation"></a>
 
 [`scan`](https://github.com/paritytech/license-scanner/blob/668b8c5f1cfa1dfc8f22170562f648a344cb60ef/license-scanner/scanner.ts#L141)

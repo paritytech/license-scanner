@@ -22,7 +22,7 @@ jobs:
       - run: cargo build --release
         working-directory: rust-crate-scanner
       - run: yarn test
-  profiling:
+  e2e:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
 
@@ -43,9 +43,9 @@ jobs:
         working-directory: license-scanner
       - run: yarn build
         working-directory: license-scanner
-      - name: Scan the Polkadot repo
+      - name: Scan the Polkadot repo - node directory
         run: |
-          yarn start -- scan --log-level debug ../polkadot/node
+          yarn start scan --log-level debug ../polkadot/node
         working-directory: license-scanner
         # It should take a reasonable time to scan the node crate.
         timeout-minutes: 3
@@ -56,3 +56,16 @@ jobs:
           # Check a couple of rows to make sure we have the output we expected.
           grep -q '"metrics/src/lib.rs","GPL-3.0-only"' ./output.csv
           grep -q '"overseer/src/tests.rs","GPL-3.0-only"' ./output.csv
+      - name: Enforce licenses in Rust files
+        run: |
+          shopt -s globstar
+
+          yarn start scan \
+            --log-level debug \
+            --ensure-licenses Apache-2.0 \
+            --ensure-licenses GPL-3.0-only \
+            --exclude ../polkadot/**/target ../polkadot/**/weights \
+            --include ../polkadot/**/src/**/*.rs \
+            && exit 1 || exit 0
+            # We expected it to fail because there are some unlicensed files left.
+        working-directory: license-scanner
