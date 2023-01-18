@@ -49,3 +49,10 @@ jobs:
         working-directory: license-scanner
         # It should take a reasonable time to scan the node crate.
         timeout-minutes: 3
+      - name: Dump into csv
+        working-directory: license-scanner
+        run: |
+          yarn start dump csv $(realpath ../polkadot/node) ./output.csv
+          # Check a couple of rows to make sure we have the output we expected.
+          grep -q '"metrics/src/lib.rs","GPL-3.0-only"' ./output.csv
+          grep -q '"overseer/src/tests.rs","GPL-3.0-only"' ./output.csv
