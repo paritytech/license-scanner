@@ -1,5 +1,7 @@
 #!/usr/bin/env node --es-module-specifier-resolution=node
 
+console.log("I AM HERE")
+
 import { executeDumpArgs, parseDumpArgs } from "./cli/dump";
 import { executeScanArgs, parseScanArgs } from "./cli/scan";
 import { DumpCliArgs, ScanCliArgs } from "./types";
