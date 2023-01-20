@@ -72,6 +72,8 @@ export const parseScanArgs = async function (args: string[]) {
       break;
     }
 
+    console.log({arg})
+
     switch (nextState) {
       case "read logLevel": {
         nextState = null;
