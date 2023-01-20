@@ -1,12 +1,18 @@
-import { join as joinPath } from "path";
+import { dirname, join as joinPath } from "path";
+import { fileURLToPath } from "url";
 
 import { LicenseInput } from "./types";
 
-export const projectRoot = process.cwd();
+/**
+ * This will be the root of the repository when running locally,
+ * Or the `build` folder when running an installed, built version.
+ */
+export const projectRoot = joinPath(dirname(fileURLToPath(import.meta.url)), "..");
+export const executionRoot = process.cwd();
 
-export const dataDir = joinPath(projectRoot, "data");
+export const dataDir = joinPath(executionRoot, "data");
 
-export const databasePath = joinPath(projectRoot, "db.json");
+export const databasePath = joinPath(executionRoot, "db.json");
 
 export const cratesDir = joinPath(dataDir, "crates");
 

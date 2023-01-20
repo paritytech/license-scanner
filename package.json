@@ -36,7 +36,7 @@
   "scripts": {
     "prepare": "ts-patch install -s",
     "typecheck": "tsc --noEmit",
-    "build": "rm -rf build && tsc",
+    "build": "rm -rf build && tsc && cp -r ./licenses ./build/",
     "start": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
     "prettier": "prettier '{*,**/*}.json'",
     "eslint": "eslint '{*,**/*}.{js,ts}'",
