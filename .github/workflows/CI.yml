@@ -48,10 +48,10 @@ jobs:
         working-directory: license-scanner
       - name: Scan the Polkadot repo - node directory
         run: |
-          license-scanner scan --log-level debug ./node
+          DEBUG=1 license-scanner scan --log-level debug ./node
         working-directory: polkadot
         # It should take a reasonable time to scan the node crate.
-        timeout-minutes: 3
+        timeout-minutes: 5
       - name: Dump into csv
         working-directory: polkadot
         run: |
