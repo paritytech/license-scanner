@@ -49,8 +49,6 @@ jobs:
         working-directory: license-scanner
       - name: Scan the Polkadot repo - node directory
         run: |
-          which license-scanner
-          cat /usr/local/bin/license-scanner
           DEBUG=1 license-scanner scan --log-level debug ./node
         working-directory: polkadot
         # It should take a reasonable time to scan the node crate.
