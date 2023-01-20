@@ -52,8 +52,14 @@ jobs:
           which license-scanner
           which node
           node --version
+          /usr/bin/env node --es-module-specifier-resolution=node --version
           ls -al /opt/hostedtoolcache/node/16.19.0/x64/bin/
         working-directory: polkadot
+      - name: Scan the Polkadot repo - absolute
+        run: |
+          node /opt/hostedtoolcache/node/16.19.0/x64/lib/node_modules/@paritytech/license-scanner/build/license-scanner/main.js scan --log-level debug ./node
+        working-directory: polkadot
+        timeout-minutes: 3
       - name: Scan the Polkadot repo - node directory
         run: |
           DEBUG=1 license-scanner scan --log-level debug ./node
