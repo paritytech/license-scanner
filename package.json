@@ -5,6 +5,11 @@
   "type": "module",
   "license": "Apache-2.0",
   "main": "./build/license-scanner/main.js",
+  "files": [
+    "build",
+    "rust-crate-scanner",
+    "licenses"
+  ],
   "licenses": [
     {
       "type": "Apache-2.0",
