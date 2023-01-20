@@ -1,8 +1,9 @@
 import {
+  buildRoot,
   cratesDir,
+  databasePath,
   extraLicenses,
   licenseAliases,
-  projectRoot,
   repositoriesDir,
   rustCrateScannerRoot,
 } from "license-scanner/constants";
@@ -195,13 +196,12 @@ export const parseScanArgs = async function (args: string[]) {
 export const executeScanArgs = async function ({
   args: { scanRoots, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses, exclude },
 }: ScanCliArgs) {
-  const licenses = await loadLicensesNormalized(joinPath(projectRoot, "licenses"), {
+  const licenses = await loadLicensesNormalized(joinPath(buildRoot, "licenses"), {
     aliases: licenseAliases,
     extraLicenses,
   });
 
-  const dbPath = joinPath(projectRoot, "db.json");
-  const db = await ensureDatabase(dbPath);
+  const db = await ensureDatabase(databasePath);
   const saveScanResultItem = getSaveScanResultItem(db);
 
   const matchLicense = getLicenseMatcher(licenses, startLinesExcludes ?? undefined);

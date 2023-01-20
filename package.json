@@ -9,7 +9,8 @@
     "license-scanner": "./build/license-scanner/main.js"
   },
   "files": [
-    "build"
+    "build",
+    "rust-crate-scanner"
   ],
   "licenses": [
     {
@@ -34,7 +35,7 @@
   "scripts": {
     "prepare": "ts-patch install -s",
     "typecheck": "tsc --noEmit",
-    "build": "rm -rf build && mkdir -p build && cp -r licenses rust-crate-scanner ./build/ && tsc",
+    "build": "rm -rf build && mkdir -p build && cp -r licenses build/ && tsc",
     "start": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
     "prettier": "prettier '{*,**/*}.json'",
     "eslint": "eslint '{*,**/*}.{js,ts}'",

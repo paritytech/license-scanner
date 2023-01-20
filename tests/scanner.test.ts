@@ -1,10 +1,10 @@
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import {
+  buildRoot,
   cratesDir,
   extraLicenses,
   licenseAliases,
-  projectRoot,
   repositoriesDir,
   rustCrateScannerRoot,
 } from "license-scanner/constants";
@@ -18,10 +18,10 @@ chai.use(chaiAsPromised);
 
 describe("Scanner tests", () => {
   let commonScanOptions: Omit<ScanOptions, "root" | "initialRoot" | "saveResult" | "tracker">;
-  const targetsRoot = path.join(projectRoot, "tests/targets");
+  const targetsRoot = path.join(process.cwd(), "tests/targets");
 
   before(async () => {
-    const licenses = await loadLicensesNormalized(path.join(projectRoot, "licenses"), {
+    const licenses = await loadLicensesNormalized(path.join(buildRoot, "licenses"), {
       aliases: licenseAliases,
       extraLicenses,
     });

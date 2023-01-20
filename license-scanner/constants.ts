@@ -3,11 +3,7 @@ import { fileURLToPath } from "url";
 
 import { LicenseInput } from "./types";
 
-/**
- * This will be the root of the repository when running locally,
- * Or the `build` folder when running an installed, built version.
- */
-export const projectRoot = joinPath(dirname(fileURLToPath(import.meta.url)), "..");
+export const buildRoot = joinPath(dirname(fileURLToPath(import.meta.url)), "..");
 export const executionRoot = process.cwd();
 
 export const dataDir = joinPath(executionRoot, "data");
@@ -18,7 +14,7 @@ export const cratesDir = joinPath(dataDir, "crates");
 
 export const repositoriesDir = joinPath(dataDir, "repositories");
 
-export const rustCrateScannerRoot = joinPath(projectRoot, "rust-crate-scanner");
+export const rustCrateScannerRoot = joinPath(buildRoot, "../rust-crate-scanner");
 
 export const extraLicenses: LicenseInput[] = [
   {
