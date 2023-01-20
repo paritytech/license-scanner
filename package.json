@@ -1,10 +1,17 @@
 {
   "name": "@paritytech/license-scanner",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Parity <admin@parity.io> (https://parity.io)",
   "type": "module",
   "license": "Apache-2.0",
   "main": "./build/license-scanner/main.js",
+  "bin": {
+    "license-scanner": "./build/license-scanner/main.js"
+  },
+  "files": [
+    "build",
+    "rust-crate-scanner"
+  ],
   "licenses": [
     {
       "type": "Apache-2.0",
@@ -28,7 +35,7 @@
   "scripts": {
     "prepare": "ts-patch install -s",
     "typecheck": "tsc --noEmit",
-    "build": "rm -rf build && tsc",
+    "build": "rm -rf build && mkdir -p build && cp -r licenses build/ && tsc",
     "start": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
     "prettier": "prettier '{*,**/*}.json'",
     "eslint": "eslint '{*,**/*}.{js,ts}'",
