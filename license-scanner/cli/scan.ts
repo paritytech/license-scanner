@@ -196,6 +196,7 @@ export const parseScanArgs = async function (args: string[]) {
 export const executeScanArgs = async function ({
   args: { scanRoots, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses, exclude },
 }: ScanCliArgs) {
+  console.log({scanRoots})
   const licenses = await loadLicensesNormalized(joinPath(buildRoot, "licenses"), {
     aliases: licenseAliases,
     extraLicenses,
