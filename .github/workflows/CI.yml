@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - rzadp/debug
 
 jobs:
   test:
