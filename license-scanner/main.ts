@@ -1,4 +1,4 @@
-#!/usr/bin/env node --es-module-specifier-resolution=node
+#!/usr/bin/env -S node --es-module-specifier-resolution=node
 
 console.log("I AM HERE")
 
