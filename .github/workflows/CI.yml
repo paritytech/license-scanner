@@ -52,7 +52,7 @@ jobs:
           which license-scanner
           which node
           node --version
-
+          ls -al /opt/hostedtoolcache/node/16.19.0/x64/bin/
         working-directory: polkadot
       - name: Scan the Polkadot repo - node directory
         run: |
