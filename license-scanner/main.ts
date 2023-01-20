@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --es-module-specifier-resolution=node
 
 import { executeDumpArgs, parseDumpArgs } from "./cli/dump";
 import { executeScanArgs, parseScanArgs } from "./cli/scan";
