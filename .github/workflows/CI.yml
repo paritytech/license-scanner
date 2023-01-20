@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js for use with actions
         uses: actions/setup-node@v3.5.1
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'license-scanner/.nvmrc'
       - uses: actions/checkout@v3.3.0
         with:
           repository: paritytech/polkadot
