@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { executeDumpArgs, parseDumpArgs } from "./cli/dump";
 import { executeScanArgs, parseScanArgs } from "./cli/scan";
 import { DumpCliArgs, ScanCliArgs } from "./types";
