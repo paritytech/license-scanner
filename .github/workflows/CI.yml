@@ -47,6 +47,13 @@ jobs:
           yarn build
           npm i -g .
         working-directory: license-scanner
+      - name: Debug
+        run: |
+          which license-scanner
+          which node
+          node --version
+
+        working-directory: polkadot
       - name: Scan the Polkadot repo - node directory
         run: |
           DEBUG=1 license-scanner scan --log-level debug ./node
