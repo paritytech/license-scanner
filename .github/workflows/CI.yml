@@ -23,6 +23,8 @@ jobs:
           scope: '@paritytech'
       - name: Check the licenses
         run: |
+          shopt -s globstar
+
           npx @paritytech/license-scanner@0.0.3 scan \
             --log-level debug \
             --ensure-licenses Apache-2.0 \
