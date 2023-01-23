@@ -288,6 +288,70 @@ yarn start -- scan --include /directory/or/file
 
 - `--include` must be used explicitly to mark the end of `--exclude` parameters.
 
+## Using as a CI check on GitHub Actions
+
+The project is published into organization's GitHub Packages as a private package.
+It can be used on CI to scan and ensure there are proper license headers in the source code.
+
+Here is an example job configuration:
+
+```
+jobs:
+  check-licenses:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '16.19.0'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@paritytech'
+      - name: Check the licenses
+        run: |
+          shopt -s globstar
+
+          npx @paritytech/license-scanner@0.0.3 scan \
+            --ensure-licenses Apache-2.0 \
+            --ensure-licenses GPL-3.0-only \
+            ./**/src/**/*.rs
+        env:
+          # One of those:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN_WITH_READ_PACKAGES_PERMISSIONS }}
+```
+
+If using `GITHUB_TOKEN`, please note that the repository needs to be granted read permissions in the [package's settings](https://github.com/orgs/paritytech/packages/npm/license-scanner/settings).
+
+Editing the token permissions will not work because it's limited to repository - see the [relevant issue](https://github.com/actions/setup-node/issues/49).
+
+```
+permissions:
+jobs:
+  check-licenses:
+    # This will NOT work.
+    permissions:
+      packages: read
+```
+
+### Testing the private package locally
+
+The package is private, so in order to download it locally we need to configure `npm` to access GitHub Packages and authorize ourselves.
+Here is an example `.npmrc` configuration file which can be used:
+
+```
+registry=https://registry.npmjs.org/
+@paritytech:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+And then the package can be installed or used with `npx`:
+
+```
+NODE_AUTH_TOKEN="xxx" npx @paritytech/license-scanner scan (...)
+```
+
+Where `NODE_AUTH_TOKEN` is your GitHub Personal Access Token with (at least) `read:packages` permissions.
+
 # Implementation <a name="implementation"></a>
 
 [`scan`](https://github.com/paritytech/license-scanner/blob/668b8c5f1cfa1dfc8f22170562f648a344cb60ef/license-scanner/scanner.ts#L141)
