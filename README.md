@@ -313,7 +313,7 @@ jobs:
           npx @paritytech/license-scanner@0.0.3 scan \
             --ensure-licenses Apache-2.0 \
             --ensure-licenses GPL-3.0-only \
-            ./**/src/**/*.rs
+            ./**/*.rs
         env:
           # One of those:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
