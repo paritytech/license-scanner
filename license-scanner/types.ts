@@ -143,19 +143,16 @@ export type CargoMetadataOutputV1 = {
   packages: { name: string; version: string; manifest_path: string }[];
 };
 
-export class ScanCliArgs {
-  constructor(
-    public args: {
-      scanRoots: string[];
-      exclude: string[];
-      startLinesExcludes: string[] | null;
-      detectionOverrides: DetectionOverride[] | null;
-      logLevel: LogLevel;
-      ensureLicenses: boolean | string[];
-    },
-  ) {}
+export interface ScanCliArgs {
+  scanRoots: string[];
+  exclude: string[];
+  startLinesExcludes: string[] | null;
+  detectionOverrides: DetectionOverride[] | null;
+  logLevel: LogLevel;
+  ensureLicenses: boolean | string[];
 }
 
-export class DumpCliArgs {
-  constructor(public args: { format: "csv"; outputFile: string; scanRoot: string }) {}
+export interface DumpCliArgs {
+  scanRoot: string
+  outputFile: string
 }

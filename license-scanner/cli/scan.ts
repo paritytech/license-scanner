@@ -56,7 +56,7 @@ const detectOption = (arg: string): NextState => {
   return null;
 };
 
-export const parseScanArgs = async function (args: string[]) {
+export const parseScanArgs = async function (args: string[]): Promise<ScanCliArgs> {
   const scanRoots: string[] = [];
   const exclude: string[] = [];
   let startLinesExcludes: string[] | null = null;
@@ -183,18 +183,18 @@ export const parseScanArgs = async function (args: string[]) {
     throw new Error("Required argument: scanRoot");
   }
 
-  return new ScanCliArgs({
+  return {
     scanRoots: scanRoots.map((scanRoot) => resolvePath(scanRoot)),
     exclude,
     startLinesExcludes,
     detectionOverrides,
     logLevel,
     ensureLicenses,
-  });
+  };
 };
 
 export const executeScanArgs = async function ({
-  args: { scanRoots, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses, exclude },
+  scanRoots, startLinesExcludes, detectionOverrides, logLevel, ensureLicenses, exclude
 }: ScanCliArgs) {
   const licenses = await loadLicensesNormalized(joinPath(buildRoot, "licenses"), {
     aliases: licenseAliases,
