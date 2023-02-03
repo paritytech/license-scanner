@@ -49,6 +49,7 @@
     "debug": "NODE_OPTIONS='--inspect-brk' yarn run start"
   },
   "dependencies": {
+    "@commander-js/extra-typings": "^10.0.2",
     "async-mutex": "^0.3.2",
     "commander": "^10.0.0",
     "elfinfo": "^0.4.0-beta",

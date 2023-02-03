@@ -201,6 +201,11 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@commander-js/extra-typings@^10.0.2":
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/@commander-js/extra-typings/-/extra-typings-10.0.2.tgz#eccf15c0b6fb58eadba163e7c6440d6a177401db"
+  integrity sha512-PSGG74fpbc2/WRInbKJbwKiUwdN9YqZSgHxDGMqInUe4G6DTLp90ww12uHMC1U/219qPWI0fLSSjwVDUTdnqIQ==
+
 "@eslint/eslintrc@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.4.1.tgz#af58772019a2d271b7e2d4c23ff4ddcba3ccfb3e"
