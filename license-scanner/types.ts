@@ -68,7 +68,7 @@ export type ScanOptions = {
   rust: ScanOptionsRust | null;
   transformItemKey?: (str: string) => string;
   tracker: ScanTracker;
-  detectionOverrides: DetectionOverride[] | null;
+  detectionOverrides: DetectionOverride[];
   meta?: ScanResultItemMetadata;
   logger: Logger;
   /**
@@ -146,8 +146,8 @@ export type CargoMetadataOutputV1 = {
 export interface ScanCliArgs {
   scanRoots: string[];
   exclude: string[];
-  startLinesExcludes: string[] | null;
-  detectionOverrides: DetectionOverride[] | null;
+  startLinesExcludes: string[];
+  detectionOverrides: DetectionOverride[];
   logLevel: LogLevel;
   ensureLicenses: boolean | string[];
 }

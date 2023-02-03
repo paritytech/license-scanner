@@ -146,7 +146,7 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
 
     logger.debug(`Enqueueing file ${file.path}`);
 
-    for (const rule of detectionOverrides ?? []) {
+    for (const rule of detectionOverrides) {
       if (rule instanceof DetectionOverrideById) {
         if (key !== rule.value) {
           continue;

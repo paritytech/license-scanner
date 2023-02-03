@@ -29,7 +29,7 @@ describe("Scanner tests", () => {
       matchLicense: getLicenseMatcher(licenses),
       dirs: { crates: cratesDir, repositories: repositoriesDir },
       rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
-      detectionOverrides: null,
+      detectionOverrides: [],
       logger: new Logger({ minLevel: process.env.DEBUG ? "debug" : "info" }),
       exclude: [],
     };

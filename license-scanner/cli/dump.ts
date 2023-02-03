@@ -21,7 +21,7 @@ const escapeValueForCsv = function (value: unknown) {
   }
 };
 
-export const executeDumpArgs = async function ({ outputFile, scanRoot }: DumpCliArgs) {
+export const executeDump = async function ({ outputFile, scanRoot }: DumpCliArgs) {
   const db: DatabaseLayout = JSON.parse((await readFileAsync(databasePath)).toString());
 
   const scanResult = db.scanResult;
