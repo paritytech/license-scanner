@@ -1,11 +1,11 @@
 #!/usr/bin/env -S node --es-module-specifier-resolution=node
 
 import { Command, Option } from "@commander-js/extra-typings";
+import { Logger, LogLevel } from "license-scanner/logger";
+import { resolve as resolvePath } from "path";
 
 import { executeDump } from "./cli/dump";
 import { executeScan, readDetectionOverrides, readEnsureLicenses, readStartLinesExcludes } from "./cli/scan";
-import { Logger, LogLevel } from "license-scanner/logger";
-import {resolve as resolvePath} from "path";
 
 const program = new Command("license-scanner").description(
   `license-scanner does not provide legal advice and it is not a lawyer. Licenses
@@ -52,7 +52,9 @@ program
     ).conflicts("--ensure-licenses"),
   )
   .option("--exclude <exclude...>", "Can be used to exclude files or directories from the scan.")
-  .action(async (scanRoots, options, asd) => {
+  // It's actually correct usage but @commander-js/extra-typings is wrong on this one.
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  .action(async (scanRoots, options) => {
     const logger = new Logger({ minLevel: options.logLevel as LogLevel });
     try {
       await executeScan({
@@ -75,6 +77,8 @@ program
   .argument("Scan root <scanRoot>", `The directory where the results of a scan are.`)
   .argument("outputFile <outputFile>", "Output path or filename.")
   .addOption(logOption)
+  // It's actually correct usage but @commander-js/extra-typings is wrong on this one.
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   .action(async (scanRoot, outputFile, options) => {
     const logger = new Logger({ minLevel: options.logLevel as LogLevel });
     try {

@@ -9,7 +9,7 @@ import {
 } from "license-scanner/constants";
 import { ensureDatabase, getSaveScanResultItem } from "license-scanner/db";
 import { getLicenseMatcher, loadLicensesNormalized, throwLicensingErrors } from "license-scanner/license";
-import { Logger, LogLevel } from "license-scanner/logger";
+import { Logger } from "license-scanner/logger";
 import { scan } from "license-scanner/scanner";
 import {
   DetectionOverride,
@@ -20,7 +20,7 @@ import {
   ScanTracker,
 } from "license-scanner/types";
 import { lstatAsync, readFileAsync, shouldExclude } from "license-scanner/utils";
-import { dirname, join as joinPath, resolve as resolvePath } from "path";
+import { dirname, join as joinPath } from "path";
 
 export const readStartLinesExcludes = async (
   startLinesExcludes: string | undefined,
@@ -38,8 +38,10 @@ export const readEnsureLicenses = (opts: {
   return false;
 };
 
-export const readDetectionOverrides = async (overridesFile: string | undefined): Promise<ScanCliArgs["detectionOverrides"]> => {
-  if (!overridesFile) return []
+export const readDetectionOverrides = async (
+  overridesFile: string | undefined,
+): Promise<ScanCliArgs["detectionOverrides"]> => {
+  if (!overridesFile) return [];
   const overridesFileDirectory = dirname(overridesFile);
 
   const parsedOverrides: DetectionOverrideInput[] = JSON.parse((await readFileAsync(overridesFile)).toString());

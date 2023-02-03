@@ -153,6 +153,6 @@ export interface ScanCliArgs {
 }
 
 export interface DumpCliArgs {
-  scanRoot: string
-  outputFile: string
+  scanRoot: string;
+  outputFile: string;
 }
