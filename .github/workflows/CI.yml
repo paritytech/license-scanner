@@ -55,7 +55,7 @@ jobs:
       - name: Dump into csv
         working-directory: polkadot
         run: |
-          license-scanner dump csv $(realpath ./node) ./output.csv
+          license-scanner dump $(realpath ./node) ./output.csv
           # Check a couple of rows to make sure we have the output we expected.
           grep -q '"metrics/src/lib.rs","GPL-3.0-only"' ./output.csv
           grep -q '"overseer/src/tests.rs","GPL-3.0-only"' ./output.csv
@@ -65,10 +65,9 @@ jobs:
 
           license-scanner scan \
             --log-level debug \
-            --ensure-licenses Apache-2.0 \
-            --ensure-licenses GPL-3.0-only \
+            --ensure-licenses Apache-2.0 GPL-3.0-only \
             --exclude ./**/target ./**/weights \
-            --include ./**/src/**/*.rs \
+            -- ./**/src/**/*.rs \
             && exit 1 || exit 0
             # We expected it to fail because there are some unlicensed files left.
         working-directory: polkadot

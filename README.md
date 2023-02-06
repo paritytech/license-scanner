@@ -59,10 +59,14 @@ yarn install
 yarn build
 
 # use `scan` for scanning
-yarn start scan /directory/or/file [...more/directories/or/files]
+yarn start -- scan /directory/or/file [...more/directories/or/files]
+
+# Mark the end of variadic options with a `--` or another non-variadic `--xxx` option
+yarn start -- scan --exclude target/debug target/release -- /directory/or/file
+yarn start -- scan --exclude target/debug target/release --log-level debug /directory/or/file
 
 # after the scan is complete, optionally dump it to CSV
-yarn start dump /directory/or/file /output.csv
+yarn start -- dump /directory/or/file /output.csv
 ```
 
 If a single file is provided, the scan will be performed exclusively for that
@@ -269,7 +273,6 @@ Can be used to exclude files or directories from the scan.
 
 - Most useful in the combination with `--ensure-licenses`.
 - The excluded path can be absolute or relative.
-- Another option starting with `--xxx` or `--` must be used explicitly to mark the end of `--exclude` parameters.
 
 # Implementation <a name="implementation"></a>
 
