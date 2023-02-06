@@ -26,11 +26,7 @@ program
   .command("scan")
   .description(`Perform a scan trying to detect licenses in the target files.`)
   .argument("<scanRoots...>")
-  .addOption(
-    new Option<"--log-level <level>", LogLevel>("--log-level <level>")
-      .choices(["error", "debug", "info"] as const)
-      .default("info"),
-  )
+  .addOption(logOption)
   .option(
     "--detection-overrides <detectionOverrides>",
     "Takes as argument a configuration file specifying Override Rules ([example](https://github.com/paritytech/license-scanner/blob/master/example/detection-overrides.json)) which can be used to override the automatic detection.",
