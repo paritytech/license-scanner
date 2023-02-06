@@ -1,3 +1,5 @@
+![GitHub Issue Sync](https://github.com/paritytech/license-scanner/actions/workflows/github-issue-sync.yml/badge.svg)
+
 # Notice
 
 license-scanner does not provide legal advice and it is not a lawyer. Licenses
