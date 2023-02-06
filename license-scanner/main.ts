@@ -43,13 +43,13 @@ program
     new Option(
       "--ensure-licenses <licenses...>",
       "If configured, the scan will make sure that all scanned files are licensed with one of the listed licenses.",
-    ).conflicts("--ensure-any-license"),
+    ).conflicts("ensureAnyLicense"),
   )
   .addOption(
     new Option(
       "--ensure-any-license",
       "If configured, the scan will make sure that all scanned files are licensed with any license.",
-    ).conflicts("--ensure-licenses"),
+    ).conflicts("ensureLicenses"),
   )
   .option("--exclude <exclude...>", "Can be used to exclude files or directories from the scan.")
   // It's actually correct usage but @commander-js/extra-typings is wrong on this one.
