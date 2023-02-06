@@ -261,10 +261,17 @@ cleanly.
 
 ## `--ensure-licenses` and `--ensure-any-license` <a name="ensure-licenses"></a>
 
-If configured, the scan will make sure that all scanned files are licensed with some license.
+If configured, the scan will make sure that all scanned files are licensed.
 
 - With `--ensure-licenses`, every file needs to be licenses with one of the provided licenses.
 - With `--ensure-any-license`, every file needs to be licenses with any license.
+
+Examples:
+
+```bash
+yarn start -- scan --ensure-licenses Apache-2.0 GPL-3.0-only -- /directory/or/file
+yarn start -- scan --ensure-any-license /directory/or/file
+```
 
 Those options are conflicting with each other so only one should be specified.
 By default, no licensing is enforced.
