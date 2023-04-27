@@ -61,10 +61,14 @@ yarn install
 yarn build
 
 # use `scan` for scanning
-yarn start -- scan /directory/or/file
+yarn start -- scan /directory/or/file [...more/directories/or/files]
+
+# Mark the end of variadic options with a `--` or another non-variadic `--xxx` option
+yarn start -- scan --exclude target/debug target/release -- /directory/or/file
+yarn start -- scan --exclude target/debug target/release --log-level debug /directory/or/file
 
 # after the scan is complete, optionally dump it to CSV
-yarn start -- dump csv /directory/or/file /output.csv
+yarn start -- dump /directory/or/file /output.csv
 ```
 
 If a single file is provided, the scan will be performed exclusively for that
@@ -255,14 +259,22 @@ Doing so will remove the specified boilerplate lines from **the top** of the
 licenses so that the detector will be able get to the actual license's text
 cleanly.
 
-## `--ensure-licenses` <a name="ensure-licenses"></a>
+## `--ensure-licenses` and `--ensure-any-license` <a name="ensure-licenses"></a>
 
 If configured, the scan will make sure that all scanned files are licensed.
 
-- If set to `true`, the scan will make sure that all source files have some license detected.
-- If set to a specific license(s), the scan will make sure that all source files have one of those licenses detected.
+- With `--ensure-licenses`, every file needs to be licenses with one of the provided licenses.
+- With `--ensure-any-license`, every file needs to be licenses with any license.
 
-By default, it is `false` - meaning no license enforcement.
+Examples:
+
+```bash
+yarn start -- scan --ensure-licenses Apache-2.0 GPL-3.0-only -- /directory/or/file
+yarn start -- scan --ensure-any-license /directory/or/file
+```
+
+Those options are conflicting with each other so only one should be specified.
+By default, no licensing is enforced.
 
 ## `--exclude` <a name="exclude"></a>
 
@@ -270,25 +282,6 @@ Can be used to exclude files or directories from the scan.
 
 - Most useful in the combination with `--ensure-licenses`.
 - The excluded path can be absolute or relative.
-- `--include` must be used explicitly to mark the end of `--exclude` parameters.
-
-## `--include` <a name="include"></a>
-
-Which files or directories to target with the scan.
-
-Example:
-
-```bash
-yarn start -- scan --include /directory/or/file
-```
-
-In most cases can be omitted:
-
-```bash
-yarn start -- scan --include /directory/or/file
-```
-
-- `--include` must be used explicitly to mark the end of `--exclude` parameters.
 
 # Implementation <a name="implementation"></a>
 

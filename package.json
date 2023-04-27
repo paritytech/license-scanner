@@ -1,6 +1,6 @@
 {
   "name": "@paritytech/license-scanner",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Parity <admin@parity.io> (https://parity.io)",
   "type": "module",
   "license": "Apache-2.0",
@@ -49,7 +49,9 @@
     "debug": "NODE_OPTIONS='--inspect-brk' yarn run start"
   },
   "dependencies": {
+    "@commander-js/extra-typings": "^10.0.2",
     "async-mutex": "^0.3.2",
+    "commander": "^10.0.0",
     "elfinfo": "^0.4.0-beta",
     "node-fetch": "^3.2.10",
     "p-queue": "^7.1.0",
