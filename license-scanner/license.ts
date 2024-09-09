@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import { promisify } from "util";
 
-import { EnsureLicensesInResultOptions, License, LicenseInput } from "./types";
+import { EnsureLicensesInResultOptions, LicenceMatcher, License, LicenseInput } from "./types";
 import { isBinaryFile, loadFiles } from "./utils";
 
 const openAsync = promisify(fs.open);
@@ -79,7 +79,7 @@ const spdxLicenseIdentifierMatcher = new RegExp(`${spdxLicenseIdentifierPrefix}[
 
 const triggerAccumulationRegExp = copyrightTailRegExp.concat(spdxLicenseIdentifierTailRegExp);
 
-export const getLicenseMatcher = function (licenses: License[], startLinesExcludes?: string[]) {
+export const getLicenseMatcher = function (licenses: License[], startLinesExcludes?: string[]): LicenceMatcher {
   const bufSize = Math.max(
     4096,
     ...licenses.map(({ text, match }) => {
@@ -296,6 +296,34 @@ export const ensureLicensesInResult = function ({
       `${file.name} has ${result.license} license` +
         `, expected one of: ${ensureLicenses.join(",")}. Exact file path: "${file.path}"`,
     );
+  }
+};
+
+/**
+ * If a product is mentioned in this file,
+ * ensure that it is the correct product,
+ * and not a copy-paste error from a different product.
+ */
+export const ensureProductInFile = function (filePath: string, product: string | undefined): Error | undefined {
+  if (!product) return;
+  const lines = fs.readFileSync(filePath, "utf8").split(/\r?\n/);
+  for (const regexp of [
+    new RegExp("This file is part of (.*)\\."),
+    new RegExp("// (.*) is free software"),
+    new RegExp("// (.*) is distributed in the hope"),
+    new RegExp("// along with (.+?)\\.(.*)gnu.org"),
+  ]) {
+    for (const line of lines) {
+      if (regexp.test(line)) {
+        const matches = regexp.exec(line);
+        assert(matches);
+        if (matches[1] !== product && matches[1].toLowerCase() !== "this program") {
+          return new Error(
+            `Product mismatch in ${filePath}. Expected "${product}", detected "${matches[1]}" in line: "${line}".`,
+          );
+        }
+      }
+    }
   }
 };
 

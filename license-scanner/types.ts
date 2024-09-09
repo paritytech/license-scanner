@@ -55,6 +55,8 @@ export type ScanResult = {
   licensingErrors: Error[];
 };
 
+export type LicenceMatcher = (file: string) => Promise<ScanResultItem | undefined>;
+
 export type ScanOptions = {
   saveResult: (projectId: string, filePathFromRoot: string, result: ScanResultItem) => Promise<void>;
   root: string;
@@ -64,7 +66,7 @@ export type ScanOptions = {
     repositories: string;
     crates: string;
   };
-  matchLicense: (file: string) => Promise<ScanResultItem | undefined>;
+  matchLicense: LicenceMatcher;
   rust: ScanOptionsRust | null;
   transformItemKey?: (str: string) => string;
   tracker: ScanTracker;
@@ -77,6 +79,11 @@ export type ScanOptions = {
    * all source files have one of those licenses detected.
    */
   ensureLicenses?: boolean | string[];
+  /**
+   * If true, the scan will make sure that
+   * the license headers contain the correct product name.
+   */
+  ensureProduct?: string | undefined;
 };
 
 export type LicenseInput = {
@@ -150,6 +157,7 @@ export interface ScanCliArgs {
   detectionOverrides: DetectionOverride[];
   logLevel: LogLevel;
   ensureLicenses: boolean | string[];
+  ensureProduct: string | undefined;
 }
 
 export interface DumpCliArgs {
