@@ -59,6 +59,7 @@ export type ScanOptions = {
   saveResult: (projectId: string, filePathFromRoot: string, result: ScanResultItem) => Promise<void>;
   root: string;
   initialRoot: string;
+  fileExtensions: string[];
   exclude: string[];
   dirs: {
     repositories: string;
@@ -145,6 +146,7 @@ export type CargoMetadataOutputV1 = {
 
 export interface ScanCliArgs {
   scanRoots: string[];
+  fileExtensions: string[];
   exclude: string[];
   startLinesExcludes: string[];
   detectionOverrides: DetectionOverride[];

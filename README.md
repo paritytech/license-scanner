@@ -283,6 +283,16 @@ Can be used to exclude files or directories from the scan.
 - Most useful in the combination with `--ensure-licenses`.
 - The excluded path can be absolute or relative.
 
+## `--file-extensions` <a name="file-extensions"></a>
+
+Scan only files with the specified extensions.
+
+Examples:
+
+```bash
+yarn start -- scan --ensure-licenses Apache-2.0 --file-extensions '.rs' -- /directory/or/file
+```
+
 # Implementation <a name="implementation"></a>
 
 [`scan`](https://github.com/paritytech/license-scanner/blob/668b8c5f1cfa1dfc8f22170562f648a344cb60ef/license-scanner/scanner.ts#L141)

@@ -31,6 +31,7 @@ describe("Scanner tests", () => {
       rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },
       detectionOverrides: [],
       logger: new Logger({ minLevel: process.env.DEBUG ? "debug" : "info" }),
+      fileExtensions: [],
       exclude: [],
     };
   });
