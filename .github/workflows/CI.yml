@@ -84,5 +84,5 @@ jobs:
           cat out.txt
           
           grep -q 'Product mismatch' ./out.txt
-          grep -q 'Expected "Polkadot", detected "Cumulus" in line:' ./out.txt
+          grep -q 'Expected "Polkadot", detected "Substrate" in line:' ./out.txt
         working-directory: polkadot
