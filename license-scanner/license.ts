@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import { promisify } from "util";
 
-import { EnsureLicensesInResultOptions, LicenceMatcher, License, LicenseInput } from "./types";
+import { EnsureLicensesInResultOptions, License, LicenseInput } from "./types";
 import { isBinaryFile, loadFiles } from "./utils";
 
 const openAsync = promisify(fs.open);
@@ -79,7 +79,7 @@ const spdxLicenseIdentifierMatcher = new RegExp(`${spdxLicenseIdentifierPrefix}[
 
 const triggerAccumulationRegExp = copyrightTailRegExp.concat(spdxLicenseIdentifierTailRegExp);
 
-export const getLicenseMatcher = function (licenses: License[], startLinesExcludes?: string[]): LicenceMatcher {
+export const getLicenseMatcher = function (licenses: License[], startLinesExcludes?: string[]) {
   const bufSize = Math.max(
     4096,
     ...licenses.map(({ text, match }) => {

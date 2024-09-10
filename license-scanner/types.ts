@@ -55,8 +55,6 @@ export type ScanResult = {
   licensingErrors: Error[];
 };
 
-export type LicenceMatcher = (file: string) => Promise<ScanResultItem | undefined>;
-
 export type ScanOptions = {
   saveResult: (projectId: string, filePathFromRoot: string, result: ScanResultItem) => Promise<void>;
   root: string;
@@ -66,7 +64,7 @@ export type ScanOptions = {
     repositories: string;
     crates: string;
   };
-  matchLicense: LicenceMatcher;
+  matchLicense: (file: string) => Promise<ScanResultItem | undefined>;
   rust: ScanOptionsRust | null;
   transformItemKey?: (str: string) => string;
   tracker: ScanTracker;
