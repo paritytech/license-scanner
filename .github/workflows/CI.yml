@@ -74,3 +74,15 @@ jobs:
           grep -q 'No license detected in reconstruct.rs. Exact file path:' ./out.txt
           grep -q 'No license detected in mod.rs. Exact file path:' ./out.txt
         working-directory: polkadot
+      - name: Enforce product references in headers
+        run: |
+          license-scanner scan \
+            --ensure-product 'Polkadot' \
+            -- ./polkadot/xcm/src/lib.rs \
+            2>out.txt \
+            && exit 1 || exit 0
+            # We expected it to fail because there are some copy-paste errors.
+          
+          grep -q 'Product mismatch' ./out.txt
+          grep -q 'Expected "Polkadot", detected "Substrate" in line:' ./out.txt
+        working-directory: polkadot
