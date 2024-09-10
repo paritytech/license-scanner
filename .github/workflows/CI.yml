@@ -66,7 +66,7 @@ jobs:
             --exclude ./**/target ./**/weights \
             -- ./**/src/**/*.rs \
             2>out.txt \
-            && exit 1 || exit 0
+            && exit 1 || true
             # We expected it to fail because there are some unlicensed files left.
           
           grep -q 'No license detected in reconstruct.rs. Exact file path:' ./out.txt
@@ -78,7 +78,7 @@ jobs:
             --ensure-product 'Polkadot' \
             -- ./polkadot/xcm/src/lib.rs \
             2>out.txt \
-            && exit 1 || exit 0
+            && exit 1 || true
             # We expected it to fail because there are some copy-paste errors.
           
           cat out.txt
