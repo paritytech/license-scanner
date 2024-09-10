@@ -2,8 +2,6 @@ name: CI
 on:
   pull_request:
   push:
-    branches:
-      - master
 
 jobs:
   test:
@@ -84,5 +82,5 @@ jobs:
             # We expected it to fail because there are some copy-paste errors.
           
           grep -q 'Product mismatch' ./out.txt
-          grep -q 'Expected "Polkadot", detected "Substrate" in line:' ./out.txt
+          grep -q 'Expected "Polkadot", detected "Cumulus" in line:' ./out.txt
         working-directory: polkadot
