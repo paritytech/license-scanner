@@ -81,6 +81,8 @@ jobs:
             && exit 1 || exit 0
             # We expected it to fail because there are some copy-paste errors.
           
+          cat out.txt
+          
           grep -q 'Product mismatch' ./out.txt
           grep -q 'Expected "Polkadot", detected "Cumulus" in line:' ./out.txt
         working-directory: polkadot
