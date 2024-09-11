@@ -192,8 +192,9 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
 
   if (rust !== null) {
     const rootCargoToml = joinPath(root, "Cargo.toml");
+    const rootCargoLock = joinPath(root, "Cargo.lock");
     if (await existsAsync(rootCargoToml)) {
-      await scanCrates(rust, options);
+      await scanCrates({...rust, shouldCheckForCargoLock: await existsAsync(rootCargoLock)}, options);
     }
   }
 
