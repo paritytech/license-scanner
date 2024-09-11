@@ -97,6 +97,7 @@ export type EnsureLicensesInResultOptions = {
   file: { path: string; name: string };
   result: ScanResultItem | undefined;
   ensureLicenses: boolean | string[];
+  manifestLicense?: string;
 };
 
 export class DatabaseSaveError extends Error {

@@ -181,7 +181,7 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
 
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
-      const licensingError = ensureLicensesInResult({ file, result, ensureLicenses });
+      const licensingError = ensureLicensesInResult({ file, result, ensureLicenses, manifestLicense: file.manifestLicense });
       if (licensingError) licensingErrors.push(licensingError);
       if (result === undefined) {
         return;

@@ -278,6 +278,7 @@ export const ensureLicensesInResult = function ({
   file,
   result,
   ensureLicenses,
+  manifestLicense
 }: EnsureLicensesInResultOptions): Error | undefined {
   if (ensureLicenses === false) return;
   if (result === undefined) {
@@ -295,6 +296,13 @@ export const ensureLicensesInResult = function ({
     return new Error(
       `${file.name} has ${result.license} license` +
         `, expected one of: ${ensureLicenses.join(",")}. Exact file path: "${file.path}"`,
+    );
+  }
+
+  if (manifestLicense && result.license !== manifestLicense) {
+    return new Error(
+      `${file.name} has ${result.license} license` +
+        `, expected ${manifestLicense} as in cargo manifest. Exact file path: "${file.path}"`,
     );
   }
 };

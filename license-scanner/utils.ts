@@ -19,22 +19,30 @@ const mkdirAsync = promisify(fs.mkdir);
 export const walkFiles: (
   dir: string,
   options?: {
+    manifestLicense?: string;
     excluding?: { initialRoot: string; exclude: string[] };
   },
-) => AsyncGenerator<{ path: string; name: string }> = async function* (dir, { excluding } = {}) {
+) => AsyncGenerator<{ path: string; name: string; manifestLicense?: string}> = async function* (dir, { excluding } = {}) {
   if ((await lstatAsync(dir)).isFile()) {
     if (excluding && shouldExclude({ targetPath: dir, ...excluding })) return;
     yield { path: dir, name: path.basename(dir) };
     return;
   }
 
+  let manifestLicense: string | undefined;
+  const rootCargoToml = path.join(dir, "Cargo.toml");
+  if (await existsAsync(rootCargoToml)) {
+    const manifest = fs.readFileSync(rootCargoToml, "utf-8")
+    manifestLicense = manifest.match(/license = "(.*)"/)?.[1];
+  }
+
   for await (const d of await fs.promises.opendir(dir)) {
     const fullPath = path.join(dir, d.name);
     if (excluding && shouldExclude({ targetPath: fullPath, ...excluding })) continue;
     if (d.isDirectory()) {
-      yield* walkFiles(fullPath, { excluding });
+      yield* walkFiles(fullPath, { excluding, manifestLicense });
     } else {
-      yield { path: fullPath, name: d.name };
+      yield { path: fullPath, name: d.name, manifestLicense };
     }
   }
 };
