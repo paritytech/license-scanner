@@ -190,10 +190,7 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
     await scanQueue.onSizeLessThan(scanQueueSize);
   }
 
-  if (rust !== null && !ensureLicenses) {
-    // Only perform a scan of the dependencies when we are running a regular scan.
-    // When we're ensuring the licenses are in order,
-    // we are only concerned about our own code - not dependencies.
+  if (rust !== null) {
     const rootCargoToml = joinPath(root, "Cargo.toml");
     if (await existsAsync(rootCargoToml)) {
       await scanCrates(rust, options);
