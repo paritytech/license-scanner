@@ -120,6 +120,7 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
 export const scan = async function (options: ScanOptions): Promise<ScanResult> {
   const {
     saveResult,
+    fileExtensions,
     exclude,
     root,
     rust,
