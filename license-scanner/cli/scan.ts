@@ -86,6 +86,7 @@ export const executeScan = async function ({
   detectionOverrides,
   logLevel,
   ensureLicenses,
+  ensureProduct,
   exclude,
 }: ScanCliArgs) {
   const licenses = await loadLicensesNormalized(joinPath(buildRoot, "licenses"), {
@@ -119,6 +120,7 @@ export const executeScan = async function ({
       detectionOverrides: detectionOverrides ?? null,
       logger,
       ensureLicenses,
+      ensureProduct,
     });
     allLicensingErrors.push(...licensingErrors);
   }

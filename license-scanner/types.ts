@@ -77,6 +77,11 @@ export type ScanOptions = {
    * all source files have one of those licenses detected.
    */
   ensureLicenses?: boolean | string[];
+  /**
+   * If true, the scan will make sure that
+   * the license headers contain the correct product name.
+   */
+  ensureProduct?: string | undefined;
 };
 
 export type LicenseInput = {
@@ -150,6 +155,7 @@ export interface ScanCliArgs {
   detectionOverrides: DetectionOverride[];
   logLevel: LogLevel;
   ensureLicenses: boolean | string[];
+  ensureProduct: string | undefined;
 }
 
 export interface DumpCliArgs {
