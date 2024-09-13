@@ -76,7 +76,6 @@ jobs:
         working-directory: polkadot
       - name: Enforce product references in headers
         run: |
-          set -e      
           ! license-scanner scan \
             --ensure-product 'Polkadot' \
             -- ./xcm/src/lib.rs \
