@@ -77,7 +77,7 @@ jobs:
       - name: Enforce product references in headers
         run: |
           ! license-scanner scan \
-            --ensure-product 'Polkadot' \
+            --ensure-product 'Polkadotxxx' \
             -- ./xcm/src/lib.rs \
             2>out.txt
             # We expected it to fail because there are some copy-paste errors.
