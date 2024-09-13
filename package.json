@@ -1,6 +1,6 @@
 {
   "name": "@paritytech/license-scanner",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Parity <admin@parity.io> (https://parity.io)",
   "type": "module",
   "license": "Apache-2.0",
