@@ -63,12 +63,11 @@ jobs:
         run: |
           shopt -s globstar
 
-          license-scanner scan \
+          ! license-scanner scan \
             --ensure-licenses Apache-2.0 GPL-3.0-only \
             --exclude ./**/target ./**/weights \
             -- ./**/src/**/*.rs \
-            2>out.txt \
-            && exit 1 || true
+            2>out.txt
             # We expected it to fail because there are some unlicensed files left.
           
           grep -q 'No license detected in reconstruct.rs. Exact file path:' ./out.txt
