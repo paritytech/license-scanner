@@ -278,7 +278,7 @@ export const ensureLicensesInResult = function ({
   file,
   result,
   ensureLicenses,
-  manifestLicense
+  manifestLicense,
 }: EnsureLicensesInResultOptions): Error | undefined {
   if (ensureLicenses === false) return;
   if (result === undefined) {
@@ -338,7 +338,8 @@ export const ensureProductInFile = function (filePath: string, product: string |
 export const throwLicensingErrors = function (licensingErrors: Error[]) {
   if (licensingErrors.length === 0) return;
   throw new Error(
-    "Encountered the following errors when enforcing licenses:\n" + "• " +
+    "Encountered the following errors when enforcing licenses:\n" +
+      "• " +
       licensingErrors.map((error) => error.message).join("\n• "),
   );
 };

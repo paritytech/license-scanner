@@ -1,4 +1,3 @@
-import assert from "assert";
 import { dirname, join as joinPath, relative as relativePath } from "path";
 
 import { getOrDownloadCrate, getVersionedCrateName } from "./crate";
@@ -181,7 +180,12 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
 
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
-      const licensingError = ensureLicensesInResult({ file, result, ensureLicenses, manifestLicense: file.manifestLicense });
+      const licensingError = ensureLicensesInResult({
+        file,
+        result,
+        ensureLicenses,
+        manifestLicense: file.manifestLicense,
+      });
       if (licensingError) licensingErrors.push(licensingError);
       const productError = ensureProductInFile(file.path, ensureProduct);
       if (productError) licensingErrors.push(productError);
@@ -197,7 +201,7 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
     const rootCargoToml = joinPath(root, "Cargo.toml");
     const rootCargoLock = joinPath(root, "Cargo.lock");
     if (await existsAsync(rootCargoToml)) {
-      await scanCrates({...rust, shouldCheckForCargoLock: await existsAsync(rootCargoLock)}, options);
+      await scanCrates({ ...rust, shouldCheckForCargoLock: await existsAsync(rootCargoLock) }, options);
     }
   }
 
