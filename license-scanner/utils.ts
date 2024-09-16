@@ -22,17 +22,15 @@ export const walkFiles: (
     manifestLicense?: string;
     excluding?: { initialRoot: string; exclude: string[] };
   },
-) => AsyncGenerator<{ path: string; name: string; manifestLicense?: string }> = async function* (
-  dir,
-  { excluding } = {},
-) {
+) => AsyncGenerator<{ path: string; name: string; manifestLicense?: string }> = async function* (dir, options = {}) {
+  const { excluding } = options;
   if ((await lstatAsync(dir)).isFile()) {
     if (excluding && shouldExclude({ targetPath: dir, ...excluding })) return;
-    yield { path: dir, name: path.basename(dir) };
+    yield { path: dir, name: path.basename(dir), manifestLicense: options.manifestLicense };
     return;
   }
 
-  let manifestLicense: string | undefined;
+  let manifestLicense = options.manifestLicense;
   const rootCargoToml = path.join(dir, "Cargo.toml");
   if (await existsAsync(rootCargoToml)) {
     const manifest = fs.readFileSync(rootCargoToml, "utf-8");
