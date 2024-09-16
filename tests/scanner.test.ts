@@ -151,8 +151,12 @@ describe("Scanner tests", () => {
       {
         const { licensingErrors } = await performScan("manifest-license", scanOpts);
         expect(licensingErrors.length).to.eq(2);
-        expect(licensingErrors.find(e => e.message.includes("main.rs"))!.toString()).to.include("main.rs has MIT license, expected Apache-2.0 as in cargo manifest.");
-        expect(licensingErrors.find(e => e.message.includes("build.rs"))!.toString()).to.include("build.rs has MIT license, expected Apache-2.0 as in cargo manifest.");
+        expect(licensingErrors.find((e) => e.message.includes("main.rs"))!.toString()).to.include(
+          "main.rs has MIT license, expected Apache-2.0 as in cargo manifest.",
+        );
+        expect(licensingErrors.find((e) => e.message.includes("build.rs"))!.toString()).to.include(
+          "build.rs has MIT license, expected Apache-2.0 as in cargo manifest.",
+        );
       }
 
       // The licenses should be OK on their own, they only conflict if the Cargo manifest is considered.
