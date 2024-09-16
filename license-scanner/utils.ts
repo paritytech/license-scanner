@@ -16,6 +16,11 @@ export const lstatAsync = promisify(fs.lstat);
 export const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
+/**
+ * Recursively traverses down the given directory and yields all found files.
+ * The files contained within the score of a Cargo.toml manifest are annotated with
+ * the corresponding license, if it exists.
+ */
 export const walkFiles: (
   dir: string,
   options?: {
