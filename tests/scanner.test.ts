@@ -145,6 +145,29 @@ describe("Scanner tests", () => {
       }
     });
 
+    it("throws when file licensed differently than specified in Cargo manifest", async () => {
+      const scanOpts: Partial<ScanOptions> = { ensureLicenses: ["Apache-2.0", "MIT"], fileExtensions: [".rs"] };
+
+      {
+        const { licensingErrors } = await performScan("manifest-license", scanOpts);
+        expect(licensingErrors.length).to.eq(2);
+        expect(licensingErrors.find(e => e.message.includes("main.rs"))!.toString()).to.include("main.rs has MIT license, expected Apache-2.0 as in cargo manifest.");
+        expect(licensingErrors.find(e => e.message.includes("build.rs"))!.toString()).to.include("build.rs has MIT license, expected Apache-2.0 as in cargo manifest.");
+      }
+
+      // The licenses should be OK on their own, they only conflict if the Cargo manifest is considered.
+      {
+        const { output, licensingErrors } = await performScan("manifest-license/src/licensed", scanOpts);
+        expect(licensingErrors.length).to.eq(0);
+        expect(output["main.rs"]?.license).to.equal("Apache-2.0");
+      }
+      {
+        const { output, licensingErrors } = await performScan("manifest-license/src/licensed-differently", scanOpts);
+        expect(licensingErrors.length).to.eq(0);
+        expect(output["main.rs"]?.license).to.equal("MIT");
+      }
+    });
+
     it("throws when file licensed differently, targeting a single file", async () => {
       {
         const { licensingErrors } = await performScan("required-license/src/licensed-differently/main.rs", {
