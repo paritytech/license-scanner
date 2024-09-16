@@ -230,7 +230,7 @@ describe("Scanner tests", () => {
 
     it("Can exclude files by specifying extensions", async () => {
       {
-        const { output } = await performScan("single-crate", { });
+        const { output } = await performScan("single-crate", {});
         expect(output.LICENSE?.license).to.be.a("string");
         expect(output["src/main.rs"]?.license).to.be.a("string");
       }
