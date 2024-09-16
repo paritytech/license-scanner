@@ -227,5 +227,19 @@ describe("Scanner tests", () => {
         expect(output).to.deep.equal({});
       }
     });
+
+    it("Can exclude files by specifying extensions", async () => {
+      {
+        const { output } = await performScan("single-crate", { });
+        expect(output.LICENSE?.license).to.be.a("string");
+        expect(output["src/main.rs"]?.license).to.be.a("string");
+      }
+
+      {
+        const { output } = await performScan("single-crate", { fileExtensions: [".rs"] });
+        expect(output.LICENSE?.license).to.be.undefined;
+        expect(output["src/main.rs"]?.license).to.be.a("string");
+      }
+    });
   });
 });
