@@ -75,7 +75,7 @@ describe("Scanner tests", () => {
     expect(output["second-crate/src/main.rs"]?.license).to.equal("GPL-3.0-or-later");
   });
 
-  it("create-with-dependencies", async () => {
+  it("crate-with-dependencies", async () => {
     const { output, licensingErrors } = await performScan("crate-with-dependencies");
     expect(licensingErrors.length).to.eq(0);
     expect(output["async-trait-0.1.61 file: Cargo.toml"]?.license).to.equal("MIT OR Apache-2.0");
