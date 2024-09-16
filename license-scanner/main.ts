@@ -47,6 +47,12 @@ program
       "If configured, the scan will make sure that all scanned files are licensed with any license.",
     ).conflicts("ensureLicenses"),
   )
+  .addOption(
+    new Option(
+      "--ensure-product <product>",
+      "If configured, the scan will make sure the product mentioned in the license headers is correct.",
+    ),
+  )
   .option("--file-extensions <fileExtensions...>", "Scan only files with the specified extensions.")
   .option("--exclude <exclude...>", "Can be used to exclude files or directories from the scan.")
   // It's actually correct usage but @commander-js/extra-typings is wrong on this one.
@@ -62,6 +68,7 @@ program
         exclude: options.exclude ?? [],
         logLevel: options.logLevel as LogLevel,
         ensureLicenses: readEnsureLicenses(options),
+        ensureProduct: options.ensureProduct,
       });
     } catch (e: any) {
       logger.debug(e.stack);

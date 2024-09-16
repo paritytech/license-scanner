@@ -276,6 +276,28 @@ yarn start -- scan --ensure-any-license /directory/or/file
 Those options are conflicting with each other so only one should be specified.
 By default, no licensing is enforced.
 
+## `--ensure-product` <a name="ensure-product"></a>
+
+If configured, the scan will make sure that if a license header references a product,
+it will be the correct product and not a result of a copy-paste error.
+
+For example, this fragment references the `Substrate` product.
+
+```text
+// Substrate is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+```
+
+Examples:
+
+```bash
+yarn start -- scan --ensure-product Polkadot -- /directory/or/file
+```
+
+It treats a different product reference as an error, but it allows a generic "this program".
+
 ## `--exclude` <a name="exclude"></a>
 
 Can be used to exclude files or directories from the scan.

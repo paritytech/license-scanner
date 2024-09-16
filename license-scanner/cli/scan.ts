@@ -86,6 +86,7 @@ export const executeScan = async function ({
   detectionOverrides,
   logLevel,
   ensureLicenses,
+  ensureProduct,
   fileExtensions,
   exclude,
 }: ScanCliArgs) {
@@ -121,6 +122,7 @@ export const executeScan = async function ({
       detectionOverrides: detectionOverrides ?? null,
       logger,
       ensureLicenses,
+      ensureProduct,
     });
     allLicensingErrors.push(...licensingErrors);
   }

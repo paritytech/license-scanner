@@ -2,7 +2,7 @@ import assert from "assert";
 import { dirname, join as joinPath, relative as relativePath } from "path";
 
 import { getOrDownloadCrate, getVersionedCrateName } from "./crate";
-import { ensureLicensesInResult } from "./license";
+import { ensureLicensesInResult, ensureProductInFile } from "./license";
 import { getOrDownloadRepository } from "./repository";
 import { scanQueue, scanQueueSize } from "./synchronization";
 import {
@@ -133,6 +133,7 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
     tracker,
     logger,
     ensureLicenses = false,
+    ensureProduct,
   } = options;
 
   const licensingErrors: Error[] = [];
@@ -182,6 +183,8 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
       const result = await matchLicense(file.path);
       const licensingError = ensureLicensesInResult({ file, result, ensureLicenses, manifestLicense: file.manifestLicense });
       if (licensingError) licensingErrors.push(licensingError);
+      const productError = ensureProductInFile(file.path, ensureProduct);
+      if (productError) licensingErrors.push(productError);
       if (result === undefined) {
         return;
       }
