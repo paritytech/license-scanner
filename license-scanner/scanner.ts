@@ -142,7 +142,7 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
       logger.debug(`Excluding file ${file.path}`);
       continue toNextFile;
     }
-    if (fileExtensions.length > 0 && !fileExtensions.some((ext) => file.path.endsWith(ext))) {
+    if (!fileExtensions.some((ext) => file.path.endsWith(ext))) {
       continue toNextFile;
     }
     tracker.setFileKey(file.path, key);
