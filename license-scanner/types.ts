@@ -116,7 +116,7 @@ export class DB {
 }
 
 export type RustCrateScannerOutput = {
-  license: string | null | undefined | { workspace: true };
+  license: string | null | undefined;
   crates: Crate[] | null | undefined;
 };
 

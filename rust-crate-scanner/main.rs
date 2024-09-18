@@ -6,7 +6,7 @@ use cargo_toml::Inheritable;
 
 #[derive(Serialize, Deserialize)]
 struct ScanResult {
-  license: Option<Inheritable<String>> ,
+  license: Option<String> ,
   crates: Option<Vec<serde_json::Value>>,
 }
 
@@ -27,11 +27,11 @@ fn scan(
     let workspace_license = manifest.workspace.clone().map(|ws| ws.package.map(|pkg| pkg.license).flatten()).flatten();
 
     match package_license {
-      Some(license) => Some(license),
-      None => match workspace_license {
-        Some(license) => Some(Inheritable::Set(license)),
-        None => None
-      }
+      Some(license) => match license {
+        Inheritable::Set(license) => Some(license),
+        Inheritable::Inherited { .. } => None
+      },
+      None => None
     }
   };
 

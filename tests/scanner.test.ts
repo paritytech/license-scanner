@@ -82,6 +82,28 @@ describe("Scanner tests", () => {
     expect(output["futures-0.4.0-alpha.0 file: Cargo.toml"]?.license).to.equal("MIT OR Apache-2.0");
   }).timeout(120_000); // Takes some time because it downloads the crates from the Internet.
 
+  describe("crates with inherited properties", () => {
+    it("targeting the workspace", async () => {
+      const { output, licensingErrors } = await performScan("inherited-properties");
+      expect(licensingErrors.length).to.eq(0);
+
+      // Workspace root.
+      expect(output["Cargo.toml"]?.license).to.equal("MIT");
+      expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
+
+      // Subpackages.
+      expect(output["subpackage-inherited/src/main.rs"]?.license).to.equal("Apache-2.0");
+      expect(output["subpackage-set/src/main.rs"]?.license).to.equal("Apache-2.0");
+    });
+
+    it("targeting a crate with inherited property directly", async () => {
+      const { output, licensingErrors } = await performScan("inherited-properties/subpackage-inherited");
+      expect(licensingErrors.length).to.eq(0);
+
+      expect(output["src/main.rs"]?.license).to.equal("Apache-2.0");
+    });
+  });
+
   describe("ensure license", () => {
     it("works when file properly licensed", async () => {
       const { output, licensingErrors } = await performScan("required-license/src/licensed", {
