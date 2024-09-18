@@ -24,7 +24,6 @@ fn scan(
         format!("Failed to parse {:?}: {:?}", &cargo_toml_path, err)
       })?;
     let package_license = manifest.package.map(|pkg| pkg.license).flatten();
-    let workspace_license = manifest.workspace.clone().map(|ws| ws.package.map(|pkg| pkg.license).flatten()).flatten();
 
     match package_license {
       Some(license) => match license {
