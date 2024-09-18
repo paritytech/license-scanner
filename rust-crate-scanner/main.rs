@@ -6,7 +6,7 @@ use cargo_toml::Inheritable;
 
 #[derive(Serialize, Deserialize)]
 struct ScanResult {
-  license: Option<String> ,
+  license: Option<String>,
   crates: Option<Vec<serde_json::Value>>,
 }
 
