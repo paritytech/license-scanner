@@ -1,3 +1,4 @@
+import assert from "assert";
 import { dirname, join as joinPath, relative as relativePath } from "path";
 
 import { getOrDownloadCrate, getVersionedCrateName } from "./crate";
@@ -41,7 +42,8 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
       .catch(reject);
   });
 
-  if (project.license !== null && project.license !== undefined && typeof project.license === "string") {
+  if (project.license !== null && project.license !== undefined) {
+    assert(typeof project.license === "string");
     await saveResult(initialRoot, transformItemKey("Cargo.toml"), { license: project.license });
   }
 
