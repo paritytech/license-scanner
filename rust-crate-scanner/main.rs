@@ -2,6 +2,7 @@ use cargo_lock::package::source::GitReference;
 use serde::{Deserialize, Serialize};
 use serde_json::{self, json};
 use std::{env, fs, path::Path, process};
+use cargo_toml::Inheritable;
 
 #[derive(Serialize, Deserialize)]
 struct ScanResult {
@@ -22,7 +23,15 @@ fn scan(
       toml::from_str(&contents).map_err(|err| {
         format!("Failed to parse {:?}: {:?}", &cargo_toml_path, err)
       })?;
-    manifest.package.map(|pkg| pkg.license).flatten()
+    let package_license = manifest.package.map(|pkg| pkg.license).flatten();
+
+    match package_license {
+      Some(license) => match license {
+        Inheritable::Set(license) => Some(license),
+        Inheritable::Inherited { .. } => None
+      },
+      None => None
+    }
   };
 
   let crates = if should_check_for_cargo_lock {

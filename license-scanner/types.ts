@@ -59,6 +59,7 @@ export type ScanOptions = {
   saveResult: (projectId: string, filePathFromRoot: string, result: ScanResultItem) => Promise<void>;
   root: string;
   initialRoot: string;
+  fileExtensions: string[];
   exclude: string[];
   dirs: {
     repositories: string;
@@ -101,6 +102,7 @@ export type EnsureLicensesInResultOptions = {
   file: { path: string; name: string };
   result: ScanResultItem | undefined;
   ensureLicenses: boolean | string[];
+  manifestLicense?: string;
 };
 
 export class DatabaseSaveError extends Error {
@@ -150,6 +152,7 @@ export type CargoMetadataOutputV1 = {
 
 export interface ScanCliArgs {
   scanRoots: string[];
+  fileExtensions: string[];
   exclude: string[];
   startLinesExcludes: string[];
   detectionOverrides: DetectionOverride[];

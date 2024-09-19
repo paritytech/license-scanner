@@ -87,6 +87,7 @@ export const executeScan = async function ({
   logLevel,
   ensureLicenses,
   ensureProduct,
+  fileExtensions,
   exclude,
 }: ScanCliArgs) {
   const licenses = await loadLicensesNormalized(joinPath(buildRoot, "licenses"), {
@@ -113,6 +114,7 @@ export const executeScan = async function ({
       matchLicense,
       root: scanRoot,
       initialRoot: scanRoot,
+      fileExtensions,
       exclude,
       dirs: { crates: cratesDir, repositories: repositoriesDir },
       rust: { shouldCheckForCargoLock: true, cargoExecPath: "cargo", rustCrateScannerRoot },

@@ -53,6 +53,7 @@ program
       "If configured, the scan will make sure the product mentioned in the license headers is correct.",
     ),
   )
+  .option("--file-extensions <fileExtensions...>", "Scan only files with the specified extensions.")
   .option("--exclude <exclude...>", "Can be used to exclude files or directories from the scan.")
   // It's actually correct usage but @commander-js/extra-typings is wrong on this one.
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -63,6 +64,7 @@ program
         scanRoots: scanRoots.map((scanRoot) => resolvePath(scanRoot)),
         startLinesExcludes: await readStartLinesExcludes(options.startLinesExcludes),
         detectionOverrides: await readDetectionOverrides(options.detectionOverrides),
+        fileExtensions: options.fileExtensions ?? [],
         exclude: options.exclude ?? [],
         logLevel: options.logLevel as LogLevel,
         ensureLicenses: readEnsureLicenses(options),

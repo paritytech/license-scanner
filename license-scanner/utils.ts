@@ -16,25 +16,39 @@ export const lstatAsync = promisify(fs.lstat);
 export const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
+/**
+ * Recursively traverses down the given directory and yields all found files.
+ * The files contained within the score of a Cargo.toml manifest are annotated with
+ * the corresponding license, if it exists.
+ */
 export const walkFiles: (
   dir: string,
   options?: {
+    manifestLicense?: string;
     excluding?: { initialRoot: string; exclude: string[] };
   },
-) => AsyncGenerator<{ path: string; name: string }> = async function* (dir, { excluding } = {}) {
+) => AsyncGenerator<{ path: string; name: string; manifestLicense?: string }> = async function* (dir, options = {}) {
+  const { excluding } = options;
   if ((await lstatAsync(dir)).isFile()) {
     if (excluding && shouldExclude({ targetPath: dir, ...excluding })) return;
-    yield { path: dir, name: path.basename(dir) };
+    yield { path: dir, name: path.basename(dir), manifestLicense: options.manifestLicense };
     return;
+  }
+
+  let manifestLicense = options.manifestLicense;
+  const rootCargoToml = path.join(dir, "Cargo.toml");
+  if (await existsAsync(rootCargoToml)) {
+    const manifest = fs.readFileSync(rootCargoToml, "utf-8");
+    manifestLicense = manifest.match(/license = "(.*)"/)?.[1];
   }
 
   for await (const d of await fs.promises.opendir(dir)) {
     const fullPath = path.join(dir, d.name);
     if (excluding && shouldExclude({ targetPath: fullPath, ...excluding })) continue;
     if (d.isDirectory()) {
-      yield* walkFiles(fullPath, { excluding });
+      yield* walkFiles(fullPath, { excluding, manifestLicense });
     } else {
-      yield { path: fullPath, name: d.name };
+      yield { path: fullPath, name: d.name, manifestLicense };
     }
   }
 };

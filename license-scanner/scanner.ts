@@ -120,6 +120,7 @@ const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOpti
 export const scan = async function (options: ScanOptions): Promise<ScanResult> {
   const {
     saveResult,
+    fileExtensions,
     exclude,
     root,
     rust,
@@ -141,6 +142,9 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
     const key = transformItemKey(relativePath(root, file.path));
     if (shouldExclude({ targetPath: file.path, initialRoot, exclude })) {
       logger.debug(`Excluding file ${file.path}`);
+      continue toNextFile;
+    }
+    if (fileExtensions.length > 0 && !fileExtensions.some((ext) => file.path.endsWith(ext))) {
       continue toNextFile;
     }
     tracker.setFileKey(file.path, key);
@@ -178,7 +182,12 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
 
     await scanQueue.add(async () => {
       const result = await matchLicense(file.path);
-      const licensingError = ensureLicensesInResult({ file, result, ensureLicenses });
+      const licensingError = ensureLicensesInResult({
+        file,
+        result,
+        ensureLicenses,
+        manifestLicense: file.manifestLicense,
+      });
       if (licensingError) licensingErrors.push(licensingError);
       const productError = ensureProductInFile(file.path, ensureProduct);
       if (productError) licensingErrors.push(productError);
@@ -192,8 +201,12 @@ export const scan = async function (options: ScanOptions): Promise<ScanResult> {
 
   if (rust !== null) {
     const rootCargoToml = joinPath(root, "Cargo.toml");
+    const rootCargoLock = joinPath(root, "Cargo.lock");
     if (await existsAsync(rootCargoToml)) {
-      await scanCrates(rust, options);
+      await scanCrates(
+        { ...rust, shouldCheckForCargoLock: rust.shouldCheckForCargoLock && (await existsAsync(rootCargoLock)) },
+        options,
+      );
     }
   }
 
