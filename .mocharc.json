@@ -1,7 +1,0 @@
-{
-  "spec": "build/tests/**/*.test.js",
-  "watchExtensions": "js",
-  "extension": "js",
-  "timeout": 2000,
-  "node-option": ["experimental-specifier-resolution=node"]
-}

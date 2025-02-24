@@ -2,7 +2,7 @@ import { Mutex } from "async-mutex";
 import fs from "fs";
 import { promisify } from "util";
 
-import { DatabaseSaveError, DB, ScanResultItem } from "./types";
+import { DatabaseSaveError, DB, ScanResultItem } from "./types.js";
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);

@@ -1,6 +1,6 @@
-import { databasePath } from "license-scanner/constants";
-import { DatabaseLayout, DumpCliArgs } from "license-scanner/types";
-import { readFileAsync, writeFileAsync } from "license-scanner/utils";
+import { databasePath } from "#license-scanner/constants";
+import { DatabaseLayout, DumpCliArgs } from "#license-scanner/types";
+import { readFileAsync, writeFileAsync } from "#license-scanner/utils";
 
 const escapeValueForCsv = function (value: unknown) {
   if (value === null || value === undefined) {
@@ -37,7 +37,7 @@ export const executeDump = async function ({ outputFile, scanRoot }: DumpCliArgs
   const lines: string[] = [];
   for (const [id, result] of Object.entries(collection)) {
     lines.push(
-      `${escapeValueForCsv(id)},${escapeValueForCsv("license" in result ? result.license : result.description ?? "")}`,
+      `${escapeValueForCsv(id)},${escapeValueForCsv("license" in result ? result.license : (result.description ?? ""))}`,
     );
   }
 

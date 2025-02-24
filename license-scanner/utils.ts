@@ -1,7 +1,6 @@
 import cp from "child_process";
 import { open as openElf } from "elfinfo";
 import fs from "fs";
-import fetch from "node-fetch";
 import path from "path";
 import stream from "stream";
 import { promisify } from "util";
@@ -94,7 +93,7 @@ export const download = async function (url: string, targetPath: string) {
 
 export const execute = function (cmd: string, args: string[], options: Omit<cp.SpawnOptions, "stdio">) {
   return new Promise<{ stdout: string; stderr: string }>((resolve) => {
-    const child = cp.spawn(cmd, args, { ...options, stdio: "pipe" });
+    const child = cp.spawn(cmd, args, { ...options, stdio: "pipe", env: process.env });
 
     let stderrBuf = "";
     child.stderr.on("data", (data) => {

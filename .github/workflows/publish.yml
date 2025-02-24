@@ -11,7 +11,7 @@ jobs:
       tagcreated: ${{ steps.autotag.outputs.tagcreated }}
       tagname: ${{ steps.autotag.outputs.tagname }}
     steps:
-    - uses: actions/checkout@v3.3.0
+    - uses: actions/checkout@v4
     - uses: butlerlogic/action-autotag@1.1.2
       id: autotag
       with:
@@ -28,15 +28,15 @@ jobs:
     # important, only triggers if tag was created
     if: needs.tag.outputs.tagcreated == 'yes'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # Setup .npmrc file to publish to GitHub Packages
-      - uses: actions/setup-node@v3.3.0
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '22.x'
           registry-url: 'https://npm.pkg.github.com'
           # Defaults to the user or organization that owns the workflow file
           scope: '@paritytech'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
       - run: yarn build
       - run: yarn publish
         env:

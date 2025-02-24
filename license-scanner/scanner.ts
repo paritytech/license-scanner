@@ -1,10 +1,10 @@
 import assert from "assert";
 import { dirname, join as joinPath, relative as relativePath } from "path";
 
-import { getOrDownloadCrate, getVersionedCrateName } from "./crate";
-import { ensureLicensesInResult, ensureProductInFile } from "./license";
-import { getOrDownloadRepository } from "./repository";
-import { scanQueue, scanQueueSize } from "./synchronization";
+import { getOrDownloadCrate, getVersionedCrateName } from "./crate.js";
+import { ensureLicensesInResult, ensureProductInFile } from "./license.js";
+import { getOrDownloadRepository } from "./repository.js";
+import { scanQueue, scanQueueSize } from "./synchronization.js";
 import {
   CargoMetadataOutputV1,
   CratesIoCrate,
@@ -16,8 +16,8 @@ import {
   ScanOptionsRust,
   ScanResult,
   UnexpectedCrateSourceError,
-} from "./types";
-import { execute, existsAsync, readFileAsync, shouldExclude, walkFiles } from "./utils";
+} from "./types.js";
+import { execute, existsAsync, readFileAsync, shouldExclude, walkFiles } from "./utils.js";
 
 const scanCrates = async function (rust: ScanOptionsRust, options: Omit<ScanOptions, "rust">) {
   const {
