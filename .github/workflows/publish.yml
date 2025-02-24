@@ -38,6 +38,6 @@ jobs:
           scope: '@paritytech'
       - run: yarn install --immutable
       - run: yarn build
-      - run: yarn publish
+      - run: yarn npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
