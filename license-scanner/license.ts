@@ -2,8 +2,8 @@ import assert from "assert";
 import fs from "fs";
 import { promisify } from "util";
 
-import { EnsureLicensesInResultOptions, License, LicenseInput } from "./types";
-import { isBinaryFile, loadFiles } from "./utils";
+import { EnsureLicensesInResultOptions, License, LicenseInput } from "./types.js";
+import { isBinaryFile, loadFiles } from "./utils.js";
 
 const openAsync = promisify(fs.open);
 const readAsync = promisify(fs.read);

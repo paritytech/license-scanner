@@ -1,13 +1,14 @@
 {
   "name": "@paritytech/license-scanner",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Parity <admin@parity.io> (https://parity.io)",
   "type": "module",
+  "engines": {
+    "node": "^22"
+  },
   "license": "Apache-2.0",
   "main": "./build/license-scanner/main.js",
-  "bin": {
-    "license-scanner": "./build/license-scanner/main.js"
-  },
+  "bin": "./build/license-scanner/main.js",
   "files": [
     "build",
     "rust-crate-scanner"
@@ -18,35 +19,30 @@
       "url": "http://opensource.org/licenses/Apache-2.0"
     }
   ],
+  "imports": {
+    "#license-scanner/*": "./license-scanner/*.js"
+  },
   "devDependencies": {
-    "@eng-automation/js-style": "^2.1.0",
-    "@types/chai": "^4.3.4",
-    "@types/chai-as-promised": "^7.1.5",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^18.16.18",
+    "@eng-automation/js-style": "^3.1.0",
+    "@types/node": "^22.13.4",
     "@types/tar": "^4.0.5",
     "@types/tmp": "^0.2.1",
-    "chai": "^4.3.7",
-    "chai-as-promised": "^7.1.1",
-    "mocha": "^10.2.0",
-    "ts-patch": "^2.1.0",
-    "typescript": "^4.9.5",
-    "typescript-transform-paths": "^3.4.6"
+    "earl": "^1.3.0",
+    "typescript": "^5.7.3"
   },
   "scripts": {
-    "prepare": "ts-patch install -s",
     "typecheck": "tsc --noEmit",
-    "build": "rm -rf build && mkdir -p build && cp -r licenses build/ && tsc",
-    "start": "node --es-module-specifier-resolution=node ./build/license-scanner/main.js",
-    "prettier": "prettier '{*,**/*}.json'",
-    "eslint": "eslint '{*,**/*}.{js,ts}'",
+    "build": "rm -rf build && mkdir -p build && cp -r licenses build/ && tsc && cp package.json build/",
+    "start": "node ./build/license-scanner/main.js",
+    "prettier": "npx prettier '{*,**/*}.json'",
+    "eslint": "npx eslint '{*,**/*}.{js,ts}'",
     "lint": "yarn run lint:eslint && yarn run lint:prettier",
     "lint:eslint": "yarn run eslint",
-    "lint:prettier": "yarn run prettier -- --check",
-    "fix:eslint": "yarn run eslint -- --fix",
-    "fix:prettier": "yarn run prettier -- --write",
+    "lint:prettier": "yarn run prettier --check",
+    "fix:eslint": "yarn run eslint --fix",
+    "fix:prettier": "yarn run prettier --write",
     "fix": "yarn run fix:eslint && yarn run fix:prettier",
-    "test": "yarn build --sourceMap && mocha",
+    "test": "yarn build && node --enable-source-maps --test build/tests/*.test.js",
     "debug": "NODE_OPTIONS='--inspect-brk' yarn run start"
   },
   "dependencies": {
@@ -54,9 +50,9 @@
     "async-mutex": "^0.3.2",
     "commander": "^10.0.0",
     "elfinfo": "^0.4.0-beta",
-    "node-fetch": "^3.2.10",
     "p-queue": "^7.1.0",
     "tar": "^6.2.1",
     "tmp": "^0.2.1"
-  }
+  },
+  "packageManager": "yarn@4.6.0"
 }

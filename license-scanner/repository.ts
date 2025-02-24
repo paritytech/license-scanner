@@ -3,10 +3,10 @@ import { basename, join as joinPath } from "path";
 import tar from "tar";
 import tmp from "tmp";
 
-import { Logger } from "./logger";
-import { downloadMutex } from "./synchronization";
-import { RepositoryCrate } from "./types";
-import { download, ensureDir, existsAsync, readdirAsync, renameAsync, unlinkAsync } from "./utils";
+import { Logger } from "./logger.js";
+import { downloadMutex } from "./synchronization.js";
+import { RepositoryCrate } from "./types.js";
+import { download, ensureDir, existsAsync, readdirAsync, renameAsync, unlinkAsync } from "./utils.js";
 
 const getVersionedRepositoryName = function (crate: RepositoryCrate) {
   return `${basename(crate.source.repository)}-${crate.source.ref.value}`;

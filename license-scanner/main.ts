@@ -1,11 +1,11 @@
 #!/usr/bin/env -S node --es-module-specifier-resolution=node
 
 import { Command, Option } from "@commander-js/extra-typings";
-import { Logger, LogLevel } from "license-scanner/logger";
+import { Logger, LogLevel } from "#license-scanner/logger";
 import { resolve as resolvePath } from "path";
 
-import { executeDump } from "./cli/dump";
-import { executeScan, readDetectionOverrides, readEnsureLicenses, readStartLinesExcludes } from "./cli/scan";
+import { executeDump } from "./cli/dump.js";
+import { executeScan, readDetectionOverrides, readEnsureLicenses, readStartLinesExcludes } from "./cli/scan.js";
 
 const program = new Command("license-scanner").description(
   `license-scanner does not provide legal advice and it is not a lawyer. Licenses

@@ -1,4 +1,4 @@
-import type { Logger, LogLevel } from "./logger";
+import type { Logger, LogLevel } from "./logger.js";
 
 export type DatabaseLayout = {
   scanResult?: {
@@ -22,7 +22,11 @@ export type DetectionOverrideInput =
   | (DetectionOverrideInputBase & { starts_with: string });
 
 export class DetectionOverride {
-  constructor(public result: ScanResultItem | null, public contents: string | null, public value: string) {}
+  constructor(
+    public result: ScanResultItem | null,
+    public contents: string | null,
+    public value: string,
+  ) {}
 }
 export class DetectionOverrideByStartsWith extends DetectionOverride {}
 export class DetectionOverrideById extends DetectionOverride {}
@@ -133,7 +137,10 @@ export class RepositoryCrate {
   ) {}
 }
 export class CratesIoCrate {
-  constructor(public base: CrateBase, public source: { tag: "crates.io" }) {}
+  constructor(
+    public base: CrateBase,
+    public source: { tag: "crates.io" },
+  ) {}
 }
 
 export type Crate = CrateBase & {

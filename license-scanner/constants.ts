@@ -1,7 +1,7 @@
 import { dirname, join as joinPath } from "path";
 import { fileURLToPath } from "url";
 
-import { LicenseInput } from "./types";
+import { LicenseInput } from "./types.js";
 
 export const buildRoot = joinPath(dirname(fileURLToPath(import.meta.url)), "..");
 export const executionRoot = process.cwd();

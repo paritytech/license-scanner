@@ -6,11 +6,11 @@ import {
   licenseAliases,
   repositoriesDir,
   rustCrateScannerRoot,
-} from "license-scanner/constants";
-import { ensureDatabase, getSaveScanResultItem } from "license-scanner/db";
-import { getLicenseMatcher, loadLicensesNormalized, throwLicensingErrors } from "license-scanner/license";
-import { Logger } from "license-scanner/logger";
-import { scan } from "license-scanner/scanner";
+} from "#license-scanner/constants";
+import { ensureDatabase, getSaveScanResultItem } from "#license-scanner/db";
+import { getLicenseMatcher, loadLicensesNormalized, throwLicensingErrors } from "#license-scanner/license";
+import { Logger } from "#license-scanner/logger";
+import { scan } from "#license-scanner/scanner";
 import {
   DetectionOverride,
   DetectionOverrideById,
@@ -18,8 +18,8 @@ import {
   DetectionOverrideInput,
   ScanCliArgs,
   ScanTracker,
-} from "license-scanner/types";
-import { lstatAsync, readFileAsync, shouldExclude } from "license-scanner/utils";
+} from "#license-scanner/types";
+import { lstatAsync, readFileAsync, shouldExclude } from "#license-scanner/utils";
 import { dirname, join as joinPath } from "path";
 
 export const readStartLinesExcludes = async (

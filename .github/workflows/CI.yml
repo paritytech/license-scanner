@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4
       - name: Setup Node.js for use with actions
-        uses: actions/setup-node@v3.5.1
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
       - run: yarn lint
       - run: yarn build
       - run: cargo build --release
@@ -27,19 +27,19 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4
         with:
           path: license-scanner
       - name: Setup Node.js for use with actions
-        uses: actions/setup-node@v3.5.1
+        uses: actions/setup-node@v4
         with:
           node-version-file: 'license-scanner/.nvmrc'
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4
         with:
           repository: paritytech/polkadot
           ref: '1c935f35139f3f43cb22009dc5c010dfbe6ad9e7'
           path: polkadot
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable
         working-directory: license-scanner
       - name: Build and install globally
         run: |
@@ -69,7 +69,7 @@ jobs:
             -- ./**/src/**/*.rs \
             2>out.txt
             # We expected it to fail because there are some unlicensed files left.
-          
+
           grep -q 'No license detected in reconstruct.rs. Exact file path:' ./out.txt
           grep -q 'No license detected in mod.rs. Exact file path:' ./out.txt
         working-directory: polkadot
@@ -80,7 +80,7 @@ jobs:
             -- ./xcm/src/lib.rs \
             2>out.txt
             # We expected it to fail because there are some copy-paste errors.
-          
+
           grep -q 'Product mismatch' ./out.txt
           grep -q 'Expected "Polkadot", detected "Substrate" in line:' ./out.txt
         working-directory: polkadot

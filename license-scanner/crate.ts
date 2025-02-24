@@ -1,10 +1,10 @@
 import { dirname, join as joinPath } from "path";
 import tar from "tar";
 
-import { Logger } from "./logger";
-import { downloadMutex } from "./synchronization";
-import { Crate, CratesIoCrate } from "./types";
-import { download, ensureDir, existsAsync, unlinkAsync } from "./utils";
+import { Logger } from "./logger.js";
+import { downloadMutex } from "./synchronization.js";
+import { Crate, CratesIoCrate } from "./types.js";
+import { download, ensureDir, existsAsync, unlinkAsync } from "./utils.js";
 
 export const getVersionedCrateName = function ({ name, version }: Pick<Crate, "name" | "version">) {
   return `${name}-${version}`;
