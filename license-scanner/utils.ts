@@ -80,7 +80,11 @@ export const ensureDir = async function (dir: string) {
 };
 
 export const download = async function (url: string, targetPath: string) {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: {
+      "User-Agent": "LicenseScanner (https://github.com/paritytech/license-scanner)",
+    },
+  });
 
   if (!response.ok) {
     throw new Error(`Unexpected response ${response.statusText} for ${url}`);
