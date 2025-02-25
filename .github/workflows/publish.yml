@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - yuri/fix-publish-2
 
 jobs:
   tag:
@@ -15,7 +16,7 @@ jobs:
     - uses: butlerlogic/action-autotag@1.1.2
       id: autotag
       with:
-        head_branch: master
+        head_branch: yuri/fix-publish-2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
