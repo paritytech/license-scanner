@@ -52,7 +52,7 @@
     "elfinfo": "^0.4.0-beta",
     "p-queue": "^7.1.0",
     "tar": "^6.2.1",
-    "tmp": "^0.2.1"
+    "tmp": "^0.2.4"
   },
   "packageManager": "yarn@4.6.0"
 }
